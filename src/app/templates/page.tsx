@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Lightbulb, Wand2, Download, BookOpen } from 'lucide-react';
+import { Lightbulb, Wand2, ArrowRightSquare, BookOpen } from 'lucide-react';
 import { suggestBusinessPlanTemplate } from '@/ai/flows/suggest-business-plan-template';
 
 import { Button } from '@/components/ui/button';
@@ -97,8 +97,8 @@ export default function TemplatesPage() {
           </CardHeader>
           <CardFooter className="mt-auto">
             <Button>
-              <Download className="mr-2 h-4 w-4" />
-              Descargar
+              <ArrowRightSquare className="mr-2 h-4 w-4" />
+              Usar Lienzo
             </Button>
           </CardFooter>
         </Card>
@@ -224,3 +224,5 @@ export default function TemplatesPage() {
     </div>
   );
 }
+
+    
