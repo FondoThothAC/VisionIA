@@ -1,12 +1,62 @@
 
 "use client"
 
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import PageHeader from "@/components/page-header";
+import { Skeleton } from "@/components/ui/skeleton";
+
+type LocalModel = {
+  id: string;
+  name: string;
+  detected: boolean;
+};
 
 export default function SettingsPage() {
+  const [localTextModels, setLocalTextModels] = useState<LocalModel[]>([
+    { id: 'llama-3-local', name: 'Llama 3 (Local)', detected: false },
+    { id: 'phi-3-local', name: 'Phi 3 (Local)', detected: false },
+  ]);
+  const [localFinanceModels, setLocalFinanceModels] = useState<LocalModel[]>([
+     { id: 'finance-llama-local', name: 'Llama 3 (Finanzas Local)', detected: false },
+  ]);
+  const [localImageModels, setLocalImageModels] = useState<LocalModel[]>([
+    { id: 'stable-diffusion-local', name: 'Stable Diffusion (Local)', detected: false },
+  ]);
+
+  const [isDetecting, setIsDetecting] = useState(true);
+
+  useEffect(() => {
+    // Simula la detección de modelos con un retraso
+    const timer = setTimeout(() => {
+      // Simulemos que detectamos Llama 3 y Stable Diffusion
+      setLocalTextModels(prev => prev.map(m => m.id === 'llama-3-local' ? { ...m, detected: true } : m));
+      setLocalImageModels(prev => prev.map(m => m.id === 'stable-diffusion-local' ? { ...m, detected: true } : m));
+      setIsDetecting(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const renderLocalModels = (models: LocalModel[]) => {
+    if (isDetecting) {
+      return <Skeleton className="h-8 w-full" />;
+    }
+    return models.map(model => (
+      <SelectItem key={model.id} value={model.id} disabled={!model.detected}>
+        <div className="flex items-center justify-between w-full">
+          <span>{model.name}</span>
+          <span className={`text-xs ${model.detected ? 'text-green-500' : 'text-muted-foreground'}`}>
+            {model.detected ? 'Detectado' : 'No disponible'}
+          </span>
+        </div>
+      </SelectItem>
+    ));
+  };
+
+
   return (
     <div className="space-y-8">
       <PageHeader
@@ -61,8 +111,7 @@ export default function SettingsPage() {
                   </SelectGroup>
                   <SelectGroup>
                     <SelectLabel>Modelos Locales</SelectLabel>
-                    <SelectItem value="llama-3-local">Llama 3 (Local)</SelectItem>
-                    <SelectItem value="phi-3-local">Phi 3 (Local)</SelectItem>
+                    {renderLocalModels(localTextModels)}
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -84,7 +133,7 @@ export default function SettingsPage() {
                   </SelectGroup>
                    <SelectGroup>
                     <SelectLabel>Modelos Locales</SelectLabel>
-                     <SelectItem value="finance-llama-local">Llama 3 (Finanzas Local)</SelectItem>
+                     {renderLocalModels(localFinanceModels)}
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -107,7 +156,7 @@ export default function SettingsPage() {
                   </SelectGroup>
                    <SelectGroup>
                     <SelectLabel>Modelos Locales</SelectLabel>
-                    <SelectItem value="stable-diffusion-local">Stable Diffusion (Local)</SelectItem>
+                    {renderLocalModels(localImageModels)}
                   </SelectGroup>
                 </SelectContent>
               </Select>
