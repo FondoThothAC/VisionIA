@@ -35,7 +35,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PageHeader from "@/components/page-header";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartConfig } from "@/components/ui/chart";
 
 
 const formatCurrency = (value: number) =>
@@ -110,6 +110,21 @@ const kpis = [
     { id: "sov", name: "Share of Voice (SoV)", formula: "(Visibilidad de tu Marca / Visibilidad Total del Mercado) x 100", description: "La cuota de participación de tu marca en las conversaciones en línea en comparación con tus competidores." },
     { id: "market-share", name: "Market Share (Cuota de Mercado)", formula: "(Ventas de tu Empresa / Ventas Totales del Mercado) x 100", description: "El porcentaje de las ventas totales en una industria generado por una empresa en particular." }
 ];
+
+const chartConfig = {
+  Ingresos: {
+    label: "Ingresos",
+    color: "hsl(var(--chart-1))",
+  },
+  Costos: {
+    label: "Costos",
+    color: "hsl(var(--chart-2))",
+  },
+  Beneficio: {
+    label: "Beneficio",
+    color: "hsl(var(--chart-3))",
+  },
+} satisfies ChartConfig;
 
 export default function FinancialsPage() {
   // --- STATE MANAGEMENT ---
@@ -264,26 +279,29 @@ export default function FinancialsPage() {
                 </div>
                 </CardHeader>
                 <CardContent className="h-[400px] w-full pt-6">
-                <ResponsiveContainer>
-                    <ComposedChart data={projectionData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="month" fontSize={12} tickLine={false} axisLine={false} />
-                    <YAxis fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value / 1000}k`} />
-                    <ChartTooltip
-                        cursor={{ fill: 'hsl(var(--muted))' }}
-                        content={<ChartTooltipContent formatter={(value, name) => {
-                            if (name === 'Ingresos') return [formatCurrency(value as number), 'Ingresos'];
-                            if (name === 'Costos') return [formatCurrency(value as number), 'Costos'];
-                            if (name === 'Beneficio') return [formatCurrency(value as number), 'Beneficio'];
-                            return [value, name];
-                        }}/>}
-                    />
-                    <Bar dataKey="Ingresos" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} name="Ingresos"/>
-                    <Bar dataKey="Costos" fill="hsl(var(--chart-2))" radius={[4, 4, 0, 0]} name="Costos"/>
-                    <Line type="monotone" dataKey="Beneficio" stroke="hsl(var(--chart-3))" strokeWidth={2} dot={false} name="Beneficio Neto"/>
-                    <ReferenceLine y={0} stroke="#666" strokeDasharray="3 3" />
-                    </ComposedChart>
-                </ResponsiveContainer>
+                <ChartContainer config={chartConfig} className="h-full w-full">
+                  <ResponsiveContainer>
+                      <ComposedChart data={projectionData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                      <XAxis dataKey="month" fontSize={12} tickLine={false} axisLine={false} />
+                      <YAxis fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value / 1000}k`} />
+                      <ChartTooltip
+                          cursor={{ fill: 'hsl(var(--muted))' }}
+                          content={<ChartTooltipContent formatter={(value, name) => {
+                              if (typeof value !== 'number') return [value, name];
+                              if (name === 'Ingresos') return [formatCurrency(value), 'Ingresos'];
+                              if (name === 'Costos') return [formatCurrency(value), 'Costos'];
+                              if (name === 'Beneficio') return [formatCurrency(value), 'Beneficio'];
+                              return [value, name];
+                          }}/>}
+                      />
+                      <Bar dataKey="Ingresos" fill="var(--color-Ingresos)" radius={[4, 4, 0, 0]} name="Ingresos"/>
+                      <Bar dataKey="Costos" fill="var(--color-Costos)" radius={[4, 4, 0, 0]} name="Costos"/>
+                      <Line type="monotone" dataKey="Beneficio" stroke="var(--color-Beneficio)" strokeWidth={2} dot={false} name="Beneficio Neto"/>
+                      <ReferenceLine y={0} stroke="#666" strokeDasharray="3 3" />
+                      </ComposedChart>
+                  </ResponsiveContainer>
+                </ChartContainer>
                 </CardContent>
             </Card>
             </div>
@@ -429,3 +447,5 @@ export default function FinancialsPage() {
     </div>
   );
 }
+
+    
