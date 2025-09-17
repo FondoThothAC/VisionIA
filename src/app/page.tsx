@@ -97,11 +97,11 @@ export default function DashboardPage() {
         <div className="flex items-center gap-4">
            <div className="flex items-center gap-2">
             <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarImage src="https://github.com/shadcn.png" alt="@robertocelis" />
+                <AvatarFallback>RC</AvatarFallback>
             </Avatar>
             <div>
-                <p className="text-sm font-medium">Carlos Nah</p>
+                <p className="text-sm font-medium">Roberto Celis</p>
                 <p className="text-xs text-muted-foreground">Administrador</p>
             </div>
            </div>
@@ -256,5 +256,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    

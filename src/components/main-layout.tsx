@@ -12,6 +12,7 @@ import {
   Library,
   Search,
   Settings,
+  User,
 } from 'lucide-react';
 
 import {
@@ -63,12 +64,20 @@ const menuItems = [
     label: 'Resumen en Video',
     icon: Film,
   },
-  {
+];
+
+const secondaryMenuItems = [
+    {
     href: '/settings',
     label: 'Configuración',
     icon: Settings,
   },
-];
+    {
+    href: '/profile',
+    label: 'Perfil',
+    icon: User,
+  },
+]
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -97,6 +106,23 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
             ))}
           </SidebarMenu>
         </SidebarContent>
+         <SidebarContent className="mt-auto">
+            <SidebarMenu>
+                 {secondaryMenuItems.map((item) => (
+                    <SidebarMenuItem key={item.href}>
+                        <Link href={item.href}>
+                        <SidebarMenuButton
+                            isActive={pathname === item.href}
+                            tooltip={item.label}
+                        >
+                            <item.icon />
+                            <span>{item.label}</span>
+                        </SidebarMenuButton>
+                        </Link>
+                    </SidebarMenuItem>
+                    ))}
+            </SidebarMenu>
+         </SidebarContent>
       </Sidebar>
       <SidebarInset>
         <header className="flex items-center p-4 border-b lg:hidden">
