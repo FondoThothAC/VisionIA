@@ -32,7 +32,7 @@ import {
 } from '@/components/ui/table';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { FileDown, TrendingDown, TrendingUp, DollarSign, Users, AlertCircle, BookOpen, Info, Trash2, PlusCircle, ChevronsUpDown } from 'lucide-react';
+import { FileDown, TrendingDown, TrendingUp, DollarSign, Users, AlertCircle, BookOpen, Info, Trash2, PlusCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PageHeader from "@/components/page-header";
@@ -122,7 +122,7 @@ const chartOfAccounts = [
   { code: '5.2', name: 'GASTOS DE OPERACIÓN', type: 'Header' },
   { code: '5.2.1', name: 'Gastos de Venta', type: 'SubHeader' },
   { code: '5.2.1.1', name: 'Sueldos y Salarios (Ventas)', type: 'Account' },
-  { code: '5.2.1.2', name: 'Comisiones a Vendedores', type: 'Account' },
+  { code: '5.2.1.2', name: 'Comisiones a Vendedores', type_of_account: 'Account' },
   { code: '5.2.1.3', name: 'Publicidad y Propaganda', type: 'Account' },
   { code: '5.2.2', name: 'Gastos de Administración', type: 'SubHeader' },
   { code: '5.2.2.1', name: 'Sueldos y Salarios (Admin)', type: 'Account' },
@@ -530,10 +530,16 @@ export default function FinancialsPage() {
 
   return (
      <div className="space-y-8">
-      <PageHeader
-        title="Modelado Financiero"
-        description="Genera estados financieros, ratios y gráficos. Realiza análisis 'what-if' para pronosticar el futuro de tu negocio."
-      />
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <PageHeader
+          title="Modelado Financiero"
+          description="Genera estados financieros, ratios y gráficos. Realiza análisis 'what-if' para pronosticar el futuro de tu negocio."
+        />
+        <Button variant="outline">
+            <FileDown className="mr-2 h-4 w-4"/>
+            Exportar a PDF
+        </Button>
+      </div>
       
        <Tabs defaultValue="projections">
         <TabsList className="grid w-full grid-cols-3 mb-4">
