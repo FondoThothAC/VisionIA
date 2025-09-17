@@ -48,23 +48,76 @@ const formatCurrency = (value: number) =>
   }).format(value);
   
 const chartOfAccounts = [
-  { code: '1000', name: 'Activos', type: 'Header', rule: 'Aumentan con Cargos (Debe), Disminuyen con Abonos (Haber)' },
-  { code: '1110', name: 'Efectivo y Equivalentes', type: 'Account' },
-  { code: '1120', name: 'Cuentas por Cobrar', type: 'Account' },
-  { code: '1130', name: 'Inventario', type: 'Account' },
-  { code: '1210', name: 'Propiedad, Planta y Equipo', type: 'Account' },
-  { code: '2000', name: 'Pasivos', type: 'Header', rule: 'Disminuyen con Cargos (Debe), Aumentan con Abonos (Haber)' },
-  { code: '2110', name: 'Cuentas por Pagar', type: 'Account' },
-  { code: '2120', name: 'Préstamos a Corto Plazo', type: 'Account' },
-  { code: '3000', name: 'Patrimonio', type: 'Header', rule: 'Disminuyen con Cargos (Debe), Aumentan con Abonos (Haber)' },
-  { code: '3100', name: 'Capital Social', type: 'Account' },
-  { code: '3200', name: 'Resultados Acumulados', type: 'Account' },
-  { code: '4000', name: 'Ingresos', type: 'Header', rule: 'Disminuyen con Cargos (Debe), Aumentan con Abonos (Haber)' },
-  { code: '4100', name: 'Ingresos por Ventas', type: 'Account' },
-  { code: '5000', name: 'Costos y Gastos', type: 'Header', rule: 'Aumentan con Cargos (Debe), Disminuyen con Abonos (Haber)' },
-  { code: '5100', name: 'Costo de la Mercancía Vendida', type: 'Account' },
-  { code: '6100', name: 'Gastos de Salarios y Sueldos', type: 'Account' },
-  { code: '6200', name: 'Gastos de Alquiler', type: 'Account' },
+  // --- Activos ---
+  { code: '1', name: 'CUENTAS DE ACTIVO', type: 'MainHeader', description: 'Bienes y derechos de la empresa. Aumentan con Cargos (Debe), Disminuyen con Abonos (Haber).' },
+  { code: '1.1', name: 'ACTIVO CIRCULANTE (Corto Plazo)', type: 'Header' },
+  { code: '1.1.1', name: 'Efectivo y Equivalentes', type: 'SubHeader' },
+  { code: '1.1.1.1', name: 'Caja', type: 'Account' },
+  { code: '1.1.1.2', name: 'Bancos', type: 'Account' },
+  { code: '1.1.2', name: 'Cuentas por Cobrar', type: 'SubHeader' },
+  { code: '1.1.2.1', name: 'Clientes', type: 'Account' },
+  { code: '1.1.2.2', name: 'Deudores Diversos', type: 'Account' },
+  { code: '1.1.2.4', name: 'Estimación para Cuentas Incobrables', type: 'Account', note: 'Cuenta de valuación, resta al activo' },
+  { code: '1.1.3', name: 'Inventarios', type: 'SubHeader' },
+  { code: '1.1.3.3', name: 'Almacén de Artículo Terminado', type: 'Account' },
+  { code: '1.1.4', name: 'Pagos Anticipados', type: 'SubHeader' },
+  { code: '1.1.4.1', name: 'Rentas Pagadas por Anticipado', type: 'Account' },
+  { code: '1.1.4.2', name: 'Seguros Pagados por Anticipado', type: 'Account' },
+
+  { code: '1.2', name: 'ACTIVO NO CIRCULANTE (Largo Plazo)', type: 'Header' },
+  { code: '1.2.1', name: 'Propiedades, Planta y Equipo', type: 'SubHeader' },
+  { code: '1.2.1.1', name: 'Terrenos', type: 'Account' },
+  { code: '1.2.1.2', name: 'Edificios', type: 'Account' },
+  { code: '1.2.1.3', name: 'Mobiliario y Equipo de Oficina', type: 'Account' },
+  { code: '1.2.1.4', name: 'Equipo de Cómputo', type: 'Account' },
+  { code: '1.2.1.5', name: 'Equipo de Transporte', type: 'Account' },
+  { code: '1.2.2', name: 'Depreciación Acumulada', type: 'SubHeader' },
+  { code: '1.2.2.1', name: 'Dep. Acum. de Edificios', type: 'Account', note: 'Cuenta de valuación, resta al activo' },
+  { code: '1.2.2.2', name: 'Dep. Acum. de Mobiliario y Equipo', type: 'Account', note: 'Cuenta de valuación, resta al activo' },
+  { code: '1.2.3', name: 'Activos Intangibles', type: 'SubHeader' },
+  { code: '1.2.3.1', name: 'Patentes y Marcas', type: 'Account' },
+  { code: '1.2.3.2', name: 'Licencias y Software', type: 'Account' },
+  
+  // --- Pasivos ---
+  { code: '2', name: 'CUENTAS DE PASIVO', type: 'MainHeader', description: 'Deudas y obligaciones. Disminuyen con Cargos (Debe), Aumentan con Abonos (Haber).' },
+  { code: '2.1', name: 'PASIVO A CORTO PLAZO', type: 'Header' },
+  { code: '2.1.1', name: 'Proveedores', type: 'Account' },
+  { code: '2.1.2', name: 'Acreedores Diversos', type: 'Account' },
+  { code: '2.1.4', name: 'Impuestos por Pagar', type: 'Account' },
+  { code: '2.1.5', name: 'Sueldos y Salarios por Pagar', type: 'Account' },
+  { code: '2.2', name: 'PASIVO A LARGO PLAZO', type: 'Header' },
+  { code: '2.2.1', name: 'Préstamos Bancarios a Largo Plazo', type: 'Account' },
+  { code: '2.2.2', name: 'Hipotecas por Pagar', type: 'Account' },
+  
+  // --- Capital Contable ---
+  { code: '3', name: 'CUENTAS DE CAPITAL CONTABLE', type: 'MainHeader', description: 'Patrimonio de los dueños. Disminuyen con Cargos (Debe), Aumentan con Abonos (Haber).' },
+  { code: '3.1', name: 'CAPITAL CONTRIBUIDO', type: 'Header' },
+  { code: '3.1.1', name: 'Capital Social', type: 'Account' },
+  { code: '3.2', name: 'CAPITAL GANADO', type: 'Header' },
+  { code: '3.2.1', name: 'Utilidades Acumuladas', type: 'Account' },
+  { code: '3.2.2', name: 'Utilidad (o Pérdida) del Ejercicio', type: 'Account' },
+  
+  // --- Cuentas de Resultados (Ingresos) ---
+  { code: '4', name: 'CUENTAS DE INGRESOS', type: 'MainHeader', description: 'Registran las ventas o ingresos. Disminuyen con Cargos (Debe), Aumentan con Abonos (Haber).' },
+  { code: '4.1', name: 'Ingresos por Ventas / Servicios', type: 'Account' },
+  { code: '4.2', name: 'Devoluciones sobre Venta', type: 'Account', note: 'Resta a los ingresos' },
+  
+  // --- Cuentas de Resultados (Costos y Gastos) ---
+  { code: '5', name: 'CUENTAS DE COSTOS Y GASTOS', type: 'MainHeader', description: 'Registran los costos y gastos. Aumentan con Cargos (Debe), Disminuyen con Abonos (Haber).' },
+  { code: '5.1', name: 'COSTO DE VENTAS', type: 'Header' },
+  { code: '5.1.1', name: 'Costo de la Mercancía Vendida', type: 'Account' },
+  { code: '5.2', name: 'GASTOS DE OPERACIÓN', type: 'Header' },
+  { code: '5.2.1', name: 'Gastos de Venta', type: 'SubHeader' },
+  { code: '5.2.1.1', name: 'Sueldos y Salarios (Ventas)', type: 'Account' },
+  { code: '5.2.1.3', name: 'Publicidad y Propaganda', type: 'Account' },
+  { code: '5.2.2', name: 'Gastos de Administración', type: 'SubHeader' },
+  { code: '5.2.2.1', name: 'Sueldos y Salarios (Admin)', type: 'Account' },
+  { code: '5.2.2.2', name: 'Renta de Oficinas', type: 'Account' },
+  { code: '5.2.2.4', name: 'Servicios Públicos', type: 'Account' },
+  { code: '5.2.2.6', name: 'Depreciaciones y Amortizaciones', type: 'Account' },
+  { code: '5.3', name: 'GASTOS FINANCIEROS', type: 'Header' },
+  { code: '5.3.1', name: 'Intereses Pagados', type: 'Account' },
+  { code: '5.3.2', name: 'Comisiones Bancarias', type: 'Account' },
 ];
 
 
@@ -121,27 +174,27 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const TAccountCard = ({ name, rule, nature }: { name: string, rule: string, nature: string }) => {
+const TAccountCard = ({ name, note, nature }: { name: string, note?: string, nature: string }) => {
     const isDebitNature = nature === "debit";
     return (
         <Card className="text-center">
             <CardHeader className="p-3 pb-2">
                 <CardTitle className="text-base">{name}</CardTitle>
-                <CardDescription className="text-xs">{rule}</CardDescription>
+                {note && <CardDescription className="text-xs text-amber-600">{note}</CardDescription>}
             </CardHeader>
             <Separator />
             <CardContent className="p-0">
                 <div className="grid grid-cols-2">
-                    <div className="p-3">
+                    <div className={`p-3 ${isDebitNature ? 'bg-green-50' : 'bg-red-50'}`}>
                         <h4 className="font-semibold">Debe (Cargos)</h4>
                         <p className="text-xs text-muted-foreground mt-1">
                             {isDebitNature ? 'Aquí se registran los AUMENTOS.' : 'Aquí se registran las DISMINUCIONES.'}
                         </p>
                     </div>
-                    <div className="p-3 border-l">
+                    <div className={`p-3 border-l ${!isDebitNature ? 'bg-green-50' : 'bg-red-50'}`}>
                         <h4 className="font-semibold">Haber (Abonos)</h4>
                         <p className="text-xs text-muted-foreground mt-1">
-                           {isDebitNature ? 'Aquí se registran las DISMINUCIONES.' : 'Aquí se registran los AUMENTOS.'}
+                           {!isDebitNature ? 'Aquí se registran los AUMENTOS.' : 'Aquí se registran las DISMINUCIONES.'}
                         </p>
                     </div>
                 </div>
@@ -443,20 +496,42 @@ export default function FinancialsPage() {
                     <CardDescription>Visualización de Cuentas T para entender el registro de transacciones mediante cargos (Debe) y abonos (Haber).</CardDescription>
                 </CardHeader>
                 <CardContent>
-                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                   <div className="space-y-6">
                         {
                             chartOfAccounts.map(account => {
-                                if (account.type === 'Header') {
+                                if (account.type === 'MainHeader') {
                                     return (
-                                        <div key={account.code} className="md:col-span-2 lg:col-span-3 mt-4">
-                                            <h3 className="text-lg font-semibold text-primary">{account.name}</h3>
-                                            <p className="text-sm text-muted-foreground">{account.rule}</p>
+                                        <div key={account.code} className="mt-6 pt-4 border-t">
+                                            <h2 className="text-xl font-bold text-primary tracking-wide">{account.name}</h2>
+                                            <p className="text-base text-muted-foreground">{account.description}</p>
                                             <Separator className="mt-2"/>
                                         </div>
                                     )
                                 }
-                                const nature = account.code.startsWith('1') || account.code.startsWith('5') || account.code.startsWith('6') ? 'debit' : 'credit';
-                                return <TAccountCard key={account.code} name={account.name} rule="" nature={nature} />
+                                if (account.type === 'Header') {
+                                     return (
+                                        <div key={account.code} className="mt-4">
+                                            <h3 className="text-lg font-semibold">{account.name}</h3>
+                                            <Separator className="mt-1"/>
+                                        </div>
+                                    )
+                                }
+                                if (account.type === 'SubHeader') {
+                                     return (
+                                        <div key={account.code} className="mt-4 ml-4">
+                                            <h4 className="text-md font-semibold text-muted-foreground">{account.name}</h4>
+                                        </div>
+                                    )
+                                }
+                                if (account.type === 'Account') {
+                                    const nature = account.code.startsWith('1') || account.code.startsWith('5') ? 'debit' : 'credit';
+                                    return (
+                                      <div key={account.code} className="ml-4 pl-4 border-l-2 border-slate-200">
+                                        <TAccountCard name={account.name} note={account.note} nature={nature} />
+                                      </div>
+                                    )
+                                }
+                                return null;
                             })
                         }
                    </div>
@@ -467,7 +542,5 @@ export default function FinancialsPage() {
     </div>
   );
 }
-
-    
 
     
