@@ -639,7 +639,7 @@ export default function FinancialsPage() {
                                     {formatCurrency(d.Beneficio)}
                                 </TableCell>
                                 <TableCell className={`text-right font-semibold ${d.Beneficio_Acumulado >= 0 ? 'text-gray-800' : 'text-red-600'}`}>
-                                    {formatcurrency(d.Beneficio_Acumulado)}
+                                    {formatCurrency(d.Beneficio_Acumulado)}
                                 </TableCell>
                                 </TableRow>
                             ))}
@@ -729,5 +729,3 @@ export default function FinancialsPage() {
     </div>
   );
 }
-
-    
