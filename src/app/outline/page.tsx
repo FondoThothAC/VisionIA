@@ -31,10 +31,10 @@ import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const formSchema = z.object({
-  businessIdea: z.string().min(10, 'Please provide a more detailed business idea.'),
-  targetMarket: z.string().min(10, 'Please describe your target market in more detail.'),
-  competitiveAdvantages: z.string().min(10, 'Please list at least one competitive advantage.'),
-  revenueModel: z.string().min(10, 'Please explain your revenue model.'),
+  businessIdea: z.string().min(10, 'Por favor, proporciona una idea de negocio más detallada.'),
+  targetMarket: z.string().min(10, 'Por favor, describe tu mercado objetivo con más detalle.'),
+  competitiveAdvantages: z.string().min(10, 'Por favor, enumera al menos una ventaja competitiva.'),
+  revenueModel: z.string().min(10, 'Por favor, explica tu modelo de ingresos.'),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -59,21 +59,21 @@ export default function OutlinePage() {
     setOutline(null);
     try {
       toast({
-        title: 'Generating Outline...',
-        description: 'The AI is crafting your business plan. Please wait.',
+        title: 'Generando Esquema...',
+        description: 'La IA está creando tu plan de negocios. Por favor espera.',
       });
       const result = await generateBusinessPlanOutline(values);
       setOutline(result.outline);
       toast({
-        title: 'Outline Generated!',
-        description: 'Your business plan outline is ready.',
+        title: '¡Esquema Generado!',
+        description: 'El esquema de tu plan de negocios está listo.',
       });
     } catch (error) {
-      console.error('Error generating outline:', error);
+      console.error('Error generando el esquema:', error);
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: 'Failed to generate outline. Please try again.',
+        description: 'No se pudo generar el esquema. Por favor, inténtalo de nuevo.',
       });
     } finally {
       setIsLoading(false);
@@ -83,16 +83,16 @@ export default function OutlinePage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Business Plan Outline Generator"
-        description="Fill in the details below, and our AI will generate a comprehensive business plan outline for you."
+        title="Generador de Esquemas de Plan de Negocios"
+        description="Completa los detalles a continuación y nuestra IA generará un esquema completo de plan de negocios para ti."
       />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <CardHeader>
-                <CardTitle>Business Details</CardTitle>
-                <CardDescription>Provide the core concepts of your business.</CardDescription>
+                <CardTitle>Detalles del Negocio</CardTitle>
+                <CardDescription>Proporciona los conceptos centrales de tu negocio.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <FormField
@@ -100,9 +100,9 @@ export default function OutlinePage() {
                   name="businessIdea"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Business Idea</FormLabel>
+                      <FormLabel>Idea de Negocio</FormLabel>
                       <FormControl>
-                        <Textarea placeholder="e.g., A subscription box service for eco-friendly products..." {...field} />
+                        <Textarea placeholder="Ej: Un servicio de caja de suscripción para productos ecológicos..." {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -113,9 +113,9 @@ export default function OutlinePage() {
                   name="targetMarket"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Target Market</FormLabel>
+                      <FormLabel>Mercado Objetivo</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., Environmentally conscious millennials in urban areas" {...field} />
+                        <Input placeholder="Ej: Millennials con conciencia ambiental en áreas urbanas" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -126,9 +126,9 @@ export default function OutlinePage() {
                   name="competitiveAdvantages"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Competitive Advantages</FormLabel>
+                      <FormLabel>Ventajas Competitivas</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., Exclusive partnerships with local artisans, unique packaging" {...field} />
+                        <Input placeholder="Ej: Asociaciones exclusivas con artesanos locales, empaques únicos" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -139,9 +139,9 @@ export default function OutlinePage() {
                   name="revenueModel"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Revenue Model</FormLabel>
+                      <FormLabel>Modelo de Ingresos</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., Monthly/annual subscriptions, one-off purchases" {...field} />
+                        <Input placeholder="Ej: Suscripciones mensuales/anuales, compras únicas" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -151,7 +151,7 @@ export default function OutlinePage() {
               <CardFooter>
                 <Button type="submit" disabled={isLoading}>
                   <Wand2 className="mr-2 h-4 w-4" />
-                  {isLoading ? 'Generating...' : 'Generate Outline'}
+                  {isLoading ? 'Generando...' : 'Generar Esquema'}
                 </Button>
               </CardFooter>
             </form>
@@ -159,8 +159,8 @@ export default function OutlinePage() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Generated Outline</CardTitle>
-            <CardDescription>Your AI-generated business plan outline will appear here.</CardDescription>
+            <CardTitle>Esquema Generado</CardTitle>
+            <CardDescription>El esquema de tu plan de negocios generado por IA aparecerá aquí.</CardDescription>
           </CardHeader>
           <CardContent>
             {isLoading && (
@@ -188,7 +188,7 @@ export default function OutlinePage() {
             )}
             {!isLoading && !outline && (
                 <div className="flex items-center justify-center h-64 text-center text-muted-foreground">
-                    <p>Your outline is waiting to be created.</p>
+                    <p>Tu esquema está esperando ser creado.</p>
                 </div>
             )}
           </CardContent>

@@ -12,7 +12,7 @@ export default function Logo({ className, iconOnly = false }: LogoProps) {
       <BrainCircuit className="h-7 w-7 text-sidebar-primary" />
       {!iconOnly && (
         <span className="font-headline text-xl font-bold text-sidebar-foreground">
-          Visionary Ventures
+          Emprendimientos Visionarios
         </span>
       )}
     </div>

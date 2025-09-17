@@ -10,23 +10,23 @@ import { Slider } from "@/components/ui/slider"
 import PageHeader from "@/components/page-header"
 
 const projectionData = [
-  { month: "Month 1", revenue: 4000, profit: 2400 },
-  { month: "Month 2", revenue: 3000, profit: 1398 },
-  { month: "Month 3", revenue: 2000, profit: 9800 },
-  { month: "Month 4", revenue: 2780, profit: 3908 },
-  { month: "Month 5", revenue: 1890, profit: 4800 },
-  { month: "Month 6", revenue: 2390, profit: 3800 },
-  { month: "Month 7", revenue: 3490, profit: 4300 },
-  { month: "Month 8", revenue: 4000, profit: 2400 },
-  { month: "Month 9", revenue: 3000, profit: 1398 },
-  { month: "Month 10", revenue: 2000, profit: 9800 },
-  { month: "Month 11", revenue: 2780, profit: 3908 },
-  { month: "Month 12", revenue: 1890, profit: 4800 },
+  { month: "Mes 1", revenue: 4000, profit: 2400 },
+  { month: "Mes 2", revenue: 3000, profit: 1398 },
+  { month: "Mes 3", revenue: 2000, profit: 9800 },
+  { month: "Mes 4", revenue: 2780, profit: 3908 },
+  { month: "Mes 5", revenue: 1890, profit: 4800 },
+  { month: "Mes 6", revenue: 2390, profit: 3800 },
+  { month: "Mes 7", revenue: 3490, profit: 4300 },
+  { month: "Mes 8", revenue: 4000, profit: 2400 },
+  { month: "Mes 9", revenue: 3000, profit: 1398 },
+  { month: "Mes 10", revenue: 2000, profit: 9800 },
+  { month: "Mes 11", revenue: 2780, profit: 3908 },
+  { month: "Mes 12", revenue: 1890, profit: 4800 },
 ];
 
 const projectionChartConfig = {
-  revenue: { label: "Revenue", color: "hsl(var(--chart-1))" },
-  profit: { label: "Profit", color: "hsl(var(--chart-2))" },
+  revenue: { label: "Ingresos", color: "hsl(var(--chart-1))" },
+  profit: { label: "Beneficio", color: "hsl(var(--chart-2))" },
 };
 
 const breakEvenData = [
@@ -39,7 +39,7 @@ const breakEvenData = [
 ];
 
 const breakEvenChartConfig = {
-  profit: { label: "Profit", color: "hsl(var(--chart-1))" },
+  profit: { label: "Beneficio", color: "hsl(var(--chart-1))" },
 };
 
 export default function FinancialsPage() {
@@ -49,27 +49,27 @@ export default function FinancialsPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Financial Modeling"
-        description="Generate financial statements, ratios, and charts. Perform what-if analysis to forecast your business's future."
+        title="Modelado Financiero"
+        description="Genera estados financieros, ratios y gráficos. Realiza análisis 'what-if' para pronosticar el futuro de tu negocio."
       />
 
       <div className="grid gap-8 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>What-If Analysis</CardTitle>
-            <CardDescription>Adjust sliders to see how variables impact your projections.</CardDescription>
+            <CardTitle>Análisis What-If</CardTitle>
+            <CardDescription>Ajusta los deslizadores para ver cómo las variables impactan tus proyecciones.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid gap-2">
               <div className="flex justify-between items-center">
-                <Label htmlFor="growth-slider">Monthly Growth Rate</Label>
+                <Label htmlFor="growth-slider">Tasa de Crecimiento Mensual</Label>
                 <span className="text-sm font-medium">{growth}%</span>
               </div>
               <Slider id="growth-slider" defaultValue={[10]} max={50} step={1} onValueChange={(value) => setGrowth(value[0])} />
             </div>
             <div className="grid gap-2">
               <div className="flex justify-between items-center">
-                <Label htmlFor="price-slider">Average Price per Unit</Label>
+                <Label htmlFor="price-slider">Precio Promedio por Unidad</Label>
                 <span className="text-sm font-medium">${price}</span>
               </div>
               <Slider id="price-slider" defaultValue={[20]} max={100} step={1} onValueChange={(value) => setPrice(value[0])} />
@@ -79,24 +79,24 @@ export default function FinancialsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Key Ratios</CardTitle>
-            <CardDescription>An overview of your business's financial health.</CardDescription>
+            <CardTitle>Ratios Clave</CardTitle>
+            <CardDescription>Un resumen de la salud financiera de tu negocio.</CardDescription>
           </CardHeader>
           <CardContent className="grid grid-cols-2 gap-4">
             <div className="p-4 bg-muted/50 rounded-lg">
-              <p className="text-sm text-muted-foreground">Gross Margin</p>
+              <p className="text-sm text-muted-foreground">Margen Bruto</p>
               <p className="text-2xl font-bold">60%</p>
             </div>
             <div className="p-4 bg-muted/50 rounded-lg">
-              <p className="text-sm text-muted-foreground">Net Profit Margin</p>
+              <p className="text-sm text-muted-foreground">Margen de Beneficio Neto</p>
               <p className="text-2xl font-bold">25%</p>
             </div>
             <div className="p-4 bg-muted/50 rounded-lg">
-              <p className="text-sm text-muted-foreground">Current Ratio</p>
+              <p className="text-sm text-muted-foreground">Ratio Corriente</p>
               <p className="text-2xl font-bold">2.5</p>
             </div>
             <div className="p-4 bg-muted/50 rounded-lg">
-              <p className="text-sm text-muted-foreground">Debt-to-Equity</p>
+              <p className="text-sm text-muted-foreground">Deuda-Patrimonio</p>
               <p className="text-2xl font-bold">0.8</p>
             </div>
           </CardContent>
@@ -105,8 +105,8 @@ export default function FinancialsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>12-Month Financial Projections</CardTitle>
-          <CardDescription>Based on your current assumptions and what-if analysis.</CardDescription>
+          <CardTitle>Proyecciones Financieras a 12 Meses</CardTitle>
+          <CardDescription>Basado en tus suposiciones actuales y análisis what-if.</CardDescription>
         </CardHeader>
         <CardContent>
           <ChartContainer config={projectionChartConfig} className="h-80 w-full">
@@ -140,21 +140,21 @@ export default function FinancialsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Break-Even Analysis (Puerto Rico)</CardTitle>
-          <CardDescription>Estimated customers needed to become profitable.</CardDescription>
+          <CardTitle>Análisis de Punto de Equilibrio (Puerto Rico)</CardTitle>
+          <CardDescription>Clientes estimados necesarios para ser rentable.</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="text-center mb-4">
-            <p className="text-muted-foreground">You need to serve</p>
+            <p className="text-muted-foreground">Necesitas atender a</p>
             <p className="text-5xl font-bold font-headline text-primary">100</p>
-            <p className="text-muted-foreground">customers to break even.</p>
+            <p className="text-muted-foreground">clientes para alcanzar el punto de equilibrio.</p>
           </div>
           <ChartContainer config={breakEvenChartConfig} className="h-80 w-full">
             <ResponsiveContainer>
               <LineChart data={breakEvenData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="customers" type="number" label={{ value: 'Number of Customers', position: 'insideBottom', offset: -5 }} />
-                <YAxis label={{ value: 'Profit / Loss ($)', angle: -90, position: 'insideLeft' }} tickFormatter={(value) => `$${value/1000}k`} />
+                <XAxis dataKey="customers" type="number" label={{ value: 'Número de Clientes', position: 'insideBottom', offset: -5 }} />
+                <YAxis label={{ value: 'Beneficio / Pérdida ($)', angle: -90, position: 'insideLeft' }} tickFormatter={(value) => `$${value/1000}k`} />
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <Line type="monotone" dataKey="profit" stroke="var(--color-profit)" strokeWidth={2} dot={{r: 4, fill: "var(--color-profit)"}} />
               </LineChart>

@@ -17,21 +17,21 @@ import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const formSchema = z.object({
-  businessType: z.string().min(3, 'Please enter a valid business type.'),
-  industry: z.string().min(3, 'Please enter a valid industry.'),
-  businessModel: z.string().min(3, 'Please describe your business model.'),
-  companyDescription: z.string().min(10, 'Please provide a brief company description.'),
+  businessType: z.string().min(3, 'Por favor, introduce un tipo de negocio válido.'),
+  industry: z.string().min(3, 'Por favor, introduce una industria válida.'),
+  businessModel: z.string().min(3, 'Por favor, describe tu modelo de negocio.'),
+  companyDescription: z.string().min(10, 'Por favor, proporciona una breve descripción de la empresa.'),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
 const templates = [
-  { name: 'Tech Startup', description: 'For innovative technology companies seeking venture capital.' },
-  { name: 'E-commerce Store', description: 'Perfect for online retailers and digital storefronts.' },
-  { name: 'Restaurant & Cafe', description: 'A detailed plan for food and beverage businesses.' },
-  { name: 'Non-Profit Organization', description: 'Tailored for organizations with a social mission.' },
-  { name: 'Service-Based Business', description: 'For consultants, freelancers, and agencies.' },
-  { name: 'Retail Business', description: 'A comprehensive plan for brick-and-mortar stores.' },
+  { name: 'Startup Tecnológica', description: 'Para empresas de tecnología innovadoras que buscan capital de riesgo.' },
+  { name: 'Tienda de E-commerce', description: 'Perfecto para minoristas en línea y tiendas digitales.' },
+  { name: 'Restaurante y Cafetería', description: 'Un plan detallado para negocios de alimentos y bebidas.' },
+  { name: 'Organización sin Fines de Lucro', description: 'Diseñado para organizaciones con una misión social.' },
+  { name: 'Negocio Basado en Servicios', description: 'Para consultores, freelancers y agencias.' },
+  { name: 'Negocio Minorista', description: 'Un plan completo para tiendas físicas.' },
 ];
 
 export default function TemplatesPage() {
@@ -54,21 +54,21 @@ export default function TemplatesPage() {
     setSuggestion(null);
     try {
       toast({
-        title: 'Finding Your Template...',
-        description: 'The AI is analyzing your business needs.',
+        title: 'Buscando tu plantilla...',
+        description: 'La IA está analizando las necesidades de tu negocio.',
       });
       const result = await suggestBusinessPlanTemplate(values);
       setSuggestion(result);
       toast({
-        title: 'Suggestion Ready!',
-        description: `We recommend the "${result.suggestedTemplate}" template.`,
+        title: '¡Sugerencia Lista!',
+        description: `Recomendamos la plantilla "${result.suggestedTemplate}".`,
       });
     } catch (error) {
-      console.error('Error suggesting template:', error);
+      console.error('Error sugiriendo la plantilla:', error);
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: 'Failed to get a suggestion. Please try again.',
+        description: 'No se pudo obtener una sugerencia. Por favor, inténtalo de nuevo.',
       });
     } finally {
       setIsLoading(false);
@@ -78,14 +78,14 @@ export default function TemplatesPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Template Library"
-        description="Find the perfect business plan template. Get a personalized recommendation or browse our library."
+        title="Biblioteca de Plantillas"
+        description="Encuentra la plantilla de plan de negocios perfecta. Obtén una recomendación personalizada o explora nuestra biblioteca."
       />
 
       <Card>
         <CardHeader>
-          <CardTitle>Get an AI Recommendation</CardTitle>
-          <CardDescription>Tell us about your business, and we'll suggest a template.</CardDescription>
+          <CardTitle>Obtén una Recomendación de IA</CardTitle>
+          <CardDescription>Cuéntanos sobre tu negocio y te sugeriremos una plantilla.</CardDescription>
         </CardHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -96,8 +96,8 @@ export default function TemplatesPage() {
                   name="businessType"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Business Type</FormLabel>
-                      <FormControl><Input placeholder="e.g., SaaS, Restaurant" {...field} /></FormControl>
+                      <FormLabel>Tipo de Negocio</FormLabel>
+                      <FormControl><Input placeholder="Ej: SaaS, Restaurante" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -107,8 +107,8 @@ export default function TemplatesPage() {
                   name="industry"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Industry</FormLabel>
-                      <FormControl><Input placeholder="e.g., Technology, Hospitality" {...field} /></FormControl>
+                      <FormLabel>Industria</FormLabel>
+                      <FormControl><Input placeholder="Ej: Tecnología, Hostelería" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -118,8 +118,8 @@ export default function TemplatesPage() {
                   name="businessModel"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Business Model</FormLabel>
-                      <FormControl><Input placeholder="e.g., Subscription, B2B" {...field} /></FormControl>
+                      <FormLabel>Modelo de Negocio</FormLabel>
+                      <FormControl><Input placeholder="Ej: Suscripción, B2B" {...field} /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -131,8 +131,8 @@ export default function TemplatesPage() {
                   name="companyDescription"
                   render={({ field }) => (
                     <FormItem className="h-full flex flex-col">
-                      <FormLabel>Company Description</FormLabel>
-                      <FormControl><Textarea placeholder="Describe your company and its goals..." {...field} className="flex-grow" /></FormControl>
+                      <FormLabel>Descripción de la Empresa</FormLabel>
+                      <FormControl><Textarea placeholder="Describe tu empresa y sus objetivos..." {...field} className="flex-grow" /></FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -142,7 +142,7 @@ export default function TemplatesPage() {
             <CardFooter className="flex flex-col items-start gap-4">
               <Button type="submit" disabled={isLoading}>
                 <Wand2 className="mr-2 h-4 w-4" />
-                {isLoading ? 'Thinking...' : 'Suggest Template'}
+                {isLoading ? 'Pensando...' : 'Sugerir Plantilla'}
               </Button>
               {isLoading && (
                 <div className="w-full space-y-2">
@@ -155,7 +155,7 @@ export default function TemplatesPage() {
                 <div className="p-4 bg-primary/10 border border-primary/20 rounded-lg w-full">
                   <h4 className="font-bold font-headline text-lg text-primary flex items-center">
                     <Lightbulb className="mr-2 h-5 w-5"/>
-                    We suggest the "{suggestion.suggestedTemplate}" template.
+                    Sugerimos la plantilla "{suggestion.suggestedTemplate}".
                   </h4>
                   <p className="text-sm text-foreground/80 mt-1">{suggestion.reason}</p>
                 </div>
@@ -166,7 +166,7 @@ export default function TemplatesPage() {
       </Card>
 
       <div className="space-y-4">
-        <h2 className="text-2xl font-bold font-headline">Template Gallery</h2>
+        <h2 className="text-2xl font-bold font-headline">Galería de Plantillas</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {templates.map((template) => (
             <Card key={template.name} className="flex flex-col">
@@ -177,7 +177,7 @@ export default function TemplatesPage() {
               <CardFooter className="mt-auto">
                 <Button>
                   <Download className="mr-2 h-4 w-4" />
-                  Download
+                  Descargar
                 </Button>
               </CardFooter>
             </Card>

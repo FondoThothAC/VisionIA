@@ -11,6 +11,7 @@ import {
   LayoutDashboard,
   Library,
   Search,
+  Settings,
 } from 'lucide-react';
 
 import {
@@ -29,38 +30,43 @@ import Logo from '@/components/logo';
 const menuItems = [
   {
     href: '/',
-    label: 'Dashboard',
+    label: 'Panel Principal',
     icon: LayoutDashboard,
   },
   {
     href: '/outline',
-    label: 'Outline Generator',
+    label: 'Generador de Esquemas',
     icon: FileText,
   },
   {
     href: '/retrieval',
-    label: 'Document Retrieval',
+    label: 'Recuperación de Documentos',
     icon: Search,
   },
   {
     href: '/financials',
-    label: 'Financials',
+    label: 'Finanzas',
     icon: BarChart2,
   },
   {
     href: '/templates',
-    label: 'Templates',
+    label: 'Plantillas',
     icon: Library,
   },
   {
     href: '/visuals',
-    label: 'Visuals Generator',
+    label: 'Generador de Visuales',
     icon: ImageIcon,
   },
   {
     href: '/video',
-    label: 'Video Overview',
+    label: 'Resumen en Video',
     icon: Film,
+  },
+  {
+    href: '/settings',
+    label: 'Configuración',
+    icon: Settings,
   },
 ];
 

@@ -5,8 +5,8 @@ import { SidebarProvider } from '@/components/ui/sidebar';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Visionary Ventures',
-  description: 'Your AI-powered business planning co-pilot',
+  title: 'Emprendimientos Visionarios',
+  description: 'Tu copiloto de IA para la planificación de negocios',
 };
 
 export default function RootLayout({
@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

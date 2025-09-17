@@ -16,7 +16,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const formSchema = z.object({
-  query: z.string().min(5, 'Please enter a more specific query.'),
+  query: z.string().min(5, 'Por favor, introduce una consulta más específica.'),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -51,8 +51,8 @@ export default function RetrievalPage() {
     if (files.length === 0) {
       toast({
         variant: 'destructive',
-        title: 'No Documents',
-        description: 'Please upload at least one document.',
+        title: 'No hay documentos',
+        description: 'Por favor, sube al menos un documento.',
       });
       return;
     }
@@ -62,8 +62,8 @@ export default function RetrievalPage() {
 
     try {
       toast({
-        title: 'Analyzing Documents...',
-        description: 'The AI is extracting relevant information.',
+        title: 'Analizando Documentos...',
+        description: 'La IA está extrayendo información relevante.',
       });
 
       const documentPromises = files.map(fileToDataURI);
@@ -76,15 +76,15 @@ export default function RetrievalPage() {
 
       setRetrievedInfo(result.relevantInformation);
       toast({
-        title: 'Information Retrieved!',
-        description: 'The AI has finished analyzing your documents.',
+        title: '¡Información Recuperada!',
+        description: 'La IA ha terminado de analizar tus documentos.',
       });
     } catch (error) {
-      console.error('Error retrieving information:', error);
+      console.error('Error recuperando información:', error);
       toast({
         variant: 'destructive',
         title: 'Error',
-        description: 'Failed to retrieve information. Please try again.',
+        description: 'No se pudo recuperar la información. Por favor, inténtalo de nuevo.',
       });
     } finally {
       setIsLoading(false);
@@ -94,27 +94,27 @@ export default function RetrievalPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="RAG-based Information Retrieval"
-        description="Upload your documents and ask a question. Our AI will find the most relevant information for you."
+        title="Recuperación de Información Basada en RAG"
+        description="Sube tus documentos y haz una pregunta. Nuestra IA encontrará la información más relevante para ti."
       />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <CardHeader>
-                <CardTitle>Knowledge Base</CardTitle>
-                <CardDescription>Upload files and enter your query.</CardDescription>
+                <CardTitle>Base de Conocimiento</CardTitle>
+                <CardDescription>Sube archivos e introduce tu consulta.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <FormItem>
-                  <FormLabel>Upload Documents</FormLabel>
+                  <FormLabel>Subir Documentos</FormLabel>
                   <FormControl>
                     <Input type="file" multiple onChange={handleFileChange} />
                   </FormControl>
                   <FormMessage />
                   {files.length > 0 && (
                     <div className="mt-2 space-y-2">
-                      <p className="text-sm font-medium">Selected files:</p>
+                      <p className="text-sm font-medium">Archivos seleccionados:</p>
                       <ul className="list-disc list-inside text-sm text-muted-foreground">
                         {files.map((file, index) => (
                           <li key={index} className="flex items-center">
@@ -132,9 +132,9 @@ export default function RetrievalPage() {
                   name="query"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Your Question</FormLabel>
+                      <FormLabel>Tu Pregunta</FormLabel>
                       <FormControl>
-                        <Input placeholder="e.g., What are the main market risks mentioned in the reports?" {...field} />
+                        <Input placeholder="Ej: ¿Cuáles son los principales riesgos de mercado mencionados en los informes?" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -144,7 +144,7 @@ export default function RetrievalPage() {
               <CardFooter>
                 <Button type="submit" disabled={isLoading}>
                   <Search className="mr-2 h-4 w-4" />
-                  {isLoading ? 'Searching...' : 'Retrieve Information'}
+                  {isLoading ? 'Buscando...' : 'Recuperar Información'}
                 </Button>
               </CardFooter>
             </form>
@@ -152,8 +152,8 @@ export default function RetrievalPage() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Retrieved Information</CardTitle>
-            <CardDescription>Relevant information from your documents will appear here.</CardDescription>
+            <CardTitle>Información Recuperada</CardTitle>
+            <CardDescription>La información relevante de tus documentos aparecerá aquí.</CardDescription>
           </CardHeader>
           <CardContent>
             {isLoading && (
@@ -171,7 +171,7 @@ export default function RetrievalPage() {
             {!isLoading && !retrievedInfo && (
               <div className="flex flex-col items-center justify-center h-64 text-center text-muted-foreground">
                 <BrainCircuit className="h-12 w-12 mb-4" />
-                <p>The AI is ready to answer your questions.</p>
+                <p>La IA está lista para responder tus preguntas.</p>
               </div>
             )}
           </CardContent>
