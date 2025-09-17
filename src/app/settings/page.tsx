@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import PageHeader from "@/components/page-header";
 
 export default function SettingsPage() {
@@ -41,7 +41,7 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle>Configuración del Modelo de IA</CardTitle>
           <CardDescription>
-            Selecciona los modelos de IA para cada tarea específica.
+            Selecciona los modelos de IA para cada tarea específica, distinguiendo entre modelos en la nube (API) y locales.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-6 md:grid-cols-2">
@@ -52,10 +52,18 @@ export default function SettingsPage() {
                   <SelectValue placeholder="Selecciona un modelo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="gemini-1.5-pro">Gemini 1.5 Pro</SelectItem>
-                  <SelectItem value="gemini-1.5-flash">Gemini 1.5 Flash</SelectItem>
-                  <SelectItem value="gpt-4o">GPT-4o</SelectItem>
-                  <SelectItem value="claude-3-opus">Claude 3 Opus</SelectItem>
+                  <SelectGroup>
+                    <SelectLabel>Modelos en la Nube (API)</SelectLabel>
+                    <SelectItem value="gemini-1.5-pro">Gemini 1.5 Pro</SelectItem>
+                    <SelectItem value="gemini-1.5-flash">Gemini 1.5 Flash</SelectItem>
+                    <SelectItem value="gpt-4o">GPT-4o</SelectItem>
+                    <SelectItem value="claude-3-opus">Claude 3 Opus</SelectItem>
+                  </SelectGroup>
+                  <SelectGroup>
+                    <SelectLabel>Modelos Locales</SelectLabel>
+                    <SelectItem value="llama-3-local">Llama 3 (Local)</SelectItem>
+                    <SelectItem value="phi-3-local">Phi 3 (Local)</SelectItem>
+                  </SelectGroup>
                 </SelectContent>
               </Select>
               <p className="text-sm text-muted-foreground">
@@ -69,8 +77,15 @@ export default function SettingsPage() {
                   <SelectValue placeholder="Selecciona un modelo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="finance-specialist-v1">Especialista Financiero v1</SelectItem>
-                  <SelectItem value="gemini-1.5-pro-finance">Gemini 1.5 Pro (Finanzas)</SelectItem>
+                   <SelectGroup>
+                    <SelectLabel>Modelos en la Nube (API)</SelectLabel>
+                    <SelectItem value="finance-specialist-v1">Especialista Financiero v1</SelectItem>
+                    <SelectItem value="gemini-1.5-pro-finance">Gemini 1.5 Pro (Finanzas)</SelectItem>
+                  </SelectGroup>
+                   <SelectGroup>
+                    <SelectLabel>Modelos Locales</SelectLabel>
+                     <SelectItem value="finance-llama-local">Llama 3 (Finanzas Local)</SelectItem>
+                  </SelectGroup>
                 </SelectContent>
               </Select>
                <p className="text-sm text-muted-foreground">
@@ -84,9 +99,16 @@ export default function SettingsPage() {
                   <SelectValue placeholder="Selecciona un modelo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="imagen-3">Imagen 3</SelectItem>
-                  <SelectItem value="dall-e-3">DALL-E 3</SelectItem>
-                  <SelectItem value="midjourney-v6">Midjourney v6</SelectItem>
+                  <SelectGroup>
+                    <SelectLabel>Modelos en la Nube (API)</SelectLabel>
+                    <SelectItem value="imagen-3">Imagen 3</SelectItem>
+                    <SelectItem value="dall-e-3">DALL-E 3</SelectItem>
+                    <SelectItem value="midjourney-v6">Midjourney v6</SelectItem>
+                  </SelectGroup>
+                   <SelectGroup>
+                    <SelectLabel>Modelos Locales</SelectLabel>
+                    <SelectItem value="stable-diffusion-local">Stable Diffusion (Local)</SelectItem>
+                  </SelectGroup>
                 </SelectContent>
               </Select>
                <p className="text-sm text-muted-foreground">
@@ -100,8 +122,11 @@ export default function SettingsPage() {
                   <SelectValue placeholder="Selecciona un modelo" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="veo">Veo</SelectItem>
-                  <SelectItem value="sora">Sora</SelectItem>
+                  <SelectGroup>
+                    <SelectLabel>Modelos en la Nube (API)</SelectLabel>
+                    <SelectItem value="veo">Veo</SelectItem>
+                    <SelectItem value="sora">Sora</SelectItem>
+                  </SelectGroup>
                 </SelectContent>
               </Select>
                <p className="text-sm text-muted-foreground">
