@@ -36,7 +36,7 @@ const prompt = ai.definePrompt({
   name: 'generateImagesForBusinessConceptsPrompt',
   input: {schema: GenerateImagesForBusinessConceptsInputSchema},
   output: {schema: GenerateImagesForBusinessConceptsOutputSchema},
-  prompt: `Generate an image representing the following business concept, and include the CAFES UNISON logo as part of the image:\n\nConcept Description: {{{conceptDescription}}}`,
+  prompt: `Generate an image representing the following business concept:\n\nConcept Description: {{{conceptDescription}}}`,
 });
 
 const generateImagesForBusinessConceptsFlow = ai.defineFlow(

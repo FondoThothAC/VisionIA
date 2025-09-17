@@ -140,7 +140,7 @@ export default function FinancialsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Análisis de Punto de Equilibrio (Puerto Rico)</CardTitle>
+          <CardTitle>Análisis de Punto de Equilibrio</CardTitle>
           <CardDescription>Clientes estimados necesarios para ser rentable.</CardDescription>
         </CardHeader>
         <CardContent>

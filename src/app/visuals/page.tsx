@@ -64,7 +64,7 @@ export default function VisualsPage() {
     <div className="space-y-8">
       <PageHeader
         title="Generador de Visuales"
-        description="Crea imágenes, mapas mentales y diagramas a partir de texto. Describe tu concepto y nuestra IA le dará vida, incluyendo el logo de CAFES UNISON."
+        description="Crea imágenes, mapas mentales y diagramas a partir de texto. Describe tu concepto y nuestra IA le dará vida."
       />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card>
