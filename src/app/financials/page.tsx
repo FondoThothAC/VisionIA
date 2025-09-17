@@ -31,7 +31,7 @@ import {
 } from '@/components/ui/table';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { FileDown, TrendingDown, TrendingUp, DollarSign, Users, AlertCircle, BookOpen } from 'lucide-react';
+import { FileDown, TrendingDown, TrendingUp, DollarSign, Users, AlertCircle, BookOpen, Info } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PageHeader from "@/components/page-header";
@@ -57,12 +57,16 @@ const chartOfAccounts = [
   { code: '1.1.2', name: 'Cuentas por Cobrar', type: 'SubHeader' },
   { code: '1.1.2.1', name: 'Clientes', type: 'Account' },
   { code: '1.1.2.2', name: 'Deudores Diversos', type: 'Account' },
+  { code: '1.1.2.3', name: 'Funcionarios y Empleados', type: 'Account' },
   { code: '1.1.2.4', name: 'Estimación para Cuentas Incobrables', type: 'Account', note: 'Cuenta de valuación, resta al activo' },
   { code: '1.1.3', name: 'Inventarios', type: 'SubHeader' },
+  { code: '1.1.3.1', name: 'Almacén de Materia Prima', type: 'Account' },
+  { code: '1.1.3.2', name: 'Producción en Proceso', type: 'Account' },
   { code: '1.1.3.3', name: 'Almacén de Artículo Terminado', type: 'Account' },
   { code: '1.1.4', name: 'Pagos Anticipados', type: 'SubHeader' },
   { code: '1.1.4.1', name: 'Rentas Pagadas por Anticipado', type: 'Account' },
-  { code: '1.1.4.2', name: 'Seguros Pagados por Anticipado', type: 'Account' },
+  { code: '1.1.4.2', name: 'Seguros y Fianzas Pagados por Anticipado', type: 'Account' },
+  { code: '1.1.4.3', name: 'Publicidad Pagada por Anticipado', type: 'Account' },
 
   { code: '1.2', name: 'ACTIVO NO CIRCULANTE (Largo Plazo)', type: 'Header' },
   { code: '1.2.1', name: 'Propiedades, Planta y Equipo', type: 'SubHeader' },
@@ -74,25 +78,31 @@ const chartOfAccounts = [
   { code: '1.2.2', name: 'Depreciación Acumulada', type: 'SubHeader' },
   { code: '1.2.2.1', name: 'Dep. Acum. de Edificios', type: 'Account', note: 'Cuenta de valuación, resta al activo' },
   { code: '1.2.2.2', name: 'Dep. Acum. de Mobiliario y Equipo', type: 'Account', note: 'Cuenta de valuación, resta al activo' },
+  { code: '1.2.2.3', name: 'Dep. Acum. de Equipo de Cómputo', type: 'Account', note: 'Cuenta de valuación, resta al activo' },
+  { code: '1.2.2.4', name: 'Dep. Acum. de Equipo de Transporte', type: 'Account', note: 'Cuenta de valuación, resta al activo' },
   { code: '1.2.3', name: 'Activos Intangibles', type: 'SubHeader' },
   { code: '1.2.3.1', name: 'Patentes y Marcas', type: 'Account' },
   { code: '1.2.3.2', name: 'Licencias y Software', type: 'Account' },
+  { code: '1.2.3.3', name: 'Crédito Mercantil (Goodwill)', type: 'Account' },
   
   // --- Pasivos ---
   { code: '2', name: 'CUENTAS DE PASIVO', type: 'MainHeader', description: 'Deudas y obligaciones. Disminuyen con Cargos (Debe), Aumentan con Abonos (Haber).' },
   { code: '2.1', name: 'PASIVO A CORTO PLAZO', type: 'Header' },
   { code: '2.1.1', name: 'Proveedores', type: 'Account' },
   { code: '2.1.2', name: 'Acreedores Diversos', type: 'Account' },
+  { code: '2.1.3', name: 'Documentos por Pagar a Corto Plazo', type: 'Account' },
   { code: '2.1.4', name: 'Impuestos por Pagar', type: 'Account' },
   { code: '2.1.5', name: 'Sueldos y Salarios por Pagar', type: 'Account' },
   { code: '2.2', name: 'PASIVO A LARGO PLAZO', type: 'Header' },
   { code: '2.2.1', name: 'Préstamos Bancarios a Largo Plazo', type: 'Account' },
   { code: '2.2.2', name: 'Hipotecas por Pagar', type: 'Account' },
+  { code: '2.2.3', name: 'Documentos por Pagar a Largo Plazo', type: 'Account' },
   
   // --- Capital Contable ---
   { code: '3', name: 'CUENTAS DE CAPITAL CONTABLE', type: 'MainHeader', description: 'Patrimonio de los dueños. Disminuyen con Cargos (Debe), Aumentan con Abonos (Haber).' },
   { code: '3.1', name: 'CAPITAL CONTRIBUIDO', type: 'Header' },
   { code: '3.1.1', name: 'Capital Social', type: 'Account' },
+  { code: '3.1.2', name: 'Aportaciones para Futuros Aumentos de Capital', type: 'Account' },
   { code: '3.2', name: 'CAPITAL GANADO', type: 'Header' },
   { code: '3.2.1', name: 'Utilidades Acumuladas', type: 'Account' },
   { code: '3.2.2', name: 'Utilidad (o Pérdida) del Ejercicio', type: 'Account' },
@@ -100,7 +110,8 @@ const chartOfAccounts = [
   // --- Cuentas de Resultados (Ingresos) ---
   { code: '4', name: 'CUENTAS DE INGRESOS', type: 'MainHeader', description: 'Registran las ventas o ingresos. Disminuyen con Cargos (Debe), Aumentan con Abonos (Haber).' },
   { code: '4.1', name: 'Ingresos por Ventas / Servicios', type: 'Account' },
-  { code: '4.2', name: 'Devoluciones sobre Venta', type: 'Account', note: 'Resta a los ingresos' },
+  { code: '4.2', name: 'Devoluciones y Descuentos sobre Venta', type: 'Account', note: 'Resta a los ingresos' },
+  { code: '4.3', name: 'Otros Ingresos', type: 'Account' },
   
   // --- Cuentas de Resultados (Costos y Gastos) ---
   { code: '5', name: 'CUENTAS DE COSTOS Y GASTOS', type: 'MainHeader', description: 'Registran los costos y gastos. Aumentan con Cargos (Debe), Disminuyen con Abonos (Haber).' },
@@ -109,11 +120,14 @@ const chartOfAccounts = [
   { code: '5.2', name: 'GASTOS DE OPERACIÓN', type: 'Header' },
   { code: '5.2.1', name: 'Gastos de Venta', type: 'SubHeader' },
   { code: '5.2.1.1', name: 'Sueldos y Salarios (Ventas)', type: 'Account' },
+  { code: '5.2.1.2', name: 'Comisiones a Vendedores', type: 'Account' },
   { code: '5.2.1.3', name: 'Publicidad y Propaganda', type: 'Account' },
   { code: '5.2.2', name: 'Gastos de Administración', type: 'SubHeader' },
   { code: '5.2.2.1', name: 'Sueldos y Salarios (Admin)', type: 'Account' },
   { code: '5.2.2.2', name: 'Renta de Oficinas', type: 'Account' },
+  { code: '5.2.2.3', name: 'Papelería y Útiles de Oficina', type: 'Account' },
   { code: '5.2.2.4', name: 'Servicios Públicos', type: 'Account' },
+  { code: '5.2.2.5', name: 'Honorarios a Profesionales Externos', type: 'Account' },
   { code: '5.2.2.6', name: 'Depreciaciones y Amortizaciones', type: 'Account' },
   { code: '5.3', name: 'GASTOS FINANCIEROS', type: 'Header' },
   { code: '5.3.1', name: 'Intereses Pagados', type: 'Account' },
@@ -203,6 +217,91 @@ const TAccountCard = ({ name, note, nature }: { name: string, note?: string, nat
     )
 };
 
+const SocialChargeGuide = () => (
+    <Card>
+        <CardContent className="pt-6">
+            <Accordion type="single" collapsible>
+                <AccordionItem value="item-1">
+                    <AccordionTrigger>
+                        <div className="flex items-center gap-3">
+                           <Info className="h-5 w-5 text-blue-500"/>
+                           <span className="font-semibold">Guía: Cálculo de Carga Social Patronal (México)</span>
+                        </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="prose prose-sm max-w-none dark:prose-invert">
+                        <p>
+                           Este documento detalla los cálculos y porcentajes que un empleador (patrón) en México debe cubrir por cada trabajador, adicional a su salario. Los cálculos se basan en el Salario Base de Cotización (SBC) y la Unidad de Medida y Actualización (UMA).
+                        </p>
+                        <h4>Conceptos Clave</h4>
+                        <ul>
+                            <li><strong>SBC (Salario Base de Cotización):</strong> Es el salario diario del trabajador más todas las prestaciones de ley (proporcionales de aguinaldo y prima vacacional). Es la base sobre la que se calculan casi todas las cuotas.</li>
+                             <li><strong>UMA (Unidad de Medida y Actualización):</strong> Valor de referencia para determinar cuotas fijas y topes. Para 2024: $108.57 MXN.</li>
+                        </ul>
+
+                        <h4>Tabla de Cuotas y Fórmulas para el Patrón</h4>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Ramo de Seguro</TableHead>
+                                    <TableHead>Concepto</TableHead>
+                                    <TableHead>Porcentaje Patronal</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                <TableRow><TableCell rowSpan={8} className="font-semibold align-top">IMSS</TableCell><TableCell>Riesgos de Trabajo</TableCell><TableCell>Variable (Clase I a V, ej. 0.52150%)</TableCell></TableRow>
+                                <TableRow><TableCell>Enfermedades y Maternidad (Cuota Fija)</TableCell><TableCell>20.40% sobre UMA</TableCell></TableRow>
+                                <TableRow><TableCell>Enfermedades y Maternidad (Diferencial)</TableCell><TableCell>1.10% sobre (SBC - 3 UMA)</TableCell></TableRow>
+                                <TableRow><TableCell>Enfermedades y Maternidad (Prest. en Dinero)</TableCell><TableCell>0.70% sobre SBC</TableCell></TableRow>
+                                <TableRow><TableCell>Invalidez y Vida</TableCell><TableCell>1.75% sobre SBC</TableCell></TableRow>
+                                <TableRow><TableCell>Retiro (SAR)</TableCell><TableCell>2.00% sobre SBC</TableCell></TableRow>
+                                <TableRow><TableCell>Cesantía y Vejez</TableCell><TableCell>3.150% sobre SBC</TableCell></TableRow>
+                                <TableRow><TableCell>Guarderías y Prestaciones Sociales</TableCell><TableCell>1.00% sobre SBC</TableCell></TableRow>
+                                <TableRow><TableCell className="font-semibold">INFONAVIT</TableCell><TableCell>Vivienda</TableCell><TableCell>5.00% sobre SBC</TableCell></TableRow>
+                                <TableRow><TableCell className="font-semibold">ISN</TableCell><TableCell>Impuesto Sobre Nómina</TableCell><TableCell>Variable (Estatal, ej. 3%)</TableCell></TableRow>
+                            </TableBody>
+                        </Table>
+                         
+                        <h4>Ejemplo Práctico Completo</h4>
+                        <p><strong>Datos:</strong> Salario Mensual Bruto de $15,000.00, empresa de software (Clase I Riesgo), CDMX (ISN 3%).</p>
+                        <ol>
+                           <li>
+                                <strong>Calcular SBC Diario:</strong>
+                                <ul>
+                                    <li>Salario Diario: $15,000 / 30 = $500.00</li>
+                                    <li>Proporcional Aguinaldo: (15 / 365) x $500 = $20.55</li>
+                                    <li>Proporcional Prima Vacacional: (12 x 25% / 365) x $500 = $4.11</li>
+                                    <li><strong>SBC Diario = $524.66</strong></li>
+                                </ul>
+                           </li>
+                           <li>
+                                <strong>Calcular Cuotas Mensuales (30 días):</strong>
+                                 <Table>
+                                    <TableBody>
+                                        <TableRow><TableCell>IMSS - Riesgos de Trabajo</TableCell><TableCell className="text-right">$82.08</TableCell></TableRow>
+                                        <TableRow><TableCell>IMSS - Cuota Fija (EyM)</TableCell><TableCell className="text-right">$664.47</TableCell></TableRow>
+                                        <TableRow><TableCell>IMSS - Cuota Adicional (EyM)</TableCell><TableCell className="text-right">$197.94</TableCell></TableRow>
+                                        <TableRow><TableCell>IMSS - Prestaciones Dinero</TableCell><TableCell className="text-right">$110.18</TableCell></TableRow>
+                                        <TableRow><TableCell>IMSS - Invalidez y Vida</TableCell><TableCell className="text-right">$275.45</TableCell></TableRow>
+                                        <TableRow><TableCell>IMSS - Retiro (SAR)</TableCell><TableCell className="text-right">$314.80</TableCell></TableRow>
+                                        <TableRow><TableCell>IMSS - Cesantía y Vejez</TableCell><TableCell className="text-right">$495.93</TableCell></TableRow>
+                                        <TableRow><TableCell>IMSS - Guarderías</TableCell><TableCell className="text-right">$157.40</TableCell></TableRow>
+                                        <TableRow><TableCell>INFONAVIT</TableCell><TableCell className="text-right">$786.99</TableCell></TableRow>
+                                        <TableRow><TableCell>ISN (Impuesto S/ Nómina)</TableCell><TableCell className="text-right">$450.00</TableCell></TableRow>
+                                        <TableRow className="font-bold"><TableCell>Total Carga Social Mensual</TableCell><TableCell className="text-right">$3,535.24</TableCell></TableRow>
+                                    </TableBody>
+                                </Table>
+                           </li>
+                        </ol>
+                        <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                            <p className="font-bold text-blue-800">Conclusión del Ejemplo:</p>
+                            <p className="text-blue-700">Para un empleado con un salario bruto de $15,000.00 MXN, el costo total real para la empresa es de <strong>$18,535.24</strong> (Salario + Carga Social).</p>
+                        </div>
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </CardContent>
+    </Card>
+);
 
 export default function FinancialsPage() {
   // --- STATE MANAGEMENT ---
@@ -316,11 +415,12 @@ export default function FinancialsPage() {
                     <Input id="employees" type="number" value={employees} onChange={(e) => setEmployees(Number(e.target.value))} />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="avgSalary">Salario Promedio Mensual</Label>
+                    <Label htmlFor="avgSalary">Salario Promedio Mensual (Bruto)</Label>
                     <Input id="avgSalary" type="number" value={avgSalary} onChange={(e) => setAvgSalary(Number(e.target.value))} />
                 </div>
                 </CardContent>
             </Card>
+            <SocialChargeGuide />
             </div>
             
             {/* Column 2: Costs */}
@@ -526,7 +626,7 @@ export default function FinancialsPage() {
                                 if (account.type === 'Account') {
                                     const nature = account.code.startsWith('1') || account.code.startsWith('5') ? 'debit' : 'credit';
                                     return (
-                                      <div key={account.code} className="ml-4 pl-4 border-l-2 border-slate-200">
+                                      <div key={account.code} className="ml-8 pl-4 border-l-2 border-slate-200 py-2">
                                         <TAccountCard name={account.name} note={account.note} nature={nature} />
                                       </div>
                                     )
