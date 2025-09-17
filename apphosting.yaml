@@ -2,6 +2,10 @@
 # https://firebase.google.com/docs/app-hosting/configure
 
 runConfig:
+  # By setting minInstances to 1, you ensure that there is always at
+  # least one running instance of your application. This can help
+  # reduce cold starts and improve performance.
+  minInstances: 1
   # Increase this value if you'd like to automatically spin up
   # more instances in response to increased traffic.
-  maxInstances: 1
+  maxInstances: 2
