@@ -1,3 +1,10 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "dashboard-hero",
+      "description": "A modern office setting with people collaborating on a whiteboard.",
+      "imageUrl": "https://picsum.photos/seed/visionary1/1200/400",
+      "imageHint": "office collaboration"
+    }
+  ]
 }

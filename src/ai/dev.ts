@@ -1,1 +1,7 @@
-// Flows will be imported for their side effects in this file.
+import { config } from 'dotenv';
+config();
+
+import '@/ai/flows/suggest-business-plan-template.ts';
+import '@/ai/flows/retrieve-relevant-information-from-documents.ts';
+import '@/ai/flows/generate-business-plan-outline.ts';
+import '@/ai/flows/generate-images-for-business-concepts.ts';
