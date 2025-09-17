@@ -13,6 +13,10 @@ import {
   Search,
   Settings,
   User,
+  Users,
+  Briefcase,
+  Target,
+  Telescope
 } from 'lucide-react';
 
 import {
@@ -50,9 +54,24 @@ const menuItems = [
     icon: BarChart2,
   },
   {
-    href: '/templates',
-    label: 'Plantillas',
-    icon: Library,
+    href: '/clientes',
+    label: 'Cliente(s)',
+    icon: Users,
+  },
+  {
+    href: '/diseno-negocio',
+    label: 'Diseño de Negocio',
+    icon: Briefcase,
+  },
+    {
+    href: '/analisis-estrategico',
+    label: 'Análisis Estratégico',
+    icon: Telescope,
+  },
+  {
+    href: '/competencia',
+    label: 'Competencia',
+    icon: Target,
   },
   {
     href: '/visuals',

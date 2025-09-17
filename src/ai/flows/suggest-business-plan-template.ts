@@ -9,7 +9,6 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
-import { businessPlanGuideTool } from '@/ai/tools/business-plan-guide';
 
 const SuggestBusinessPlanTemplateInputSchema = z.object({
   businessType: z.string().describe('The type of business (e.g., restaurant, tech startup).'),
@@ -33,9 +32,7 @@ const prompt = ai.definePrompt({
   name: 'suggestBusinessPlanTemplatePrompt',
   input: {schema: SuggestBusinessPlanTemplateInputSchema},
   output: {schema: SuggestBusinessPlanTemplateOutputSchema},
-  tools: [businessPlanGuideTool],
-  prompt: `Given the following business information, suggest the most suitable business plan template and explain your reasoning.\n\nBusiness Type: {{{businessType}}}\nIndustry: {{{industry}}}\nBusiness Model: {{{businessModel}}}\nCompany Description: {{{companyDescription}}}\n\nConsider templates for various industries and business models. Use the businessPlanGuideTool to get the standard business plan guide to inform your suggestion.
-`,
+  prompt: `Given the following business information, suggest the most suitable business plan template and explain your reasoning.\n\nBusiness Type: {{{businessType}}}\nIndustry: {{{industry}}}\nBusiness Model: {{{businessModel}}}\nCompany Description: {{{companyDescription}}}\n\nConsider templates for various industries and business models.`,
 });
 
 const suggestBusinessPlanTemplateFlow = ai.defineFlow(
