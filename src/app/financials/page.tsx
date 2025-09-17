@@ -32,7 +32,7 @@ import {
 } from '@/components/ui/table';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { FileDown, TrendingDown, TrendingUp, DollarSign, Users, AlertCircle, BookOpen, Info, Trash2, PlusCircle } from 'lucide-react';
+import { FileDown, TrendingDown, TrendingUp, DollarSign, Users, AlertCircle, BookOpen, Info, Trash2, PlusCircle, ChevronsUpDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PageHeader from "@/components/page-header";
@@ -512,21 +512,30 @@ export default function FinancialsPage() {
             
             {/* Column 2: Costs */}
             <div className="space-y-6 lg:col-span-2 xl:col-span-1">
-            <Card>
-                <CardHeader>
-                <CardTitle>Costos Operativos Mensuales</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-4">
-                    {Object.entries(costs).map(([key, value]) => (
-                        <div key={key} className="space-y-1.5">
-                        <Label htmlFor={key} className="capitalize text-sm">{key.replace('_', ' ')}</Label>
-                        <Input id={key} name={key} type="number" value={value} onChange={handleCostChange} className="h-9"/>
-                        </div>
-                    ))}
-                    </div>
-                </CardContent>
-            </Card>
+                <Accordion type="single" collapsible defaultValue="item-1">
+                    <Card>
+                        <AccordionItem value="item-1" className="border-b-0">
+                            <AccordionTrigger className="p-6">
+                                <CardTitle>Costos Operativos Mensuales</CardTitle>
+                            </AccordionTrigger>
+                            <AccordionContent className="p-6 pt-0">
+                                <p className="text-sm text-muted-foreground mb-4">
+                                    Todos los cálculos de la proyección se actualizan automáticamente al cambiar estos valores.
+                                </p>
+                                <div className="space-y-4">
+                                    <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+                                        {Object.entries(costs).map(([key, value]) => (
+                                            <div key={key} className="space-y-1.5">
+                                                <Label htmlFor={key} className="capitalize text-sm">{key.replace('_', ' ')}</Label>
+                                                <Input id={key} name={key} type="number" value={value} onChange={handleCostChange} className="h-9"/>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Card>
+                </Accordion>
             </div>
 
             {/* Column 3: Projections & Chart */}
@@ -729,3 +738,5 @@ export default function FinancialsPage() {
     </div>
   );
 }
+
+    
