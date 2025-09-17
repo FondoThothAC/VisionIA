@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Lightbulb, Wand2, Download } from 'lucide-react';
+import { Lightbulb, Wand2, Download, BookOpen } from 'lucide-react';
 import { suggestBusinessPlanTemplate } from '@/ai/flows/suggest-business-plan-template';
 
 import { Button } from '@/components/ui/button';
@@ -15,6 +15,7 @@ import { Textarea } from '@/components/ui/textarea';
 import PageHeader from '@/components/page-header';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
+import BusinessPlanGuide from '@/components/business-plan-guide';
 
 const formSchema = z.object({
   businessType: z.string().min(3, 'Por favor, introduce un tipo de negocio válido.'),
@@ -81,6 +82,8 @@ export default function TemplatesPage() {
         title="Biblioteca de Plantillas"
         description="Encuentra la plantilla de plan de negocios perfecta. Obtén una recomendación personalizada o explora nuestra biblioteca."
       />
+
+      <BusinessPlanGuide />
 
       <Card>
         <CardHeader>
