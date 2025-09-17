@@ -27,17 +27,24 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-const canvases = [
+const customerCanvases = [
   { name: 'Mapa de Empatía', description: 'Para entender profundamente a tu cliente: qué piensa, siente, ve, oye, dice y hace.' },
   { name: 'Buyer Persona', description: 'Para crear un perfil semi-ficticio de tu cliente ideal basado en datos reales.' },
   { name: 'Mapa del Viaje del Cliente', description: 'Para visualizar todas las interacciones del cliente con tu empresa e identificar puntos de mejora.' },
+];
+
+const businessModelCanvases = [
   { name: 'Lienzo de la Propuesta de Valor', description: 'Para asegurar que tu producto o servicio resuelve problemas y crea alegrías reales para tus clientes.' },
   { name: 'Lienzo del Modelo de Negocio', description: 'Para describir, diseñar y visualizar tu modelo de negocio completo en una sola página.' },
   { name: 'Lean Canvas', description: 'Adaptación del Business Model Canvas para startups, enfocada en problema, solución, métricas y ventaja.' },
   { name: 'Product Canvas', description: 'Para definir la visión, objetivos, funcionalidades y métricas de un producto específico.' },
+];
+
+const strategicAnalysisCanvases = [
   { name: 'Análisis FODA', description: 'Para evaluar las Fortalezas, Oportunidades, Debilidades y Amenazas de tu negocio.' },
   { name: 'Lienzo de la Competencia', description: 'Para analizar y comparar de forma estructurada a tus competidores directos e indirectos.' },
 ];
+
 
 export default function TemplatesPage() {
   const [suggestion, setSuggestion] = useState<{ suggestedTemplate: string; reason: string } | null>(null);
@@ -79,6 +86,25 @@ export default function TemplatesPage() {
       setIsLoading(false);
     }
   }
+
+  const renderCanvasGrid = (canvases: {name: string, description: string}[]) => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {canvases.map((canvas) => (
+        <Card key={canvas.name} className="flex flex-col">
+          <CardHeader>
+            <CardTitle>{canvas.name}</CardTitle>
+            <CardDescription>{canvas.description}</CardDescription>
+          </CardHeader>
+          <CardFooter className="mt-auto">
+            <Button>
+              <Download className="mr-2 h-4 w-4" />
+              Descargar
+            </Button>
+          </CardFooter>
+        </Card>
+      ))}
+    </div>
+  );
 
   return (
     <div className="space-y-8">
@@ -172,25 +198,28 @@ export default function TemplatesPage() {
         </Form>
       </Card>
 
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold font-headline">Galería de Lienzos Estratégicos</h2>
-        <p className="text-muted-foreground">Utiliza estas herramientas para analizar, diseñar y pivotar tu modelo de negocio.</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {canvases.map((canvas) => (
-            <Card key={canvas.name} className="flex flex-col">
-              <CardHeader>
-                <CardTitle>{canvas.name}</CardTitle>
-                <CardDescription>{canvas.description}</CardDescription>
-              </CardHeader>
-              <CardFooter className="mt-auto">
-                <Button>
-                  <Download className="mr-2 h-4 w-4" />
-                  Descargar
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold font-headline">Lienzos para Entender a tu Cliente</h2>
+          <p className="text-muted-foreground">Utiliza estas herramientas para analizar y empatizar con tu público objetivo.</p>
         </div>
+        {renderCanvasGrid(customerCanvases)}
+      </div>
+      
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold font-headline">Lienzos para Diseñar tu Negocio</h2>
+          <p className="text-muted-foreground">Estructura y visualiza los componentes clave de tu modelo de negocio.</p>
+        </div>
+        {renderCanvasGrid(businessModelCanvases)}
+      </div>
+
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold font-headline">Lienzos para Análisis Estratégico</h2>
+          <p className="text-muted-foreground">Evalúa el entorno competitivo y la posición de tu empresa en el mercado.</p>
+        </div>
+        {renderCanvasGrid(strategicAnalysisCanvases)}
       </div>
     </div>
   );
