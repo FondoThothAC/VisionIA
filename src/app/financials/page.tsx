@@ -37,6 +37,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PageHeader from "@/components/page-header";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartConfig } from "@/components/ui/chart";
+import { Separator } from '@/components/ui/separator';
 
 
 const formatCurrency = (value: number) =>
@@ -47,32 +48,25 @@ const formatCurrency = (value: number) =>
   }).format(value);
   
 const chartOfAccounts = [
-  { code: '1000', name: 'Activos', type: 'Header' },
-  { code: '1100', name: 'Activos Circulantes', type: 'Header' },
+  { code: '1000', name: 'Activos', type: 'Header', rule: 'Aumentan con Cargos (Debe), Disminuyen con Abonos (Haber)' },
   { code: '1110', name: 'Efectivo y Equivalentes', type: 'Account' },
   { code: '1120', name: 'Cuentas por Cobrar', type: 'Account' },
   { code: '1130', name: 'Inventario', type: 'Account' },
-  { code: '1200', name: 'Activos Fijos', type: 'Header' },
   { code: '1210', name: 'Propiedad, Planta y Equipo', type: 'Account' },
-  { code: '1220', name: 'Depreciación Acumulada', type: 'Account' },
-  { code: '2000', name: 'Pasivos', type: 'Header' },
-  { code: '2100', name: 'Pasivos Circulantes', type: 'Header' },
+  { code: '2000', name: 'Pasivos', type: 'Header', rule: 'Disminuyen con Cargos (Debe), Aumentan con Abonos (Haber)' },
   { code: '2110', name: 'Cuentas por Pagar', type: 'Account' },
   { code: '2120', name: 'Préstamos a Corto Plazo', type: 'Account' },
-  { code: '3000', name: 'Patrimonio', type: 'Header' },
+  { code: '3000', name: 'Patrimonio', type: 'Header', rule: 'Disminuyen con Cargos (Debe), Aumentan con Abonos (Haber)' },
   { code: '3100', name: 'Capital Social', type: 'Account' },
   { code: '3200', name: 'Resultados Acumulados', type: 'Account' },
-  { code: '4000', name: 'Ingresos', type: 'Header' },
+  { code: '4000', name: 'Ingresos', type: 'Header', rule: 'Disminuyen con Cargos (Debe), Aumentan con Abonos (Haber)' },
   { code: '4100', name: 'Ingresos por Ventas', type: 'Account' },
-  { code: '5000', name: 'Costos de Ventas (COGS)', type: 'Header' },
+  { code: '5000', name: 'Costos y Gastos', type: 'Header', rule: 'Aumentan con Cargos (Debe), Disminuyen con Abonos (Haber)' },
   { code: '5100', name: 'Costo de la Mercancía Vendida', type: 'Account' },
-  { code: '6000', name: 'Gastos Operativos', type: 'Header' },
   { code: '6100', name: 'Gastos de Salarios y Sueldos', type: 'Account' },
   { code: '6200', name: 'Gastos de Alquiler', type: 'Account' },
-  { code: '6300', name: 'Gastos de Marketing', type: 'Account' },
-  { code: '6400', name: 'Servicios Públicos (Luz, Agua, etc.)', type: 'Account' },
-  { code: '6500', name: 'Suministros de Oficina', type: 'Account' },
 ];
+
 
 const kpis = [
     { id: "cac", name: "CAC (Costo de Adquisición de Cliente)", formula: "(Inversión en Marketing y Ventas) / (Nuevos Clientes)", description: "Mide cuánto cuesta adquirir un nuevo cliente." },
@@ -126,6 +120,36 @@ const chartConfig = {
     color: "hsl(var(--chart-3))",
   },
 } satisfies ChartConfig;
+
+const TAccountCard = ({ name, rule, nature }: { name: string, rule: string, nature: string }) => {
+    const isDebitNature = nature === "debit";
+    return (
+        <Card className="text-center">
+            <CardHeader className="p-3 pb-2">
+                <CardTitle className="text-base">{name}</CardTitle>
+                <CardDescription className="text-xs">{rule}</CardDescription>
+            </CardHeader>
+            <Separator />
+            <CardContent className="p-0">
+                <div className="grid grid-cols-2">
+                    <div className="p-3">
+                        <h4 className="font-semibold">Debe (Cargos)</h4>
+                        <p className="text-xs text-muted-foreground mt-1">
+                            {isDebitNature ? 'Aquí se registran los AUMENTOS.' : 'Aquí se registran las DISMINUCIONES.'}
+                        </p>
+                    </div>
+                    <div className="p-3 border-l">
+                        <h4 className="font-semibold">Haber (Abonos)</h4>
+                        <p className="text-xs text-muted-foreground mt-1">
+                           {isDebitNature ? 'Aquí se registran las DISMINUCIONES.' : 'Aquí se registran los AUMENTOS.'}
+                        </p>
+                    </div>
+                </div>
+            </CardContent>
+        </Card>
+    )
+};
+
 
 export default function FinancialsPage() {
   // --- STATE MANAGEMENT ---
@@ -415,32 +439,27 @@ export default function FinancialsPage() {
         <TabsContent value="accounts">
              <Card>
                 <CardHeader>
-                    <CardTitle className="flex items-center gap-2"><BookOpen className="h-5 w-5 text-primary"/> Catálogo de Cuentas Contables</CardTitle>
-                    <CardDescription>Referencia estándar de cuentas para la clasificación de transacciones financieras.</CardDescription>
+                    <CardTitle className="flex items-center gap-2"><BookOpen className="h-5 w-5 text-primary"/> Catálogo de Cuentas Contables (Esquema de Mayor)</CardTitle>
+                    <CardDescription>Visualización de Cuentas T para entender el registro de transacciones mediante cargos (Debe) y abonos (Haber).</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead className="w-[100px]">Código</TableHead>
-                                <TableHead>Nombre de la Cuenta</TableHead>
-                                <TableHead className="text-right">Tipo</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {chartOfAccounts.map((account) => (
-                                <TableRow key={account.code} className={account.type === 'Header' ? 'bg-muted/50 font-semibold' : ''}>
-                                    <TableCell>{account.code}</TableCell>
-                                    <TableCell>{account.name}</TableCell>
-                                    <TableCell className="text-right">
-                                     <Badge variant={account.type === 'Header' ? 'secondary' : 'outline'}>
-                                        {account.type}
-                                     </Badge>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
+                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {
+                            chartOfAccounts.map(account => {
+                                if (account.type === 'Header') {
+                                    return (
+                                        <div key={account.code} className="md:col-span-2 lg:col-span-3 mt-4">
+                                            <h3 className="text-lg font-semibold text-primary">{account.name}</h3>
+                                            <p className="text-sm text-muted-foreground">{account.rule}</p>
+                                            <Separator className="mt-2"/>
+                                        </div>
+                                    )
+                                }
+                                const nature = account.code.startsWith('1') || account.code.startsWith('5') || account.code.startsWith('6') ? 'debit' : 'credit';
+                                return <TAccountCard key={account.code} name={account.name} rule="" nature={nature} />
+                            })
+                        }
+                   </div>
                 </CardContent>
              </Card>
         </TabsContent>
