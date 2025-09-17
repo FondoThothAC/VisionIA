@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -26,13 +27,16 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-const templates = [
-  { name: 'Startup Tecnológica', description: 'Para empresas de tecnología innovadoras que buscan capital de riesgo.' },
-  { name: 'Tienda de E-commerce', description: 'Perfecto para minoristas en línea y tiendas digitales.' },
-  { name: 'Restaurante y Cafetería', description: 'Un plan detallado para negocios de alimentos y bebidas.' },
-  { name: 'Organización sin Fines de Lucro', description: 'Diseñado para organizaciones con una misión social.' },
-  { name: 'Negocio Basado en Servicios', description: 'Para consultores, freelancers y agencias.' },
-  { name: 'Negocio Minorista', description: 'Un plan completo para tiendas físicas.' },
+const canvases = [
+  { name: 'Mapa de Empatía', description: 'Para entender profundamente a tu cliente: qué piensa, siente, ve, oye, dice y hace.' },
+  { name: 'Buyer Persona', description: 'Para crear un perfil semi-ficticio de tu cliente ideal basado en datos reales.' },
+  { name: 'Mapa del Viaje del Cliente', description: 'Para visualizar todas las interacciones del cliente con tu empresa e identificar puntos de mejora.' },
+  { name: 'Lienzo de la Propuesta de Valor', description: 'Para asegurar que tu producto o servicio resuelve problemas y crea alegrías reales para tus clientes.' },
+  { name: 'Lienzo del Modelo de Negocio', description: 'Para describir, diseñar y visualizar tu modelo de negocio completo en una sola página.' },
+  { name: 'Lean Canvas', description: 'Adaptación del Business Model Canvas para startups, enfocada en problema, solución, métricas y ventaja.' },
+  { name: 'Product Canvas', description: 'Para definir la visión, objetivos, funcionalidades y métricas de un producto específico.' },
+  { name: 'Análisis FODA', description: 'Para evaluar las Fortalezas, Oportunidades, Debilidades y Amenazas de tu negocio.' },
+  { name: 'Lienzo de la Competencia', description: 'Para analizar y comparar de forma estructurada a tus competidores directos e indirectos.' },
 ];
 
 export default function TemplatesPage() {
@@ -79,16 +83,16 @@ export default function TemplatesPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Biblioteca de Plantillas"
-        description="Encuentra la plantilla de plan de negocios perfecta. Obtén una recomendación personalizada o explora nuestra biblioteca."
+        title="Biblioteca de Plantillas y Lienzos"
+        description="Encuentra la plantilla o lienzo estratégico perfecto para tu negocio. Obtén una recomendación o explora la galería."
       />
 
       <BusinessPlanGuide />
 
       <Card>
         <CardHeader>
-          <CardTitle>Obtén una Recomendación de IA</CardTitle>
-          <CardDescription>Cuéntanos sobre tu negocio y te sugeriremos una plantilla.</CardDescription>
+          <CardTitle>Obtén una Recomendación de IA para tu Plan de Negocios</CardTitle>
+          <CardDescription>Cuéntanos sobre tu negocio y te sugeriremos una plantilla de plan de negocios completa.</CardDescription>
         </CardHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -169,13 +173,14 @@ export default function TemplatesPage() {
       </Card>
 
       <div className="space-y-4">
-        <h2 className="text-2xl font-bold font-headline">Galería de Plantillas</h2>
+        <h2 className="text-2xl font-bold font-headline">Galería de Lienzos Estratégicos</h2>
+        <p className="text-muted-foreground">Utiliza estas herramientas para analizar, diseñar y pivotar tu modelo de negocio.</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {templates.map((template) => (
-            <Card key={template.name} className="flex flex-col">
+          {canvases.map((canvas) => (
+            <Card key={canvas.name} className="flex flex-col">
               <CardHeader>
-                <CardTitle>{template.name}</CardTitle>
-                <CardDescription>{template.description}</CardDescription>
+                <CardTitle>{canvas.name}</CardTitle>
+                <CardDescription>{canvas.description}</CardDescription>
               </CardHeader>
               <CardFooter className="mt-auto">
                 <Button>
