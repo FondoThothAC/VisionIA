@@ -26,6 +26,16 @@ const strategicAnalysisCanvases = [
       { title: "Amenazas", description: "Factores externos que podrían perjudicar al negocio." },
     ]
   },
+  {
+    name: 'Lienzo de Asignación de Recursos (FPP)',
+    description: 'Ayuda a visualizar los trade-offs al asignar recursos limitados entre dos iniciativas competidoras.',
+    fields: [
+      { title: "Actividad / Producto A", description: "La primera iniciativa en la que puedes invertir recursos." },
+      { title: "Actividad / Producto B", description: "La segunda iniciativa que compite por los mismos recursos." },
+      { title: "Recurso Limitado", description: "El recurso escaso que debes asignar (ej. horas de ingeniería, presupuesto de marketing)." },
+      { title: "Costo de Oportunidad", description: "Analiza qué sacrificas de 'A' por cada unidad adicional que produces o inviertes en 'B'." },
+    ]
+  },
 ];
 
 
