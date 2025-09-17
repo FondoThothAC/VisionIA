@@ -313,6 +313,123 @@ type EmployeeRole = {
   riskClass: 'I' | 'II' | 'III' | 'IV' | 'V';
 };
 
+const riskClassPremiums: Record<EmployeeRole['riskClass'], number> = {
+  'I': 0.0052150,
+  'II': 0.0113065,
+  'III': 0.0259840,
+  'IV': 0.0465325,
+  'V': 0.0758875,
+};
+const UMA_2024 = 108.57;
+const ISN_RATE = 0.03; // Example for CDMX
+
+type Breakdown = {
+    roleName: string;
+    employeeCount: number;
+    baseSalary: number;
+    sbc: number;
+    socialCharge: number;
+    totalPerEmployee: number;
+    totalPerRole: number;
+};
+
+const PersonnelCostBreakdown = ({ roles }: { roles: EmployeeRole[] }) => {
+    const breakdownData: Breakdown[] = roles.map(role => {
+        if (role.salary <= 0) {
+            return {
+                roleName: role.name || '[Sin nombre]',
+                employeeCount: role.count,
+                baseSalary: 0, sbc: 0, socialCharge: 0, totalPerEmployee: 0, totalPerRole: 0
+            };
+        }
+
+        const dailySalary = role.salary / 30;
+        const aguinaldoProportion = (15 / 365) * dailySalary;
+        const primaVacacionalProportion = (12 * 0.25 / 365) * dailySalary;
+        const sbc = dailySalary + aguinaldoProportion + primaVacacionalProportion;
+        const monthlySBC = sbc * 30;
+
+        const riskOfWork = monthlySBC * riskClassPremiums[role.riskClass];
+        const fixedQuota = UMA_2024 * 30 * 0.2040;
+        const additionalQuota = Math.max(0, sbc - 3 * UMA_2024) * 30 * 0.0110;
+        const moneyBenefits = monthlySBC * 0.0070;
+        const disabilityAndLife = monthlySBC * 0.0175;
+        const retirement = monthlySBC * 0.0200;
+        const cesantiaAndVejez = monthlySBC * 0.03150;
+        const childcare = monthlySBC * 0.0100;
+        const infonavit = monthlySBC * 0.0500;
+        const isn = role.salary * ISN_RATE;
+
+        const socialCharge =
+            riskOfWork +
+            fixedQuota +
+            additionalQuota +
+            moneyBenefits +
+            disabilityAndLife +
+            retirement +
+            cesantiaAndVejez +
+            childcare +
+            infonavit +
+            isn;
+            
+        const totalPerEmployee = role.salary + socialCharge;
+        const totalPerRole = totalPerEmployee * role.count;
+
+        return {
+            roleName: role.name || '[Sin nombre]',
+            employeeCount: role.count,
+            baseSalary: role.salary,
+            sbc: sbc,
+            socialCharge: socialCharge,
+            totalPerEmployee: totalPerEmployee,
+            totalPerRole: totalPerRole,
+        };
+    });
+
+    const totalCostAllRoles = breakdownData.reduce((acc, data) => acc + data.totalPerRole, 0);
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle>Desglose de Costos de Personal</CardTitle>
+                <CardDescription>Cálculo detallado de la carga social y el costo total para cada puesto definido.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Puesto</TableHead>
+                            <TableHead className="text-right">Salario Bruto</TableHead>
+                            <TableHead className="text-right">SBC Diario</TableHead>
+                            <TableHead className="text-right">Carga Social (Mes)</TableHead>
+                            <TableHead className="text-right">Costo Total / Emp.</TableHead>
+                            <TableHead className="text-right">#</TableHead>
+                            <TableHead className="text-right">Costo Total / Rol</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {breakdownData.map((data, index) => (
+                            <TableRow key={index}>
+                                <TableCell className="font-medium">{data.roleName}</TableCell>
+                                <TableCell className="text-right">{formatCurrency(data.baseSalary)}</TableCell>
+                                <TableCell className="text-right">{formatCurrency(data.sbc)}</TableCell>
+                                <TableCell className="text-right text-red-600">{formatCurrency(data.socialCharge)}</TableCell>
+                                <TableCell className="text-right font-semibold">{formatCurrency(data.totalPerEmployee)}</TableCell>
+                                <TableCell className="text-right text-muted-foreground">x {data.employeeCount}</TableCell>
+                                <TableCell className="text-right font-bold">{formatCurrency(data.totalPerRole)}</TableCell>
+                            </TableRow>
+                        ))}
+                         <TableRow className="bg-muted/50 font-bold">
+                            <TableCell colSpan={6} className="text-right">Costo Mensual Total de Personal</TableCell>
+                            <TableCell className="text-right">{formatCurrency(totalCostAllRoles)}</TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </CardContent>
+        </Card>
+    );
+};
+
 
 export default function FinancialsPage() {
   // --- STATE MANAGEMENT ---
@@ -365,7 +482,28 @@ export default function FinancialsPage() {
     const data = [];
     let currentRevenue = monthlyRevenue;
 
-    const totalSalaryCost = employeeRoles.reduce((acc, role) => acc + (role.count * role.salary), 0);
+    const totalSalaryCost = employeeRoles.reduce((acc, role) => {
+        if (role.salary <= 0) return acc;
+        const dailySalary = role.salary / 30;
+        const aguinaldoProportion = (15 / 365) * dailySalary;
+        const primaVacacionalProportion = (12 * 0.25 / 365) * dailySalary;
+        const sbc = dailySalary + aguinaldoProportion + primaVacacionalProportion;
+        const monthlySBC = sbc * 30;
+        const riskOfWork = monthlySBC * riskClassPremiums[role.riskClass];
+        const fixedQuota = UMA_2024 * 30 * 0.2040;
+        const additionalQuota = Math.max(0, sbc - 3 * UMA_2024) * 30 * 0.0110;
+        const moneyBenefits = monthlySBC * 0.0070;
+        const disabilityAndLife = monthlySBC * 0.0175;
+        const retirement = monthlySBC * 0.0200;
+        const cesantiaAndVejez = monthlySBC * 0.03150;
+        const childcare = monthlySBC * 0.0100;
+        const infonavit = monthlySBC * 0.0500;
+        const isn = role.salary * ISN_RATE;
+        const socialCharge = riskOfWork + fixedQuota + additionalQuota + moneyBenefits + disabilityAndLife + retirement + cesantiaAndVejez + childcare + infonavit + isn;
+        const totalPerEmployee = role.salary + socialCharge;
+        return acc + (totalPerEmployee * role.count);
+    }, 0);
+    
     const otherCosts = Object.values(costs).reduce((acc, v) => acc + v, 0);
     const totalMonthlyCost = totalSalaryCost + otherCosts;
 
@@ -583,80 +721,83 @@ export default function FinancialsPage() {
             
             {/* --- SUMMARY & TABLE --- */}
             <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-4">
-            <div className="lg:col-span-1 space-y-6">
-            <Card>
-                <CardHeader className="pb-4">
-                    <CardTitle>Resumen Financiero</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3 text-sm">
-                    <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground">Costo Operativo Mensual</span>
-                        <span className="font-medium">{formatCurrency(totalMonthlyCost)}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground">Beneficio Total ({projectionMonths}m)</span>
-                        <span className={`font-medium ${totalProfit > 0 ? 'text-green-600' : 'text-red-600'}`}>{formatCurrency(totalProfit)}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground">Beneficio Acumulado</span>
-                        <span className={`font-medium ${finalCumulativeProfit > 0 ? 'text-green-600' : 'text-red-600'}`}>{formatCurrency(finalCumulativeProfit)}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                        <span className="text-muted-foreground">Crecimiento vs Inflación</span>
-                        <Badge variant={growthBeatsInflation ? 'default' : 'destructive'} className="gap-1.5 pl-2 pr-2.5">
-                        {growthBeatsInflation ? <TrendingUp className="h-4 w-4"/> : <TrendingDown className="h-4 w-4"/>}
-                        {growthBeatsInflation ? 'Supera' : 'Debajo'}
-                        </Badge>
-                    </div>
-                </CardContent>
-                </Card>
-                { finalCumulativeProfit < initialInvestment &&
-                    <Card className="bg-amber-50 border-amber-200">
-                        <CardHeader className="flex flex-row items-center gap-4 space-y-0 pb-4">
-                            <AlertCircle className="h-6 w-6 text-amber-600"/>
-                            <div>
-                            <CardTitle className="text-amber-900 text-base">Análisis de Inversión</CardTitle>
-                            </div>
+                <div className="lg:col-span-1 space-y-6">
+                    <Card>
+                        <CardHeader className="pb-4">
+                            <CardTitle>Resumen Financiero</CardTitle>
                         </CardHeader>
-                        <CardContent className="text-amber-800 text-sm">
-                        Tu beneficio acumulado en {projectionMonths} meses no cubre la inversión inicial. Considera ajustar precios, costos o la estrategia de crecimiento.
+                        <CardContent className="space-y-3 text-sm">
+                            <div className="flex justify-between items-center">
+                                <span className="text-muted-foreground">Costo Operativo Mensual</span>
+                                <span className="font-medium">{formatCurrency(totalMonthlyCost)}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-muted-foreground">Beneficio Total ({projectionMonths}m)</span>
+                                <span className={`font-medium ${totalProfit > 0 ? 'text-green-600' : 'text-red-600'}`}>{formatCurrency(totalProfit)}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-muted-foreground">Beneficio Acumulado</span>
+                                <span className={`font-medium ${finalCumulativeProfit > 0 ? 'text-green-600' : 'text-red-600'}`}>{formatCurrency(finalCumulativeProfit)}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                                <span className="text-muted-foreground">Crecimiento vs Inflación</span>
+                                <Badge variant={growthBeatsInflation ? 'default' : 'destructive'} className="gap-1.5 pl-2 pr-2.5">
+                                {growthBeatsInflation ? <TrendingUp className="h-4 w-4"/> : <TrendingDown className="h-4 w-4"/>}
+                                {growthBeatsInflation ? 'Supera' : 'Debajo'}
+                                </Badge>
+                            </div>
                         </CardContent>
                     </Card>
-                }
-            </div>
-            <div className="lg:col-span-3">
-                <Card>
-                    <CardHeader><CardTitle>Tabla de Proyección Detallada</CardTitle></CardHeader>
-                    <CardContent>
-                        <Table>
-                            <TableHeader>
-                            <TableRow>
-                                <TableHead>Mes</TableHead>
-                                <TableHead className="text-right">Ingresos</TableHead>
-                                <TableHead className="text-right">Costos Totales</TableHead>
-                                <TableHead className="text-right">Beneficio Neto</TableHead>
-                                <TableHead className="text-right">Beneficio Acumulado</TableHead>
-                            </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                            {projectionData.map((d) => (
-                                <TableRow key={d.month}>
-                                <TableCell className="font-medium">{d.month}</TableCell>
-                                <TableCell className="text-right text-green-600">{formatCurrency(d.Ingresos)}</TableCell>
-                                <TableCell className="text-right text-red-600">{formatCurrency(d.Costos)}</TableCell>
-                                <TableCell className={`text-right font-medium ${d.Beneficio >= 0 ? 'text-blue-600' : 'text-red-600'}`}>
-                                    {formatCurrency(d.Beneficio)}
-                                </TableCell>
-                                <TableCell className={`text-right font-semibold ${d.Beneficio_Acumulado >= 0 ? 'text-gray-800' : 'text-red-600'}`}>
-                                    {formatCurrency(d.Beneficio_Acumulado)}
-                                </TableCell>
+                    { finalCumulativeProfit < initialInvestment &&
+                        <Card className="bg-amber-50 border-amber-200">
+                            <CardHeader className="flex flex-row items-center gap-4 space-y-0 pb-4">
+                                <AlertCircle className="h-6 w-6 text-amber-600"/>
+                                <div>
+                                <CardTitle className="text-amber-900 text-base">Análisis de Inversión</CardTitle>
+                                </div>
+                            </CardHeader>
+                            <CardContent className="text-amber-800 text-sm">
+                            Tu beneficio acumulado en {projectionMonths} meses no cubre la inversión inicial. Considera ajustar precios, costos o la estrategia de crecimiento.
+                            </CardContent>
+                        </Card>
+                    }
+                </div>
+                <div className="lg:col-span-3">
+                    <Card>
+                        <CardHeader><CardTitle>Tabla de Proyección Detallada</CardTitle></CardHeader>
+                        <CardContent>
+                            <Table>
+                                <TableHeader>
+                                <TableRow>
+                                    <TableHead>Mes</TableHead>
+                                    <TableHead className="text-right">Ingresos</TableHead>
+                                    <TableHead className="text-right">Costos Totales</TableHead>
+                                    <TableHead className="text-right">Beneficio Neto</TableHead>
+                                    <TableHead className="text-right">Beneficio Acumulado</TableHead>
                                 </TableRow>
-                            ))}
-                            </TableBody>
-                        </Table>
-                    </CardContent>
-                </Card>
+                                </TableHeader>
+                                <TableBody>
+                                {projectionData.map((d) => (
+                                    <TableRow key={d.month}>
+                                    <TableCell className="font-medium">{d.month}</TableCell>
+                                    <TableCell className="text-right text-green-600">{formatCurrency(d.Ingresos)}</TableCell>
+                                    <TableCell className="text-right text-red-600">{formatCurrency(d.Costos)}</TableCell>
+                                    <TableCell className={`text-right font-medium ${d.Beneficio >= 0 ? 'text-blue-600' : 'text-red-600'}`}>
+                                        {formatCurrency(d.Beneficio)}
+                                    </TableCell>
+                                    <TableCell className={`text-right font-semibold ${d.Beneficio_Acumulado >= 0 ? 'text-gray-800' : 'text-red-600'}`}>
+                                        {formatCurrency(d.Beneficio_Acumulado)}
+                                    </TableCell>
+                                    </TableRow>
+                                ))}
+                                </TableBody>
+                            </Table>
+                        </CardContent>
+                    </Card>
+                </div>
             </div>
+            <div className="mt-6">
+                <PersonnelCostBreakdown roles={employeeRoles} />
             </div>
         </TabsContent>
          <TabsContent value="kpis">
