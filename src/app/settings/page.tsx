@@ -41,22 +41,73 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle>Configuración del Modelo de IA</CardTitle>
           <CardDescription>
-            Selecciona si deseas ejecutar modelos de IA localmente o usar APIs.
+            Selecciona los modelos de IA para cada tarea específica.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="grid gap-2 max-w-sm">
-            <Label htmlFor="ai-model-select">Tipo de Ejecución del Modelo</Label>
-            <Select defaultValue="api">
-              <SelectTrigger id="ai-model-select">
-                <SelectValue placeholder="Selecciona un tipo de ejecución" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="api">Uso de API</SelectItem>
-                <SelectItem value="local">Ejecución Local</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+        <CardContent className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-3">
+              <Label htmlFor="text-model-select">Contenido y Estrategia</Label>
+              <Select defaultValue="gemini-1.5-pro">
+                <SelectTrigger id="text-model-select">
+                  <SelectValue placeholder="Selecciona un modelo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="gemini-1.5-pro">Gemini 1.5 Pro</SelectItem>
+                  <SelectItem value="gemini-1.5-flash">Gemini 1.5 Flash</SelectItem>
+                  <SelectItem value="gpt-4o">GPT-4o</SelectItem>
+                  <SelectItem value="claude-3-opus">Claude 3 Opus</SelectItem>
+                </SelectContent>
+              </Select>
+              <p className="text-sm text-muted-foreground">
+                Modelo para generar la misión, visión y estrategias del plan de negocios.
+              </p>
+            </div>
+            <div className="grid gap-3">
+              <Label htmlFor="finance-model-select">Análisis Financiero</Label>
+              <Select defaultValue="finance-specialist-v1">
+                <SelectTrigger id="finance-model-select">
+                  <SelectValue placeholder="Selecciona un modelo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="finance-specialist-v1">Especialista Financiero v1</SelectItem>
+                  <SelectItem value="gemini-1.5-pro-finance">Gemini 1.5 Pro (Finanzas)</SelectItem>
+                </SelectContent>
+              </Select>
+               <p className="text-sm text-muted-foreground">
+                Modelo especializado en proyecciones y análisis financieros.
+              </p>
+            </div>
+             <div className="grid gap-3">
+              <Label htmlFor="image-model-select">Generación de Imágenes</Label>
+              <Select defaultValue="imagen-3">
+                <SelectTrigger id="image-model-select">
+                  <SelectValue placeholder="Selecciona un modelo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="imagen-3">Imagen 3</SelectItem>
+                  <SelectItem value="dall-e-3">DALL-E 3</SelectItem>
+                  <SelectItem value="midjourney-v6">Midjourney v6</SelectItem>
+                </SelectContent>
+              </Select>
+               <p className="text-sm text-muted-foreground">
+                Modelo para crear imágenes y conceptos visuales.
+              </p>
+            </div>
+             <div className="grid gap-3">
+              <Label htmlFor="video-model-select">Generación de Video y Audio</Label>
+              <Select defaultValue="veo">
+                <SelectTrigger id="video-model-select">
+                  <SelectValue placeholder="Selecciona un modelo" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="veo">Veo</SelectItem>
+                  <SelectItem value="sora">Sora</SelectItem>
+                </SelectContent>
+              </Select>
+               <p className="text-sm text-muted-foreground">
+                Modelo para generar resúmenes en video con narración.
+              </p>
+            </div>
         </CardContent>
       </Card>
     </div>
