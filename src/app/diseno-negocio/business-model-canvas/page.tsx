@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Save } from "lucide-react";
+import { Save, ChevronsUpDown } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const CanvasBlock = ({ title, children, className }: { title: string, children: React.ReactNode, className?: string }) => (
   <Card className={className}>
@@ -21,15 +22,28 @@ const CanvasBlock = ({ title, children, className }: { title: string, children: 
 export default function BusinessModelCanvasPage() {
   return (
     <div className="space-y-6">
-       <div className="flex items-center justify-between">
+       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
          <div>
             <h1 className="font-headline text-3xl font-bold">Lienzo del Modelo de Negocio</h1>
             <p className="text-muted-foreground">Rellena los 9 bloques para construir tu modelo de negocio.</p>
          </div>
-         <Button>
-            <Save className="mr-2 h-4 w-4"/>
-            Guardar Progreso
-         </Button>
+         <div className="flex items-center gap-4 w-full md:w-auto">
+            <Select defaultValue="cafe-aroma">
+              <SelectTrigger className="w-full md:w-[280px]">
+                <ChevronsUpDown className="mr-2 h-4 w-4 opacity-50"/>
+                <SelectValue placeholder="Seleccionar proyecto..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
+                <SelectItem value="moda-sostenible">Proyecto: Moda Sostenible</SelectItem>
+                <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button>
+                <Save className="mr-2 h-4 w-4"/>
+                Guardar
+            </Button>
+         </div>
       </div>
 
       <div className="grid grid-cols-5 grid-rows-8 gap-4 min-h-[75vh]">
