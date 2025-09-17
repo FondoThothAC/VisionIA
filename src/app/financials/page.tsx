@@ -8,6 +8,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -31,13 +32,14 @@ import {
 } from '@/components/ui/table';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { FileDown, TrendingDown, TrendingUp, DollarSign, Users, AlertCircle, BookOpen, Info } from 'lucide-react';
+import { FileDown, TrendingDown, TrendingUp, DollarSign, Users, AlertCircle, BookOpen, Info, Trash2, PlusCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PageHeader from "@/components/page-header";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartConfig } from "@/components/ui/chart";
 import { Separator } from '@/components/ui/separator';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 
 const formatCurrency = (value: number) =>
@@ -303,6 +305,15 @@ const SocialChargeGuide = () => (
     </Card>
 );
 
+type EmployeeRole = {
+  id: number;
+  name: string;
+  count: number;
+  salary: number;
+  riskClass: 'I' | 'II' | 'III' | 'IV' | 'V';
+};
+
+
 export default function FinancialsPage() {
   // --- STATE MANAGEMENT ---
   const [projectionMonths, setProjectionMonths] = useState(12);
@@ -314,8 +325,23 @@ export default function FinancialsPage() {
   const [inflationRate, setInflationRate] = useState(4.5); // Annual inflation rate
 
   // Personnel Costs
-  const [employees, setEmployees] = useState(2);
-  const [avgSalary, setAvgSalary] = useState(8000);
+  const [employeeRoles, setEmployeeRoles] = useState<EmployeeRole[]>([
+    { id: 1, name: 'Desarrollador', count: 2, salary: 25000, riskClass: 'I' },
+    { id: 2, name: 'Vendedor', count: 1, salary: 18000, riskClass: 'I' },
+  ]);
+
+  const handleRoleChange = (id: number, field: keyof EmployeeRole, value: string | number) => {
+    setEmployeeRoles(roles => roles.map(role => role.id === id ? { ...role, [field]: value } : role));
+  };
+
+  const addRole = () => {
+    setEmployeeRoles(roles => [...roles, { id: Date.now(), name: '', count: 1, salary: 10000, riskClass: 'I' }]);
+  };
+
+  const removeRole = (id: number) => {
+    setEmployeeRoles(roles => roles.filter(role => role.id !== id));
+  };
+
 
   // Fixed & Variable Costs
   const [costs, setCosts] = useState({
@@ -339,7 +365,7 @@ export default function FinancialsPage() {
     const data = [];
     let currentRevenue = monthlyRevenue;
 
-    const totalSalaryCost = employees * avgSalary;
+    const totalSalaryCost = employeeRoles.reduce((acc, role) => acc + (role.count * role.salary), 0);
     const otherCosts = Object.values(costs).reduce((acc, v) => acc + v, 0);
     const totalMonthlyCost = totalSalaryCost + otherCosts;
 
@@ -407,18 +433,79 @@ export default function FinancialsPage() {
             </Card>
             <Card>
                 <CardHeader>
-                <CardTitle className="flex items-center gap-2"><Users className="h-5 w-5 text-primary"/> Costos de Personal</CardTitle>
+                    <CardTitle className="flex items-center gap-2"><Users className="h-5 w-5 text-primary"/> Costos de Personal</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                <div className="space-y-2">
-                    <Label htmlFor="employees">Número de Empleados</Label>
-                    <Input id="employees" type="number" value={employees} onChange={(e) => setEmployees(Number(e.target.value))} />
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="avgSalary">Salario Promedio Mensual (Bruto)</Label>
-                    <Input id="avgSalary" type="number" value={avgSalary} onChange={(e) => setAvgSalary(Number(e.target.value))} />
-                </div>
+                    {employeeRoles.map((role, index) => (
+                        <div key={role.id} className="p-3 border rounded-lg space-y-3 relative">
+                             { index > 0 && <Separator className="absolute -top-5 left-0 right-0"/>}
+                            <div className="grid grid-cols-2 gap-2">
+                                <div>
+                                    <Label htmlFor={`role-name-${role.id}`} className="text-xs">Puesto</Label>
+                                    <Input
+                                        id={`role-name-${role.id}`}
+                                        placeholder="Ej. Vendedor"
+                                        value={role.name}
+                                        onChange={(e) => handleRoleChange(role.id, 'name', e.target.value)}
+                                        className="h-9"
+                                    />
+                                </div>
+                                <div>
+                                    <Label htmlFor={`role-count-${role.id}`} className="text-xs">Cantidad</Label>
+                                    <Input
+                                        id={`role-count-${role.id}`}
+                                        type="number"
+                                        value={role.count}
+                                        onChange={(e) => handleRoleChange(role.id, 'count', parseInt(e.target.value) || 1)}
+                                        className="h-9"
+                                    />
+                                </div>
+                            </div>
+                             <div>
+                                <Label htmlFor={`role-salary-${role.id}`} className="text-xs">Salario Mensual (Bruto)</Label>
+                                <Input
+                                    id={`role-salary-${role.id}`}
+                                    type="number"
+                                    value={role.salary}
+                                    onChange={(e) => handleRoleChange(role.id, 'salary', parseInt(e.target.value) || 0)}
+                                    className="h-9"
+                                />
+                            </div>
+                             <div>
+                                <Label htmlFor={`role-risk-${role.id}`} className="text-xs">Clase de Riesgo (IMSS)</Label>
+                                <Select
+                                     value={role.riskClass}
+                                     onValueChange={(value: EmployeeRole['riskClass']) => handleRoleChange(role.id, 'riskClass', value)}
+                                >
+                                    <SelectTrigger id={`role-risk-${role.id}`} className="h-9">
+                                        <SelectValue placeholder="Seleccionar..." />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="I">Clase I (Riesgo mínimo)</SelectItem>
+                                        <SelectItem value="II">Clase II (Riesgo bajo)</SelectItem>
+                                        <SelectItem value="III">Clase III (Riesgo medio)</SelectItem>
+                                        <SelectItem value="IV">Clase IV (Riesgo alto)</SelectItem>
+                                        <SelectItem value="V">Clase V (Riesgo máximo)</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                             <Button
+                                variant="ghost"
+                                size="icon"
+                                className="absolute top-1 right-1 h-7 w-7 text-muted-foreground hover:text-destructive"
+                                onClick={() => removeRole(role.id)}
+                            >
+                                <Trash2 className="h-4 w-4" />
+                            </Button>
+                        </div>
+                    ))}
                 </CardContent>
+                <CardFooter>
+                     <Button variant="outline" className="w-full" onClick={addRole}>
+                        <PlusCircle className="mr-2 h-4 w-4" />
+                        Añadir Puesto
+                    </Button>
+                </CardFooter>
             </Card>
             <SocialChargeGuide />
             </div>
@@ -552,7 +639,7 @@ export default function FinancialsPage() {
                                     {formatCurrency(d.Beneficio)}
                                 </TableCell>
                                 <TableCell className={`text-right font-semibold ${d.Beneficio_Acumulado >= 0 ? 'text-gray-800' : 'text-red-600'}`}>
-                                    {formatCurrency(d.Beneficio_Acumulado)}
+                                    {formatcurrency(d.Beneficio_Acumulado)}
                                 </TableCell>
                                 </TableRow>
                             ))}
