@@ -293,3 +293,87 @@ export const guide2 = [
   { unit: "PLAN OPERATIVO", title: "" },
   { unit: "PLAN DE DESARROLLO A FUTURO", title: "" },
 ];
+
+export const guide3 = [
+  {
+    unit: "1.",
+    title: "Resumen Ejecutivo",
+    sections: [
+      { title: "Misión de la Empresa" },
+      { title: "Productos y Servicios" },
+      { title: "Público Objetivo" },
+      { title: "Metas y Objetivos" },
+      { title: "Equipo Directivo" },
+      { title: "Resumen Financiero" },
+    ],
+  },
+  {
+    unit: "2.",
+    title: "Descripción de la Compañía",
+    sections: [
+      { title: "Descripción General del Negocio" },
+      { title: "Estructura del Negocio" },
+      { title: "Misión y Visión" },
+      { title: "Metas y Objetivos" },
+      { title: "Ventajas Competitivas" },
+    ],
+  },
+  {
+    unit: "3.",
+    title: "Análisis de Mercado",
+    sections: [
+      { title: "Análisis de la Industria" },
+      { title: "Análisis del Mercado Objetivo" },
+      { title: "Análisis de la Competencia" },
+      { title: "Análisis FODA" },
+    ],
+  },
+  {
+    unit: "4.",
+    title: "Organización y Gestión",
+    sections: [
+      { title: "Equipo Directivo" },
+      { title: "Estructura Organizacional" },
+      { title: "Propiedad del Negocio" },
+    ],
+  },
+  {
+    unit: "5.",
+    title: "Productos o Servicios",
+    sections: [
+      { title: "Descripción del Producto/Servicio" },
+      { title: "Ciclo de Vida del Producto" },
+      { title: "Propiedad Intelectual" },
+    ],
+  },
+  {
+    unit: "6.",
+    title: "Estrategia de Marketing y Ventas",
+    sections: [
+      { title: "Estrategia de Marketing" },
+      { title: "Estrategia de Ventas" },
+      { title: "Canales de Distribución" },
+      { title: "Estrategia de Precios" },
+    ],
+  },
+  {
+    unit: "7.",
+    title: "Proyecciones Financieras",
+    sections: [
+      { title: "Estado de Resultados" },
+      { title: "Estado de Flujo de Efectivo" },
+      { title: "Balance General" },
+      { title: "Análisis de Punto de Equilibrio" },
+    ],
+  },
+  {
+    unit: "8.",
+    title: "Apéndice",
+    sections: [
+      { title: "Currículums del Equipo Directivo" },
+      { title: "Licencias y Permisos" },
+      { title: "Investigación de Mercado Detallada" },
+      { title: "Documentos Legales" },
+    ],
+  },
+];
