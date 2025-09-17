@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Toaster } from '@/components/ui/toaster';
 import MainLayout from '@/components/main-layout';
+import { SidebarProvider } from '@/components/ui/sidebar';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -21,7 +22,9 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        <MainLayout>{children}</MainLayout>
+        <SidebarProvider>
+          <MainLayout>{children}</MainLayout>
+        </SidebarProvider>
         <Toaster />
       </body>
     </html>

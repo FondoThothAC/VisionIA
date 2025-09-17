@@ -14,7 +14,6 @@ import {
 } from 'lucide-react';
 
 import {
-  SidebarProvider,
   Sidebar,
   SidebarHeader,
   SidebarContent,
@@ -70,7 +69,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   const { isMobile } = useSidebar();
 
   return (
-    <SidebarProvider>
+    <>
       <Sidebar collapsible="icon" className="border-r border-sidebar-border/50">
         <SidebarHeader>
           <Logo />
@@ -104,6 +103,6 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
             {children}
         </main>
       </SidebarInset>
-    </SidebarProvider>
+    </>
   );
 }
