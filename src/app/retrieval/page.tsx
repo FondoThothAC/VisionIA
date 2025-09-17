@@ -8,7 +8,7 @@ import { BrainCircuit, File as FileIcon, Loader2, Search } from 'lucide-react';
 import { retrieveRelevantInformationFromDocuments } from '@/ai/flows/retrieve-relevant-information-from-documents';
 
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import PageHeader from '@/components/page-header';
