@@ -74,7 +74,7 @@ export default function DisenoNegocioPage() {
                                   </Link>
                                 </Button>
                             ) : (
-                                <Button disabled>
+                                <Button>
                                     <ArrowRightSquare className="mr-2 h-4 w-4" />
                                     Usar Lienzo
                                 </Button>
@@ -92,3 +92,5 @@ export default function DisenoNegocioPage() {
         </div>
     )
 }
+
+    
