@@ -1,28 +1,18 @@
 
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Save, ChevronsUpDown } from "lucide-react";
+import { Save, ChevronsUpDown, Maximize } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
-const CanvasBlock = ({ title, children, className }: { title: string, children: React.ReactNode, className?: string }) => (
-  <Card className={className}>
-    <CardHeader className="p-3">
-      <CardTitle className="text-base font-medium">{title}</CardTitle>
-    </CardHeader>
-    <CardContent className="p-3 pt-0">
-      {children}
-    </CardContent>
-  </Card>
-);
-
-const exampleData = {
-    partners: "- Fincas de café de comercio justo en Chiapas y Veracruz.\n- Proveedores de empaques biodegradables.\n- Empresas de logística para distribución nacional.\n- Tiendas y mercados de productos orgánicos.",
-    activities: "- Tostado y molido artesanal del café.\n- Control de calidad riguroso.\n- Empaquetado y distribución.\n- Marketing digital y gestión de redes sociales.\n- Participación en ferias de café.",
-    resources: "- Planta de tostado y equipo especializado.\n- Maestros tostadores con experiencia.\n- Granos de café verde de alta calidad.\n- Plataforma de e-commerce.\n- Marca y branding establecidos.",
+const initialData = {
+    keyPartners: "- Fincas de café de comercio justo en Chiapas y Veracruz.\n- Proveedores de empaques biodegradables.\n- Empresas de logística para distribución nacional.\n- Tiendas y mercados de productos orgánicos.",
+    keyActivities: "- Tostado y molido artesanal del café.\n- Control de calidad riguroso.\n- Empaquetado y distribución.\n- Marketing digital y gestión de redes sociales.\n- Participación en ferias de café.",
+    keyResources: "- Planta de tostado y equipo especializado.\n- Maestros tostadores con experiencia.\n- Granos de café verde de alta calidad.\n- Plataforma de e-commerce.\n- Marca y branding establecidos.",
     valueProposition: "Café de especialidad 100% mexicano, tostado artesanalmente para resaltar sus notas únicas. Ofrecemos un producto fresco, de origen ético y con un empaque amigable con el medio ambiente, entregado directamente a tu puerta o negocio.",
     customerRelationships: "- Soporte al cliente vía chat y correo electrónico.\n- Programa de lealtad y suscripciones mensuales.\n- Contenido educativo sobre café en blog y redes sociales.\n- Talleres de catación y barismo (futuro).",
     channels: "- Tienda en línea (e-commerce) propia.\n- Venta a cafeterías de especialidad (B2B).\n- Presencia en tiendas gourmet y mercados orgánicos.\n- Redes sociales (Instagram, Facebook) para marketing y ventas.",
@@ -31,7 +21,62 @@ const exampleData = {
     revenueStreams: "- Venta directa al consumidor (B2C) a través de la tienda en línea.\n- Venta al por mayor (B2B) a cafeterías y tiendas.\n- Modelo de suscripción con envíos recurrentes.\n- Venta de merchandising y equipo para preparar café."
 };
 
+type CanvasData = typeof initialData;
+type CanvasKey = keyof CanvasData;
+
+const CanvasBlock = ({ title, content, onContentChange, blockKey, className }: { title: string, content: string, onContentChange: (key: CanvasKey, value: string) => void, blockKey: CanvasKey, className?: string }) => (
+  <Dialog>
+    <DialogTrigger asChild>
+      <Card className={`cursor-pointer hover:shadow-lg transition-shadow relative group ${className}`}>
+        <CardHeader className="p-3">
+          <CardTitle className="text-base font-medium">{title}</CardTitle>
+        </CardHeader>
+        <CardContent className="p-3 pt-0">
+          <Textarea 
+            value={content}
+            onChange={(e) => onContentChange(blockKey, e.target.value)}
+            className="h-full resize-none bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0"
+            readOnly
+          />
+          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Maximize className="h-4 w-4 text-muted-foreground" />
+          </div>
+        </CardContent>
+      </Card>
+    </DialogTrigger>
+    <DialogContent className="sm:max-w-[600px] h-[70vh] flex flex-col">
+      <DialogHeader>
+        <DialogTitle>{title}</DialogTitle>
+      </DialogHeader>
+      <div className="flex-grow">
+        <Textarea 
+          value={content}
+          onChange={(e) => onContentChange(blockKey, e.target.value)}
+          className="h-full resize-none"
+          placeholder={`Escribe aquí sobre "${title}"...`}
+        />
+      </div>
+    </DialogContent>
+  </Dialog>
+);
+
+
 export default function BusinessModelCanvasPage() {
+  const [canvasData, setCanvasData] = useState<CanvasData>(initialData);
+
+  const handleContentChange = (key: CanvasKey, value: string) => {
+    setCanvasData(prevData => ({
+      ...prevData,
+      [key]: value
+    }));
+  };
+
+  const handleSave = () => {
+    console.log("Guardando datos del lienzo:", canvasData);
+    // En una aplicación real, aquí llamarías a una API para guardar los datos.
+    alert("Progreso guardado en la consola del navegador.");
+  }
+
   return (
     <div className="space-y-6">
        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -51,7 +96,7 @@ export default function BusinessModelCanvasPage() {
                 <SelectItem value="app-fitness" disabled>Proyecto: App de Fitness (en progreso)</SelectItem>
               </SelectContent>
             </Select>
-            <Button>
+            <Button onClick={handleSave}>
                 <Save className="mr-2 h-4 w-4"/>
                 Guardar Progreso
             </Button>
@@ -59,41 +104,28 @@ export default function BusinessModelCanvasPage() {
       </div>
 
       <div className="grid grid-cols-5 grid-rows-8 gap-4 min-h-[75vh]">
-        {/* Fila 1 */}
-        <CanvasBlock title="8. Socios Clave" className="col-span-1 row-span-4">
-          <Textarea placeholder="¿Quiénes son tus socios y proveedores clave?" className="h-full resize-none" defaultValue={exampleData.partners}/>
-        </CanvasBlock>
-        <div className="col-span-1 row-span-4 flex flex-col gap-4">
-            <CanvasBlock title="7. Actividades Clave" className="flex-1">
-                <Textarea placeholder="¿Qué actividades clave requiere tu propuesta de valor?" className="h-full resize-none" defaultValue={exampleData.activities}/>
-            </CanvasBlock>
-            <CanvasBlock title="6. Recursos Clave" className="flex-1">
-                <Textarea placeholder="¿Qué recursos clave necesitas?" className="h-full resize-none" defaultValue={exampleData.resources}/>
-            </CanvasBlock>
-        </div>
-        <CanvasBlock title="2. Propuestas de Valor" className="col-span-1 row-span-4">
-          <Textarea placeholder="¿Qué valor entregas al cliente? ¿Qué problema solucionas?" className="h-full resize-none" defaultValue={exampleData.valueProposition}/>
-        </CanvasBlock>
-        <div className="col-span-1 row-span-4 flex flex-col gap-4">
-            <CanvasBlock title="4. Relación con Clientes" className="flex-1">
-                <Textarea placeholder="¿Qué tipo de relación esperas tener con tus clientes?" className="h-full resize-none" defaultValue={exampleData.customerRelationships}/>
-            </CanvasBlock>
-            <CanvasBlock title="3. Canales" className="flex-1">
-                <Textarea placeholder="¿A través de qué canales llegarás a tus clientes?" className="h-full resize-none" defaultValue={exampleData.channels}/>
-            </CanvasBlock>
-        </div>
-        <CanvasBlock title="1. Segmentos de Mercado" className="col-span-1 row-span-4">
-          <Textarea placeholder="¿Para quién estás creando valor?" className="h-full resize-none" defaultValue={exampleData.customerSegments}/>
-        </CanvasBlock>
+        <CanvasBlock title="8. Socios Clave" blockKey="keyPartners" content={canvasData.keyPartners} onContentChange={handleContentChange} className="col-span-1 row-span-4" />
         
-        {/* Fila 2 */}
-        <CanvasBlock title="9. Estructura de Costes" className="col-span-2 row-span-4 col-start-1">
-            <Textarea placeholder="¿Cuáles son los costos más importantes inherentes a tu modelo de negocio?" className="h-full resize-none" defaultValue={exampleData.costStructure}/>
-        </CanvasBlock>
-        <CanvasBlock title="5. Fuentes de Ingresos" className="col-span-3 row-span-4 col-start-3">
-            <Textarea placeholder="¿Por qué valor están dispuestos a pagar tus clientes? ¿Cómo pagarán?" className="h-full resize-none" defaultValue={exampleData.revenueStreams}/>
-        </CanvasBlock>
+        <div className="col-span-1 row-span-4 flex flex-col gap-4">
+            <CanvasBlock title="7. Actividades Clave" blockKey="keyActivities" content={canvasData.keyActivities} onContentChange={handleContentChange} className="flex-1" />
+            <CanvasBlock title="6. Recursos Clave" blockKey="keyResources" content={canvasData.keyResources} onContentChange={handleContentChange} className="flex-1" />
+        </div>
+        
+        <CanvasBlock title="2. Propuestas de Valor" blockKey="valueProposition" content={canvasData.valueProposition} onContentChange={handleContentChange} className="col-span-1 row-span-4" />
+
+        <div className="col-span-1 row-span-4 flex flex-col gap-4">
+            <CanvasBlock title="4. Relación con Clientes" blockKey="customerRelationships" content={canvasData.customerRelationships} onContentChange={handleContentChange} className="flex-1" />
+            <CanvasBlock title="3. Canales" blockKey="channels" content={canvasData.channels} onContentChange={handleContentChange} className="flex-1" />
+        </div>
+
+        <CanvasBlock title="1. Segmentos de Mercado" blockKey="customerSegments" content={canvasData.customerSegments} onContentChange={handleContentChange} className="col-span-1 row-span-4" />
+        
+        <CanvasBlock title="9. Estructura de Costes" blockKey="costStructure" content={canvasData.costStructure} onContentChange={handleContentChange} className="col-span-2 row-span-4 col-start-1" />
+        
+        <CanvasBlock title="5. Fuentes de Ingresos" blockKey="revenueStreams" content={canvasData.revenueStreams} onContentChange={handleContentChange} className="col-span-3 row-span-4 col-start-3" />
       </div>
     </div>
   );
 }
+
+    
