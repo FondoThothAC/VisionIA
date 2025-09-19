@@ -17,7 +17,8 @@ import {
   Users,
   Briefcase,
   Target,
-  Telescope
+  Telescope,
+  BookOpen,
 } from 'lucide-react';
 
 import {
@@ -38,6 +39,11 @@ const menuItems = [
     href: '/',
     label: 'Panel Principal',
     icon: LayoutDashboard,
+  },
+  {
+    href: '/guia',
+    label: 'Guía del Plan',
+    icon: BookOpen,
   },
   {
     href: '/outline',
