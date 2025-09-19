@@ -29,28 +29,40 @@ export default function SettingsPage() {
   const [isDetecting, setIsDetecting] = useState(true);
 
   useEffect(() => {
-    // Simula la detección de modelos con un retraso
+    // Simula la detección de modelos locales (como Ollama) con un retraso.
+    // En una implementación real, aquí harías una llamada a un endpoint local.
     const timer = setTimeout(() => {
-      // Simulemos que detectamos Llama 3 y Stable Diffusion
+      // Simulemos que detectamos Llama 3 y Stable Diffusion en el servidor local.
       setLocalTextModels(prev => prev.map(m => m.id === 'llama-3-local' ? { ...m, detected: true } : m));
       setLocalImageModels(prev => prev.map(m => m.id === 'stable-diffusion-local' ? { ...m, detected: true } : m));
+      
+      // Simulamos que el modelo de finanzas local no está disponible
+      setLocalFinanceModels(prev => prev.map(m => ({ ...m, detected: false })));
+
       setIsDetecting(false);
-    }, 1500);
+    }, 2000); // Aumentamos el tiempo para que la simulación sea más perceptible
 
     return () => clearTimeout(timer);
   }, []);
 
   const renderLocalModels = (models: LocalModel[]) => {
     if (isDetecting) {
-      return <Skeleton className="h-8 w-full" />;
+      return <Skeleton className="h-8 w-full rounded-md" />;
     }
+    
+    if (models.every(m => !m.detected)) {
+        return (
+             <SelectItem value="no-local-models" disabled>
+                No se detectaron modelos locales
+            </SelectItem>
+        )
+    }
+
     return models.map(model => (
       <SelectItem key={model.id} value={model.id} disabled={!model.detected}>
         <div className="flex items-center justify-between w-full">
           <span>{model.name}</span>
-          <span className={`text-xs ${model.detected ? 'text-green-500' : 'text-muted-foreground'}`}>
-            {model.detected ? 'Detectado' : 'No disponible'}
-          </span>
+          {model.detected && <span className="text-xs text-green-500">Detectado</span>}
         </div>
       </SelectItem>
     ));
@@ -91,10 +103,10 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle>Configuración del Modelo de IA</CardTitle>
           <CardDescription>
-            Selecciona los modelos de IA para cada tarea específica, distinguiendo entre modelos en la nube (API) y locales.
+            Selecciona los modelos de IA para cada tarea, incluyendo modelos locales auto-hospedados (ej. con Ollama).
           </CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-6 md:grid-cols-2">
+        <CardContent className="grid gap-8 md:grid-cols-2">
             <div className="grid gap-3">
               <Label htmlFor="text-model-select">Contenido y Estrategia</Label>
               <Select defaultValue="gemini-1.5-pro">
@@ -110,7 +122,7 @@ export default function SettingsPage() {
                     <SelectItem value="claude-3-opus">Claude 3 Opus</SelectItem>
                   </SelectGroup>
                   <SelectGroup>
-                    <SelectLabel>Modelos Locales</SelectLabel>
+                    <SelectLabel>Modelos Locales (Ollama)</SelectLabel>
                     {renderLocalModels(localTextModels)}
                   </SelectGroup>
                 </SelectContent>
@@ -132,7 +144,7 @@ export default function SettingsPage() {
                     <SelectItem value="gemini-1.5-pro-finance">Gemini 1.5 Pro (Finanzas)</SelectItem>
                   </SelectGroup>
                    <SelectGroup>
-                    <SelectLabel>Modelos Locales</SelectLabel>
+                    <SelectLabel>Modelos Locales (Ollama)</SelectLabel>
                      {renderLocalModels(localFinanceModels)}
                   </SelectGroup>
                 </SelectContent>
