@@ -2,6 +2,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import {
     Card,
     CardContent,
@@ -19,7 +20,8 @@ const competitionCanvases = [
     { 
         name: 'Lienzo de la Competencia', 
         description: 'Para analizar y comparar de forma estructurada a tus competidores directos e indirectos.',
-        fields: ["Competidor", "Propuesta de Valor", "Segmento de Clientes", "Precios", "Fortalezas", "Debilidades", "Estrategia de Marketing"]
+        fields: ["Competidor", "Propuesta de Valor", "Segmento de Clientes", "Precios", "Fortalezas", "Debilidades", "Estrategia de Marketing"],
+        href: "/competencia/lienzo",
     },
 ];
 
@@ -46,10 +48,19 @@ export default function CompetenciaPage() {
                           </ul>
                         </CardContent>
                         <CardFooter className="mt-auto flex justify-between items-center">
-                            <Button>
-                                <ArrowRightSquare className="mr-2 h-4 w-4" />
-                                Usar Lienzo
-                            </Button>
+                            {canvas.href ? (
+                                <Button asChild>
+                                  <Link href={canvas.href}>
+                                    <ArrowRightSquare className="mr-2 h-4 w-4" />
+                                    Usar Lienzo
+                                  </Link>
+                                </Button>
+                            ) : (
+                                <Button>
+                                    <ArrowRightSquare className="mr-2 h-4 w-4" />
+                                    Usar Lienzo
+                                </Button>
+                            )}
                             <div className="flex items-center space-x-2">
                                 <Checkbox id={`na-${canvas.name}`} />
                                 <Label htmlFor={`na-${canvas.name}`} className="text-sm font-medium leading-none text-muted-foreground">
