@@ -20,6 +20,7 @@ import {
   Telescope,
   BookOpen,
   Package,
+  FilePlus2,
 } from 'lucide-react';
 
 import {
@@ -40,6 +41,11 @@ const menuItems = [
     href: '/',
     label: 'Panel Principal',
     icon: LayoutDashboard,
+  },
+  {
+    href: '/nuevo-proyecto',
+    label: 'Nuevo Proyecto',
+    icon: FilePlus2,
   },
   {
     href: '/guia',
@@ -170,3 +176,5 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
     </>
   );
 }
+
+    

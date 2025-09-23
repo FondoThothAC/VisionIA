@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -121,9 +122,11 @@ export default function DashboardPage() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                 <Button variant="secondary" size="lg" className="w-full md:w-auto">
-                    <FilePlus2 className="mr-2"/>
-                    Iniciar nuevo plan
+                 <Button asChild variant="secondary" size="lg" className="w-full md:w-auto">
+                    <Link href="/nuevo-proyecto">
+                        <FilePlus2 className="mr-2"/>
+                        Iniciar nuevo plan
+                    </Link>
                 </Button>
             </CardContent>
         </Card>
@@ -256,3 +259,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
