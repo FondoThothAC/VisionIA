@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Lightbulb, Loader2, Sparkles, Wand2 } from 'lucide-react';
+import { ArrowRight, Lightbulb, Loader2, Sparkles, Wand2 } from 'lucide-react';
 import { suggestBusinessPlanTemplate, SuggestBusinessPlanTemplateOutput } from '@/ai/flows/suggest-business-plan-template';
 
 import { Button } from '@/components/ui/button';
@@ -217,5 +217,3 @@ export default function NewProjectPage() {
     </div>
   );
 }
-
-    
