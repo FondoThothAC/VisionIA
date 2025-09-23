@@ -22,6 +22,7 @@ import {
   Package,
   FilePlus2,
   Edit,
+  Megaphone,
 } from 'lucide-react';
 
 import {
@@ -87,6 +88,11 @@ const menuItems = [
     href: '/producto',
     label: 'Producto o Servicio',
     icon: Package,
+  },
+  {
+    href: '/estrategia-marketing',
+    label: 'Estrategia de Marketing',
+    icon: Megaphone,
   },
   {
     href: '/financials',
