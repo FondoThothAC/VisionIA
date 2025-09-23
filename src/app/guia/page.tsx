@@ -121,10 +121,10 @@ export default function GuiaPlanNegociosPage() {
                                 <SelectValue placeholder="Selecciona un tamaño..." />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="solopreneur">Emprendimiento Solitario</SelectItem>
-                                <SelectItem value="micro">Microempresa</SelectItem>
-                                <SelectItem value="small">Pequeña Empresa</SelectItem>
-                                <SelectItem value="medium">Mediana Empresa</SelectItem>
+                                <SelectItem value="solopreneur">Emprendimiento Solitario (1 persona)</SelectItem>
+                                <SelectItem value="micro">Microempresa (hasta 10 empleados)</SelectItem>
+                                <SelectItem value="small">Pequeña Empresa (11-50 empleados)</SelectItem>
+                                <SelectItem value="medium">Mediana Empresa (51-250 empleados)</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
@@ -135,9 +135,13 @@ export default function GuiaPlanNegociosPage() {
                                 <SelectValue placeholder="Selecciona una naturaleza..." />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="startup">Start-up</SelectItem>
-                                <SelectItem value="scaleup">Scale-up</SelectItem>
-                                <SelectItem value="deeptech">Deep Tech / Emprendimiento de Alto Impacto</SelectItem>
+                                <SelectItem value="startup">Startup (En busca de un modelo de negocio escalable)</SelectItem>
+                                <SelectItem value="scaleup">Scale-up (Crecimiento acelerado de un modelo probado)</SelectItem>
+                                <SelectItem value="deeptech">Deep Tech / Alto Impacto (Basado en innovación científica/tecnológica)</SelectItem>
+                                <SelectItem value="traditional">Negocio Tradicional (PyME)</SelectItem>
+                                <SelectItem value="social">Emprendimiento Social / A.C. (Enfocado en impacto social)</SelectItem>
+                                <SelectItem value="corporate">Intraemprendimiento (Proyecto dentro de una empresa existente)</SelectItem>
+                                <SelectItem value="unique">Proyecto Único / Finito (Evento, construcción, etc.)</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
@@ -172,4 +176,3 @@ export default function GuiaPlanNegociosPage() {
         </div>
     );
 }
-
