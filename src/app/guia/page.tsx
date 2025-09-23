@@ -1,5 +1,7 @@
+
 "use client";
 
+import { useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -8,6 +10,8 @@ import {
 } from "@/components/ui/accordion";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import PageHeader from "@/components/page-header";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 const sections = [
     {
@@ -42,7 +46,7 @@ const sections = [
             "Industria: ¿Qué tan grande es el mercado? ¿Está creciendo o disminuyendo? ¿Cuáles son las tendencias actuales?",
             "Cliente Ideal (Target Market): ¿Quiénes son tus clientes? (Demografía, comportamiento, necesidades).",
             "Competencia: ¿Quiénes son tus competidores directos e indirectos? ¿Qué hacen bien y qué hacen mal (tu oportunidad)?",
-            "Análisis FODA: ¿Cuáles son las Fortalezas, Oportunidades, Debilidades y Amenazas de tu proyecto en este mercado?",
+            "Análisis FODA: ¿Cuáles son las Fortalezas, Oportunidades, Debilidades y Amenazas de tu proyecto en este mercado en este mercado?",
         ],
     },
     {
@@ -92,34 +96,80 @@ const sections = [
 ];
 
 export default function GuiaPlanNegociosPage() {
-  return (
-    <div className="space-y-8">
-      <PageHeader
-        title="Estructura Fundamental del Plan de Negocios"
-        description="Tu hoja de ruta para un proyecto exitoso. Usa esta guía como referencia al completar las secciones de tu plan."
-      />
-      <Card>
-        <CardContent className="pt-6">
-          <Accordion type="single" collapsible className="w-full">
-            {sections.map((section) => (
-              <AccordionItem value={section.value} key={section.value}>
-                <AccordionTrigger className="text-lg font-semibold hover:no-underline">
-                  {section.title}
-                </AccordionTrigger>
-                <AccordionContent className="prose prose-sm max-w-none dark:prose-invert">
-                  <p className="lead">{section.intro}</p>
-                  <h4>Preguntas que responde:</h4>
-                  <ul>
-                    {section.questions.map((question, index) => (
-                      <li key={index}>{question}</li>
-                    ))}
-                  </ul>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </CardContent>
-      </Card>
-    </div>
-  );
+    const [companySize, setCompanySize] = useState<string>("");
+    const [projectNature, setProjectNature] = useState<string>("");
+
+    return (
+        <div className="space-y-8">
+            <PageHeader
+                title="Guía Estructurada del Plan de Negocios"
+                description="Tu hoja de ruta para un proyecto exitoso. Usa esta guía como referencia al completar las secciones de tu plan."
+            />
+
+            <Card>
+                <CardHeader>
+                    <CardTitle>Personaliza tu Guía</CardTitle>
+                    <CardDescription>
+                        Selecciona el tamaño y la naturaleza de tu empresa para adaptar las recomendaciones. (Funcionalidad futura)
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                        <Label htmlFor="company-size">Tamaño de la Empresa</Label>
+                        <Select value={companySize} onValueChange={setCompanySize}>
+                            <SelectTrigger id="company-size">
+                                <SelectValue placeholder="Selecciona un tamaño..." />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="solopreneur">Emprendimiento Solitario</SelectItem>
+                                <SelectItem value="micro">Microempresa</SelectItem>
+                                <SelectItem value="small">Pequeña Empresa</SelectItem>
+                                <SelectItem value="medium">Mediana Empresa</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="project-nature">Naturaleza del Proyecto</Label>
+                        <Select value={projectNature} onValueChange={setProjectNature}>
+                            <SelectTrigger id="project-nature">
+                                <SelectValue placeholder="Selecciona una naturaleza..." />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="startup">Start-up</SelectItem>
+                                <SelectItem value="scaleup">Scale-up</SelectItem>
+                                <SelectItem value="deeptech">Deep Tech / Emprendimiento de Alto Impacto</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </CardContent>
+            </Card>
+
+            <Card>
+                <CardHeader>
+                    <CardTitle>Estructura Fundamental</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <Accordion type="single" collapsible className="w-full">
+                        {sections.map((section) => (
+                            <AccordionItem value={section.value} key={section.value}>
+                                <AccordionTrigger className="text-lg font-semibold hover:no-underline">
+                                    {section.title}
+                                </AccordionTrigger>
+                                <AccordionContent className="prose prose-sm max-w-none dark:prose-invert">
+                                    <p className="lead">{section.intro}</p>
+                                    <h4>Preguntas que responde:</h4>
+                                    <ul>
+                                        {section.questions.map((question, index) => (
+                                            <li key={index}>{question}</li>
+                                        ))}
+                                    </ul>
+                                </AccordionContent>
+                            </AccordionItem>
+                        ))}
+                    </Accordion>
+                </CardContent>
+            </Card>
+        </div>
+    );
 }
+
