@@ -61,7 +61,7 @@ export default function AnalisisEstrategicoPage() {
                           </ul>
                         </CardContent>
                         <CardFooter className="mt-auto flex justify-between items-center">
-                            <Button>
+                            <Button disabled>
                                 <ArrowRightSquare className="mr-2 h-4 w-4" />
                                 Usar Lienzo
                             </Button>
