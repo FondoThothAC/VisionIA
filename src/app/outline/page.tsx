@@ -1,10 +1,11 @@
+
 "use client";
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Wand2 } from 'lucide-react';
+import { Wand2, Save } from 'lucide-react';
 import { generateBusinessPlanOutline } from '@/ai/flows/generate-business-plan-outline';
 
 import { Button } from '@/components/ui/button';
@@ -80,19 +81,27 @@ export default function OutlinePage() {
     }
   }
 
+  const handleSave = () => {
+    console.log("Guardando datos del proyecto:", form.getValues());
+    toast({
+      title: "Progreso Guardado",
+      description: "La información de tu proyecto se ha guardado en la consola.",
+    });
+  }
+
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Generador de Esquemas de Plan de Negocios"
-        description="Completa los detalles a continuación y nuestra IA generará un esquema completo de plan de negocios para ti."
+        title="Editar Proyecto y Generar Esquema"
+        description="Completa los detalles a continuación. La IA puede autocompletar secciones o generar un esquema completo para ti."
       />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <Card>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <CardHeader>
-                <CardTitle>Detalles del Negocio</CardTitle>
-                <CardDescription>Proporciona los conceptos centrales de tu negocio.</CardDescription>
+                <CardTitle>Detalles Centrales del Proyecto</CardTitle>
+                <CardDescription>Esta es la información principal que la IA usará para ayudarte.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <FormField
@@ -100,7 +109,7 @@ export default function OutlinePage() {
                   name="businessIdea"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Idea de Negocio</FormLabel>
+                      <FormLabel>Idea de Negocio / Misión</FormLabel>
                       <FormControl>
                         <Textarea placeholder="Ej: Un servicio de caja de suscripción para productos ecológicos..." {...field} />
                       </FormControl>
@@ -148,10 +157,14 @@ export default function OutlinePage() {
                   )}
                 />
               </CardContent>
-              <CardFooter>
+              <CardFooter className="flex justify-between">
                 <Button type="submit" disabled={isLoading}>
                   <Wand2 className="mr-2 h-4 w-4" />
-                  {isLoading ? 'Generando...' : 'Generar Esquema'}
+                  {isLoading ? 'Generando...' : 'Generar Esquema con IA'}
+                </Button>
+                 <Button variant="outline" onClick={handleSave} type="button">
+                  <Save className="mr-2 h-4 w-4" />
+                  Guardar Progreso
                 </Button>
               </CardFooter>
             </form>

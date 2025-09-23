@@ -21,6 +21,7 @@ import {
   BookOpen,
   Package,
   FilePlus2,
+  Edit,
 } from 'lucide-react';
 
 import {
@@ -48,14 +49,14 @@ const menuItems = [
     icon: FilePlus2,
   },
   {
+    href: '/outline',
+    label: 'Editar Proyecto',
+    icon: Edit,
+  },
+  {
     href: '/guia',
     label: 'Guía del Plan',
     icon: BookOpen,
-  },
-  {
-    href: '/outline',
-    label: 'Generador de Esquemas',
-    icon: FileText,
   },
   {
     href: '/retrieval',
@@ -176,5 +177,3 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
     </>
   );
 }
-
-    
