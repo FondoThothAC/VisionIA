@@ -19,6 +19,7 @@ import {
   Target,
   Telescope,
   BookOpen,
+  Package,
 } from 'lucide-react';
 
 import {
@@ -55,12 +56,7 @@ const menuItems = [
     label: 'Recuperación de Documentos',
     icon: Search,
   },
-  {
-    href: '/financials',
-    label: 'Finanzas',
-    icon: BarChart2,
-  },
-  {
+    {
     href: '/clientes',
     label: 'Cliente(s)',
     icon: Users,
@@ -79,6 +75,16 @@ const menuItems = [
     href: '/competencia',
     label: 'Competencia',
     icon: Target,
+  },
+   {
+    href: '/producto',
+    label: 'Producto o Servicio',
+    icon: Package,
+  },
+  {
+    href: '/financials',
+    label: 'Finanzas',
+    icon: BarChart2,
   },
   {
     href: '/visuals',
