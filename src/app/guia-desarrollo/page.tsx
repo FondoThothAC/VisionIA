@@ -5,10 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import PageHeader from "@/components/page-header";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const levels = [
   {
     level: "Nivel 0: Validación de la Idea",
+    value: "level-0",
     objective: "Contestar rápidamente a la pregunta: ¿Esta idea tiene potencial?",
     checklists: [
       {
@@ -45,6 +47,7 @@ const levels = [
   },
   {
     level: "Nivel 1: Dirección Estratégica",
+    value: "level-1",
     objective: "Crear la brújula que guiará tu negocio.",
     checklists: [
         {
@@ -73,6 +76,7 @@ const levels = [
   },
   {
     level: "Nivel 2: El Plan de Negocios Integral",
+    value: "level-2",
     objective: "Desarrollar el documento maestro que presentarás a bancos, socios o inversionistas.",
     checklists: [
         {
@@ -97,6 +101,7 @@ const levels = [
   },
   {
     level: "Nivel 3: Los Planes Funcionales (El Detalle)",
+    value: "level-3",
     objective: "Crear guías de acción específicas para cada área de tu negocio.",
     checklists: [
         {
@@ -135,6 +140,7 @@ const levels = [
   },
   {
     level: "Nivel 4: La Ejecución",
+    value: "level-4",
     objective: "Convertir un plan en un conjunto de tareas realizables.",
     checklists: [
         {
@@ -173,35 +179,46 @@ export default function DevelopmentGuidePage() {
                 description="Usa esta guía como tu checklist interactiva para asegurarte de que no te falte ningún elemento crucial en tu planificación."
             />
 
-            {levels.map((level, levelIndex) => (
-                <Card key={levelIndex}>
-                    <CardHeader>
-                        <CardTitle className="text-2xl text-primary">{level.level}</CardTitle>
-                        <CardDescription>{level.objective}</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                        {level.checklists.map((checklist, checklistIndex) => (
-                            <div key={checklistIndex}>
-                                <h3 className="text-lg font-semibold mb-2">{checklist.title}</h3>
-                                {checklist.items.map((item, itemIndex) => (
-                                    <div key={itemIndex} className="pl-4 border-l-2 border-border ml-2 mb-4">
-                                        {item.heading && <h4 className="font-semibold text-base mb-2">{item.heading}</h4>}
-                                        <div className="flex flex-col">
-                                            {item.tasks.map((task, taskIndex) => (
-                                                <ChecklistItem 
-                                                    key={taskIndex}
-                                                    task={task}
-                                                    id={`l${levelIndex}-c${checklistIndex}-i${itemIndex}-t${taskIndex}`}
-                                                />
-                                            ))}
-                                        </div>
+            <Tabs defaultValue="level-0" className="w-full">
+                <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+                    {levels.map((level) => (
+                        <TabsTrigger key={level.value} value={level.value}>
+                            {level.level.split(':')[0]}
+                        </TabsTrigger>
+                    ))}
+                </TabsList>
+                {levels.map((level, levelIndex) => (
+                    <TabsContent key={level.value} value={level.value}>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-2xl text-primary">{level.level}</CardTitle>
+                                <CardDescription>{level.objective}</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-6">
+                                {level.checklists.map((checklist, checklistIndex) => (
+                                    <div key={checklistIndex}>
+                                        <h3 className="text-lg font-semibold mb-2">{checklist.title}</h3>
+                                        {checklist.items.map((item, itemIndex) => (
+                                            <div key={itemIndex} className="pl-4 border-l-2 border-border ml-2 mb-4">
+                                                {item.heading && <h4 className="font-semibold text-base mb-2">{item.heading}</h4>}
+                                                <div className="flex flex-col">
+                                                    {item.tasks.map((task, taskIndex) => (
+                                                        <ChecklistItem 
+                                                            key={taskIndex}
+                                                            task={task}
+                                                            id={`l${levelIndex}-c${checklistIndex}-i${itemIndex}-t${taskIndex}`}
+                                                        />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
                                 ))}
-                            </div>
-                        ))}
-                    </CardContent>
-                </Card>
-            ))}
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                ))}
+            </Tabs>
         </div>
     );
 }
