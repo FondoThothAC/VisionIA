@@ -112,7 +112,7 @@ const menuItems = [
   },
   {
     href: '/video',
-    label: 'Resumen en Video',
+    label: 'Pitch de Inversor',
     icon: Film,
   },
 ];

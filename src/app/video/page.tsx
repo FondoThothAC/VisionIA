@@ -21,6 +21,21 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
+const defaultScript = `"Buenos días a todos. Mi nombre es [Tu Nombre] y hoy quiero hablarles sobre el futuro de la planificación de negocios. Presentamos VisionIA: una plataforma diseñada para llevar una idea desde su concepción hasta la inversión, utilizando el poder de la inteligencia artificial. VisionIA no es solo una herramienta, es el copiloto estratégico que empodera a la nueva generación de emprendedores."
+
+(Pausa para la siguiente diapositiva: El Gran Problema del Emprendimiento)
+
+"Todos sabemos que las grandes ideas no son suficientes. Las estadísticas son contundentes: 8 de cada 10 startups fracasan. ¿Por qué? La causa principal no es la falta de pasión, sino una deficiente planificación estratégica y financiera. El 82% fracasa por problemas de flujo de efectivo, y casi la mitad falla porque nunca identificó una necesidad real en el mercado. Los emprendedores, incluso los más brillantes, están navegando a ciegas."
+
+(Pausa para la siguiente diapositiva: La "Solución" Tradicional y sus Fallas)
+
+"Hasta ahora, las herramientas que hemos tenido están rotas y son ineficientes. Las plantillas de Word son pasivas, las hojas de cálculo son complejas y propensas a errores, y los consultores externos son costosos y a menudo crean un plan para el emprendedor, no con él, perdiendo todo el aprendizaje en el proceso. El resultado es un plan que se guarda en un cajón."
+
+(Pausa para la siguiente diapositiva: Nuestra Solución - VisionIA)
+
+"Por eso creamos VisionIA, una plataforma que integra todos los aspectos de la creación de un negocio en un único entorno guiado por IA. Transformamos un proceso que antes era intimidante en una ventaja competitiva."`;
+
+
 export default function VideoPage() {
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +44,7 @@ export default function VideoPage() {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      script: 'Ej: Emprendimientos Visionarios es tu copiloto de IA para la planificación de negocios. Transforma tus ideas en planes sólidos con nuestras herramientas inteligentes, desde la generación de esquemas hasta el análisis financiero y la creación de visuales impactantes. Comienza hoy y da vida a tu visión.',
+      script: defaultScript,
     },
   });
 
@@ -38,8 +53,8 @@ export default function VideoPage() {
     setVideoUrl(null);
     try {
       toast({
-        title: 'Generando Video...',
-        description: 'La IA está creando tu resumen en video. Este proceso puede tardar varios minutos. Por favor, no cierres esta ventana.',
+        title: 'Generando Video Pitch...',
+        description: 'La IA está creando tu video de presentación. Este proceso puede tardar varios minutos. Por favor, no cierres esta ventana.',
       });
       
       // const result = await generateVideoSummary(values.script);
@@ -52,7 +67,7 @@ export default function VideoPage() {
 
       toast({
         title: '¡Video Generado!',
-        description: 'Tu resumen en video está listo.',
+        description: 'Tu video pitch está listo.',
       });
     } catch (error) {
       console.error('Error generando el video:', error);
@@ -69,8 +84,8 @@ export default function VideoPage() {
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Generación de Resumen en Video"
-        description="Crea automáticamente un atractivo resumen en video de tu plan de negocios. Perfecto para presentaciones a inversores y marketing."
+        title="Generación de Pitch de Inversor"
+        description="Utiliza esta sección para escribir y perfeccionar tu guion de presentación. Cuando estés listo, genera un video pitch dinámico con IA."
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -78,8 +93,8 @@ export default function VideoPage() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col h-full">
               <CardHeader>
-                <CardTitle>Guion para el Video</CardTitle>
-                <CardDescription>Escribe o pega el texto que servirá como base para la narración y las escenas del video.</CardDescription>
+                <CardTitle>Guion para el Video Pitch</CardTitle>
+                <CardDescription>Escribe o pega el texto que servirá como base para la narración y las escenas del video. Usa el texto de ejemplo como inspiración.</CardDescription>
               </CardHeader>
               <CardContent className="flex-grow">
                 <FormField
@@ -110,7 +125,7 @@ export default function VideoPage() {
                   ) : (
                     <>
                       <Wand2 className="mr-2 h-4 w-4" />
-                      Generar Video
+                      Generar Video Pitch
                     </>
                   )}
                 </Button>
@@ -121,7 +136,7 @@ export default function VideoPage() {
         
         <Card>
             <CardHeader>
-                <CardTitle>Tu Resumen en Video</CardTitle>
+                <CardTitle>Tu Video Pitch</CardTitle>
                 <CardDescription>El video generado aparecerá aquí cuando esté listo.</CardDescription>
             </CardHeader>
             <CardContent>
