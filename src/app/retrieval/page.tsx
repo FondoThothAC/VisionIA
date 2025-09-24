@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -111,7 +112,11 @@ export default function RetrievalPage() {
                   <FormControl>
                     <Input type="file" multiple onChange={handleFileChange} />
                   </FormControl>
-                  <FormMessage />
+                   <FormMessage />
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Actualmente se admiten formatos de texto sin formato como `.txt`, `.md`, o `.json`. 
+                    Si tienes un archivo de Word (`.docx`) o PDF, por favor copia el contenido y pégalo en un archivo `.txt` antes de subirlo.
+                  </p>
                   {files.length > 0 && (
                     <div className="mt-2 space-y-2">
                       <p className="text-sm font-medium">Archivos seleccionados:</p>

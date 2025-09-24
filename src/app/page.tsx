@@ -49,18 +49,18 @@ const projects = [
         status: "En progreso",
     },
     {
-        name: "Estudio de Mercado - Moda Sostenible",
-        lead: "Carlos Ruiz",
-        lastModified: "Hace 1 día",
-        progress: 40,
-        status: "En progreso",
-    },
-    {
         name: "Proyecciones Financieras - App de Fitness",
         lead: "Sofía Lara",
         lastModified: "Hace 3 días",
         progress: 90,
         status: "Revisión",
+    },
+    {
+        name: "Estudio de Mercado - Moda Sostenible",
+        lead: "Carlos Ruiz",
+        lastModified: "Hace 1 día",
+        progress: 40,
+        status: "En progreso",
     },
     {
         name: "Estrategia de Marketing - Servicios de Consultoría",
@@ -73,8 +73,8 @@ const projects = [
 
 const ganttData = [
   { project: "Café 'Aroma de Montaña'", "Investigación": 2, "Escritura": 4, "Finanzas": 3, "Revisión": 1, },
-  { project: "Moda Sostenible", "Investigación": 3, "Escritura": 2, "Finanzas": 1, "Revisión": 0, },
   { project: "App de Fitness", "Investigación": 1, "Escritura": 3, "Finanzas": 4, "Revisión": 2, },
+  { project: "Moda Sostenible", "Investigación": 3, "Escritura": 2, "Finanzas": 1, "Revisión": 0, },
   { project: "Consultoría", "Investigación": 2, "Escritura": 5, "Finanzas": 3, "Revisión": 2, },
 ];
 
@@ -154,7 +154,7 @@ export default function DashboardPage() {
             <FolderKanban className="h-5 w-5 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">3</div>
+            <div className="text-2xl font-bold">4</div>
             <p className="text-xs text-muted-foreground">+2 esta semana</p>
           </CardContent>
         </Card>

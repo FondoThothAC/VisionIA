@@ -92,8 +92,8 @@ export default function BusinessModelCanvasPage() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
+                <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
                 <SelectItem value="new-project">Nuevo Proyecto (en blanco)</SelectItem>
-                <SelectItem value="app-fitness" disabled>Proyecto: App de Fitness (en progreso)</SelectItem>
               </SelectContent>
             </Select>
             <Button onClick={handleSave}>
