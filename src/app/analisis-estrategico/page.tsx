@@ -26,6 +26,18 @@ const strategicAnalysisCanvases = [
       { title: "Amenazas", description: "Factores externos que podrían perjudicar al negocio." },
     ]
   },
+  { 
+    name: 'Análisis PESTEL', 
+    description: 'Para identificar factores del macroentorno que pueden ser oportunidades o amenazas para tu plan.',
+    fields: [
+      { title: "Políticos", description: "Leyes gubernamentales, políticas fiscales, estabilidad política." },
+      { title: "Económicos", description: "Crecimiento económico, tasas de interés, inflación, tipos de cambio." },
+      { title: "Sociales", description: "Tendencias culturales, demografía, conciencia de la salud, estilos de vida." },
+      { title: "Tecnológicos", description: "Innovaciones, automatización, investigación y desarrollo." },
+      { title: "Ecológicos (Ambientales)", description: "Leyes ambientales, cambio climático, sostenibilidad." },
+      { title: "Legales", description: "Leyes de protección al consumidor, normativas laborales, propiedad intelectual." },
+    ]
+  },
   {
     name: 'Lienzo de Asignación de Recursos (FPP)',
     description: 'Ayuda a visualizar los trade-offs al asignar recursos limitados entre dos iniciativas competidoras.',
