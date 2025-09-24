@@ -23,6 +23,7 @@ import {
   FilePlus2,
   Edit,
   Megaphone,
+  ClipboardCheck,
 } from 'lucide-react';
 
 import {
@@ -58,6 +59,11 @@ const menuItems = [
     href: '/guia',
     label: 'Guía del Plan',
     icon: BookOpen,
+  },
+  {
+    href: '/guia-desarrollo',
+    label: 'Guía de Desarrollo',
+    icon: ClipboardCheck,
   },
   {
     href: '/retrieval',
