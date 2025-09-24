@@ -30,8 +30,8 @@ const levels = [
             tasks: [
               "Tamaño y Potencial del Mercado: ¿Cuántos clientes potenciales existen? (Ej. CAAM RAYON calculó la demanda potencial de adultos mayores en Hermosillo).",
               "Segmentación de Clientes: Define los grupos de clientes a los que te dirigirás.",
-              "Análisis de la Competencia: Identifica 3-5 competidores. Analiza sus precios, productos y estrategias.",
-              "Buyer Persona: Crea un perfil detallado de tu cliente ideal (nombre, edad, motivaciones, frustraciones).",
+              "Análisis de la Competencia: Identifica 3-5 competidores. Analiza sus precios, productos y estrategias. Herramienta Visionaria: Completa el \"Lienzo de la Competencia\" en la sección 'Competencia'.",
+              "Buyer Persona: Crea un perfil detallado de tu cliente ideal (nombre, edad, motivaciones, frustraciones). Herramienta Visionaria: Utiliza las herramientas \"Mapa de Empatía\" y \"Buyer Persona\" en la sección 'Cliente(s)' de la plataforma.",
             ],
           },
           {
@@ -40,7 +40,7 @@ const levels = [
                 "Fortalezas: ¿Qué haces mejor que nadie?",
                 "Debilidades: ¿En qué necesitas mejorar internamente?",
                 "Oportunidades: ¿Qué factores del mercado puedes aprovechar?",
-                "Amenazas: ¿Qué factores externos podrían perjudicarte?",
+                "Amenazas: ¿Qué factores externos podrían perjudicarte? Herramienta Visionaria: Usa el \"Análisis FODA\" interactivo en la sección 'Análisis Estratégico'.",
             ],
           },
         ],
@@ -56,16 +56,22 @@ const levels = [
             title: "Checklist de Componentes Estratégicos",
             items: [
                 {
-                    heading: "1. Identidad y Dirección",
+                    heading: "1. Creación del Proyecto en la Plataforma",
+                    tasks: [
+                        "Herramienta Visionaria: Inicia en la sección 'Nuevo Proyecto'. Describe tu negocio para que la IA te sugiera una estructura de plan a tu medida.",
+                    ]
+                },
+                {
+                    heading: "2. Identidad y Dirección",
                     tasks: [
                         "Misión: Tu propósito.",
-                        "Vision: Tu meta a largo plazo.",
+                        "Visión: Tu meta a largo plazo.",
                         "Valores: Tus principios guía.",
                         "Objetivos SMART: Metas Específicas, Medibles, Alcanzables, Relevantes y con Plazo.",
                     ]
                 },
                 {
-                    heading: "2. Modelo de Negocio (Business Model Canvas)",
+                    heading: "3. Modelo de Negocio (Business Model Canvas)",
                     tasks: [
                         "Propuesta de Valor: ¿Qué ofreces y por qué es único?",
                         "Segmentos de Clientes: ¿A quién te diriges?",
@@ -75,16 +81,16 @@ const levels = [
                         "Actividades Clave: ¿Qué es lo más importante que harás?",
                         "Recursos Clave: ¿Qué necesitas para operar?",
                         "Socios Clave: ¿Quiénes son tus aliados?",
-                        "Estructura de Costos: ¿Cuáles son tus principales gastos?",
+                        "Estructura de Costos: ¿Cuáles son tus principales gastos? Herramienta Visionaria: Desarrolla este lienzo visualmente en la sección 'Diseño de Negocio'. Si eres una startup, puedes optar por el \"Lean Canvas\".",
                     ]
                 },
                  {
-                    heading: "3. Estrategia de Marketing y Ventas",
+                    heading: "4. Estrategia de Marketing y Ventas",
                     tasks: [
                         "Estrategia de Producto: Características, calidad, empaque.",
                         "Estrategia de Precio: Basada en costos, competencia y valor percibido.",
                         "Estrategia de Plaza (Distribución): Canales de venta (online, físico).",
-                        "Estrategia de Promoción: Publicidad, redes sociales, relaciones públicas.",
+                        "Estrategia de Promoción: Publicidad, redes sociales, relaciones públicas. Herramienta Visionaria: Detalla estas estrategias en la sección 'Estrategia de Marketing'.",
                     ]
                 }
             ]
@@ -106,6 +112,7 @@ const levels = [
                         "Listado de Activos Fijos: Tabla con maquinaria, equipo, costo y vida útil.",
                         "Gestión de Proveedores: Lista de proveedores y cotizaciones.",
                         "Control de Calidad: Define los estándares y puntos de revisión.",
+                        "Lienzo del Producto (Product Canvas): Herramienta Visionaria: Para un enfoque ágil, define la visión, objetivos y métricas de tu producto usando esta herramienta en la sección 'Diseño de Negocio'.",
                     ]
                 },
                 {
@@ -122,7 +129,7 @@ const levels = [
                         "Estructura de Costos: Hojas de cálculo detalladas de costos fijos y variables.",
                         "Proyecciones de Ventas: Estimación de ingresos mensuales para los primeros 3 años.",
                         "Estados Financieros Proforma: Estado de Resultados, Flujo de Efectivo y Balance General proyectados.",
-                        "Análisis de Rentabilidad: Cálculo del Punto de Equilibrio, ROI y VAN.",
+                        "Análisis de Rentabilidad: Cálculo del Punto de Equilibrio, ROI y VAN. Herramienta Visionaria: Gestiona y proyecta todos estos elementos en la sección 'Finanzas' de la plataforma.",
                     ]
                 }
             ]
@@ -132,7 +139,7 @@ const levels = [
   {
     level: "Nivel 4: La Ejecución",
     value: "level-4",
-    objective: "Convertir los planes tácticos en acciones concretas y medibles.",
+    objective: "Convertir los planes tácticos en acciones concretas y medibles usando el dashboard de 'Emprendimientos Visionarios'.",
     checklists: [
         {
             title: "Checklist del Plan de Proyecto",
@@ -141,11 +148,12 @@ const levels = [
                     heading: null,
                     tasks: [
                         'Definir un Objetivo Concreto: Elige una meta de tus planes funcionales (ej. "Lanzar campaña de marketing digital para el Día de la Madre").',
-                        "Desglosar en Tareas: Lista todas las actividades necesarias (diseñar gráficos, escribir textos, programar publicaciones, asignar presupuesto, etc.).",
-                        "Crear un Cronograma: Usa una tabla o diagrama de Gantt para asignar fechas de inicio y fin a cada tarea.",
+                        "Desglosar en Tareas: Lista todas las actividades necesarias.",
+                        "Crear un Cronograma: Usa una tabla o diagrama de Gantt para asignar fechas de inicio y fin a cada tarea. Herramienta Visionaria: Visualiza el avance con el 'Cronograma de Proyectos' en el Panel Principal.",
                         "Asignar Responsables: Define quién se encargará de cada tarea.",
                         "Definir Presupuesto: Estima el costo asociado a la ejecución de ese proyecto específico.",
-                        'Métricas de Éxito (KPIs): ¿Cómo medirás si el proyecto fue exitoso? (ej. "Aumentar las ventas online en un 20% durante el mes de mayo").',
+                        'Métricas de Éxito (KPIs): ¿Cómo medirás si el proyecto fue exitoso?',
+                        "Gestión de Tareas: Herramienta Visionaria: Asigna y da seguimiento a las actividades diarias desde la sección 'Tareas Pendientes' del Panel Principal.",
                     ]
                 }
             ]
@@ -167,7 +175,7 @@ export default function DevelopmentGuidePage() {
     return (
         <div className="space-y-8">
             <PageHeader
-                title="Guía de Desarrollo: Puntos Clave para tu Plan de Negocio"
+                title="Guía de Desarrollo con 'Emprendimientos Visionarios': Tu Ruta al Éxito"
                 description="Usa esta guía como tu checklist interactiva para asegurarte de que no te falte ningún elemento crucial en tu planificación."
             />
 
@@ -206,6 +214,16 @@ export default function DevelopmentGuidePage() {
                                         ))}
                                     </div>
                                 ))}
+                                {level.value === 'level-4' && (
+                                    <div>
+                                        <h3 className="text-lg font-semibold mb-2">Herramientas Visionarias: Potencia tu Plan</h3>
+                                        <p className="text-sm text-muted-foreground">Aprovecha estas funcionalidades avanzadas para llevar tu planificación al siguiente nivel:</p>
+                                        <ul className="list-disc list-inside space-y-2 mt-2 text-sm">
+                                            <li><strong>Recuperación de Información (RAG):</strong> Sube tus documentos de investigación de mercado o planes previos a la sección 'Recuperación de Documentos' y hazle preguntas directas a la IA para obtener respuestas basadas en tu propia información.</li>
+                                            <li><strong>Generador de Visuales y Video:</strong> Utiliza las herramientas integradas en 'Generador de Visuales' y 'Resumen en Video' para crear gráficos, logos y resúmenes que enriquezcan la presentación de tu plan de negocio.</li>
+                                        </ul>
+                                    </div>
+                                )}
                             </CardContent>
                         </Card>
                     </TabsContent>
@@ -214,3 +232,5 @@ export default function DevelopmentGuidePage() {
         </div>
     );
 }
+
+    
