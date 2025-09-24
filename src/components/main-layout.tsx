@@ -150,10 +150,9 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
               </SidebarMenuItem>
             ))}
           </SidebarMenu>
-        </SidebarContent>
-         <SidebarContent className="mt-auto">
+          <div className="mt-auto">
             <SidebarMenu>
-                 {secondaryMenuItems.map((item) => (
+                {secondaryMenuItems.map((item) => (
                     <SidebarMenuItem key={item.href}>
                         <Link href={item.href}>
                         <SidebarMenuButton
@@ -167,7 +166,8 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
                     </SidebarMenuItem>
                     ))}
             </SidebarMenu>
-         </SidebarContent>
+          </div>
+        </SidebarContent>
       </Sidebar>
       <SidebarInset>
         <header className="flex items-center p-4 border-b lg:hidden">
