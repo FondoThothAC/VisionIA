@@ -7,6 +7,9 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import PageHeader from "@/components/page-header";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 type LocalModel = {
   id: string;
@@ -53,20 +56,22 @@ export default function SettingsPage() {
     if (isDetecting) {
       return <Skeleton className="h-8 w-full rounded-md" />;
     }
-    
-    if (models.every(m => !m.detected)) {
-        return (
-             <SelectItem value="no-local-models" disabled>
-                No se detectaron modelos locales
-            </SelectItem>
-        )
+
+    const detectedModels = models.filter(m => m.detected);
+
+    if (detectedModels.length === 0) {
+      return (
+        <SelectItem value="no-local-models" disabled>
+          No se detectaron modelos locales
+        </SelectItem>
+      );
     }
 
-    return models.map(model => (
+    return detectedModels.map(model => (
       <SelectItem key={model.id} value={model.id} disabled={!model.detected}>
         <div className="flex items-center justify-between w-full">
           <span>{model.name}</span>
-          {model.detected && <span className="text-xs text-green-500">Detectado</span>}
+          <span className="text-xs text-green-500">Detectado</span>
         </div>
       </SelectItem>
     ));
@@ -162,7 +167,7 @@ export default function SettingsPage() {
               <Select defaultValue="imagen-3">
                 <SelectTrigger id="image-model-select">
                   <SelectValue placeholder="Selecciona un modelo" />
-                </SelectTrigger>
+                </Trigger>
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Modelos en la Nube (API)</SelectLabel>
@@ -185,7 +190,7 @@ export default function SettingsPage() {
               <Select defaultValue="veo">
                 <SelectTrigger id="video-model-select">
                   <SelectValue placeholder="Selecciona un modelo" />
-                </SelectTrigger>
+                </Trigger>
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Modelos en la Nube (API)</SelectLabel>
@@ -204,8 +209,66 @@ export default function SettingsPage() {
             </div>
         </CardContent>
       </Card>
+      
+      <Card>
+        <CardHeader>
+            <CardTitle>Fuentes de Datos y APIs</CardTitle>
+            <CardDescription>
+                Conecta la aplicación a fuentes de datos externas para enriquecer tu análisis de mercado y financiero.
+            </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+            <div className="space-y-4">
+                <h3 className="font-medium">Datos de Mercado</h3>
+                <div className="flex items-center justify-between p-4 border rounded-lg">
+                    <div>
+                        <Label htmlFor="api-inegi">API de INEGI (México)</Label>
+                        <p className="text-xs text-muted-foreground">Datos demográficos y económicos de México.</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <Badge variant="default">Conectado</Badge>
+                        <Select defaultValue="enabled">
+                            <SelectTrigger className="w-[120px]">
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="enabled">Habilitado</SelectItem>
+                                <SelectItem value="disabled">Deshabilitado</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+                 <div className="flex items-center justify-between p-4 border rounded-lg">
+                    <div>
+                        <Label htmlFor="api-statista">API de Statista</Label>
+                        <p className="text-xs text-muted-foreground">Estadísticas y reportes de industria globales.</p>
+                    </div>
+                     <div className="flex items-center gap-4">
+                         <Badge variant="destructive">Requiere API Key</Badge>
+                        <Input id="api-statista" placeholder="Introduce tu API Key..." className="w-64" />
+                    </div>
+                </div>
+            </div>
+            <Separator />
+             <div className="space-y-4">
+                <h3 className="font-medium">Datos Financieros</h3>
+                 <div className="flex items-center justify-between p-4 border rounded-lg">
+                    <div>
+                        <Label htmlFor="api-alpha-vantage">API de Alpha Vantage</Label>
+                        <p className="text-xs text-muted-foreground">Datos de mercados de valores y tipos de cambio.</p>
+                    </div>
+                     <div className="flex items-center gap-4">
+                        <Badge variant="destructive">Requiere API Key</Badge>
+                        <Input id="api-alpha-vantage" placeholder="Introduce tu API Key..." className="w-64" />
+                    </div>
+                </div>
+            </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
+
+    
 
     
