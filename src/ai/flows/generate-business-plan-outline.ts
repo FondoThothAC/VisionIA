@@ -10,6 +10,7 @@
 
 import {ai} from '@/ai/genkit';
 import {z} from 'genkit';
+import {getTradeInformation} from '@/ai/tools/business-plan-guide';
 
 const BusinessPlanOutlineInputSchema = z.object({
   businessIdea: z
@@ -42,9 +43,12 @@ const prompt = ai.definePrompt({
   name: 'generateBusinessPlanOutlinePrompt',
   input: {schema: BusinessPlanOutlineInputSchema},
   output: {schema: BusinessPlanOutlineOutputSchema},
+  tools: [getTradeInformation],
   prompt: `You are an expert in creating business plan outlines.
 
   Based on the following information about the business idea, generate a detailed business plan outline.
+
+  If the business idea involves importing or exporting goods, use the getTradeInformation tool to enrich the market analysis or financial projections sections with real-world data on tariffs or trade flows.
 
   Business Idea: {{{businessIdea}}}
   Target Market: {{{targetMarket}}}
