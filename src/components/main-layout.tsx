@@ -36,6 +36,7 @@ import {
   SidebarInset,
   SidebarTrigger,
   useSidebar,
+  SidebarRail,
 } from '@/components/ui/sidebar';
 import Logo from '@/components/logo';
 
@@ -137,6 +138,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   return (
     <>
       <Sidebar collapsible="icon" className="border-r border-sidebar-border/50">
+        <SidebarRail />
         <SidebarHeader>
           <Logo />
         </SidebarHeader>
