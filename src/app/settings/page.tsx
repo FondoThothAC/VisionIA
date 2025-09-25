@@ -36,45 +36,59 @@ export default function SettingsPage() {
   const [isDetecting, setIsDetecting] = useState(true);
 
   useEffect(() => {
-    // Simula la detección de modelos locales (como Ollama) con un retraso.
-    // En una implementación real, aquí harías una llamada a un endpoint local.
     const timer = setTimeout(() => {
-      // Simulemos que detectamos Llama 3 y Stable Diffusion en el servidor local.
       setLocalTextModels(prev => prev.map(m => m.id === 'llama-3-local' ? { ...m, detected: true } : m));
       setLocalImageModels(prev => prev.map(m => m.id === 'stable-diffusion-local' ? { ...m, detected: true } : m));
-      
-      // Simulamos que FinBERT está disponible localmente
       setLocalFinanceModels(prev => prev.map(m => m.id === 'finbert-local' ? { ...m, detected: true } : m));
-
       setIsDetecting(false);
     }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
 
-  const renderLocalModels = (models: LocalModel[]) => {
+  const renderModelSelect = (
+    label: string, 
+    defaultValue: string, 
+    cloudModels: {value: string, label: string}[],
+    localModels: LocalModel[],
+    localLabel: string
+  ) => {
+    const detectedLocalModels = localModels.filter(m => m.detected);
+
     if (isDetecting) {
-      return <Skeleton className="h-8 w-full rounded-md" />;
+      return <Skeleton className="h-10 w-full" />;
     }
 
-    const detectedModels = models.filter(m => m.detected);
-
-    if (detectedModels.length === 0) {
-      return (
-        <SelectItem value="no-local-models" disabled>
-          No se detectaron modelos locales
-        </SelectItem>
-      );
-    }
-
-    return detectedModels.map(model => (
-      <SelectItem key={model.id} value={model.id} disabled={!model.detected}>
-        <div className="flex items-center justify-between w-full">
-          <span>{model.name}</span>
-          <span className="text-xs text-green-500">Detectado</span>
-        </div>
-      </SelectItem>
-    ));
+    return (
+      <Select defaultValue={defaultValue}>
+        <SelectTrigger>
+          <SelectValue placeholder="Selecciona un modelo" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Modelos en la Nube (API)</SelectLabel>
+            {cloudModels.map(model => (
+              <SelectItem key={model.value} value={model.value}>{model.label}</SelectItem>
+            ))}
+          </SelectGroup>
+          <SelectGroup>
+            <SelectLabel>{localLabel}</SelectLabel>
+            {detectedLocalModels.length > 0 ? (
+              detectedLocalModels.map(model => (
+                <SelectItem key={model.id} value={model.id}>
+                   <div className="flex items-center justify-between w-full">
+                    <span>{model.name}</span>
+                    <span className="text-xs text-green-500">Detectado</span>
+                  </div>
+                </SelectItem>
+              ))
+            ) : (
+              <SelectItem value="no-local" disabled>No se detectaron modelos locales</SelectItem>
+            )}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    );
   };
 
 
@@ -118,91 +132,67 @@ export default function SettingsPage() {
         <CardContent className="grid gap-8 md:grid-cols-2">
             <div className="grid gap-3">
               <Label htmlFor="text-model-select">Contenido y Estrategia</Label>
-              <Select defaultValue="gemini-1.5-pro">
-                <SelectTrigger id="text-model-select">
-                  <SelectValue placeholder="Selecciona un modelo" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Modelos en la Nube (API)</SelectLabel>
-                    <SelectItem value="gemini-1.5-pro">Gemini 1.5 Pro</SelectItem>
-                    <SelectItem value="gemini-1.5-flash">Gemini 1.5 Flash</SelectItem>
-                    <SelectItem value="gpt-4o">GPT-4o</SelectItem>
-                    <SelectItem value="claude-3-opus">Claude 3 Opus</SelectItem>
-                  </SelectGroup>
-                  <SelectGroup>
-                    <SelectLabel>Modelos Locales (Ollama)</SelectLabel>
-                    {renderLocalModels(localTextModels)}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              {renderModelSelect(
+                "Contenido y Estrategia",
+                "gemini-1.5-pro",
+                [
+                  { value: "gemini-1.5-pro", label: "Gemini 1.5 Pro" },
+                  { value: "gemini-1.5-flash", label: "Gemini 1.5 Flash" },
+                  { value: "gpt-4o", label: "GPT-4o" },
+                  { value: "claude-3-opus", label: "Claude 3 Opus" },
+                ],
+                localTextModels,
+                "Modelos Locales (Ollama)"
+              )}
               <p className="text-sm text-muted-foreground">
                 Modelo para generar la misión, visión y estrategias del plan de negocios.
               </p>
             </div>
             <div className="grid gap-3">
               <Label htmlFor="finance-model-select">Análisis Financiero</Label>
-              <Select defaultValue="finbert-local">
-                <SelectTrigger id="finance-model-select">
-                  <SelectValue placeholder="Selecciona un modelo" />
-                </SelectTrigger>
-                <SelectContent>
-                   <SelectGroup>
-                    <SelectLabel>Modelos en la Nube (API)</SelectLabel>
-                    <SelectItem value="finance-specialist-v1">Especialista Financiero v1</SelectItem>
-                    <SelectItem value="gemini-1.5-pro-finance">Gemini 1.5 Pro (Finanzas)</SelectItem>
-                  </SelectGroup>
-                   <SelectGroup>
-                    <SelectLabel>Modelos Locales (Ollama)</SelectLabel>
-                     {renderLocalModels(localFinanceModels)}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              {renderModelSelect(
+                "Análisis Financiero",
+                "finbert-local",
+                [
+                  { value: "finance-specialist-v1", label: "Especialista Financiero v1" },
+                  { value: "gemini-1.5-pro-finance", label: "Gemini 1.5 Pro (Finanzas)" },
+                ],
+                localFinanceModels,
+                "Modelos Locales (Ollama)"
+              )}
                <p className="text-sm text-muted-foreground">
                 Modelo especializado en proyecciones y análisis financieros.
               </p>
             </div>
              <div className="grid gap-3">
               <Label htmlFor="image-model-select">Generación de Imágenes</Label>
-              <Select defaultValue="imagen-3">
-                <SelectTrigger id="image-model-select">
-                  <SelectValue placeholder="Selecciona un modelo" />
-                </Trigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Modelos en la Nube (API)</SelectLabel>
-                    <SelectItem value="imagen-3">Imagen 3</SelectItem>
-                    <SelectItem value="dall-e-3">DALL-E 3</SelectItem>
-                    <SelectItem value="midjourney-v6">Midjourney v6</SelectItem>
-                  </SelectGroup>
-                   <SelectGroup>
-                    <SelectLabel>Modelos Locales</SelectLabel>
-                    {renderLocalModels(localImageModels)}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              {renderModelSelect(
+                "Generación de Imágenes",
+                "imagen-3",
+                [
+                  { value: "imagen-3", label: "Imagen 3" },
+                  { value: "dall-e-3", label: "DALL-E 3" },
+                  { value: "midjourney-v6", label: "Midjourney v6" },
+                ],
+                localImageModels,
+                "Modelos Locales"
+              )}
                <p className="text-sm text-muted-foreground">
                 Modelo para crear imágenes y conceptos visuales.
               </p>
             </div>
              <div className="grid gap-3">
               <Label htmlFor="video-model-select">Generación de Video y Audio</Label>
-              <Select defaultValue="veo">
-                <SelectTrigger id="video-model-select">
-                  <SelectValue placeholder="Selecciona un modelo" />
-                </Trigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Modelos en la Nube (API)</SelectLabel>
-                    <SelectItem value="veo">Veo</SelectItem>
-                    <SelectItem value="sora">Sora</SelectItem>
-                  </SelectGroup>
-                   <SelectGroup>
-                    <SelectLabel>Modelos Locales</SelectLabel>
-                    {renderLocalModels(localVideoModels)}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              {renderModelSelect(
+                "Generación de Video y Audio",
+                "veo",
+                [
+                  { value: "veo", label: "Veo" },
+                  { value: "sora", label: "Sora" },
+                ],
+                localVideoModels,
+                "Modelos Locales"
+              )}
                <p className="text-sm text-muted-foreground">
                 Modelo para generar resúmenes en video con narración.
               </p>
@@ -268,7 +258,5 @@ export default function SettingsPage() {
     </div>
   );
 }
-
-    
 
     
