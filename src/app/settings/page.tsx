@@ -36,6 +36,8 @@ export default function SettingsPage() {
   const [isDetecting, setIsDetecting] = useState(true);
 
   useEffect(() => {
+    // Simulación de una llamada de red a un servidor local que comprueba Ollama.
+    // En una implementación real, aquí harías un fetch a 'http://localhost:XXXX/api/local-models'.
     const timer = setTimeout(() => {
       setLocalTextModels(prev => prev.map(m => m.id === 'llama-3-local' ? { ...m, detected: true } : m));
       setLocalImageModels(prev => prev.map(m => m.id === 'stable-diffusion-local' ? { ...m, detected: true } : m));
@@ -53,7 +55,16 @@ export default function SettingsPage() {
     localModels: LocalModel[],
     localLabel: string
   ) => {
-    const detectedLocalModels = localModels.filter(m => m.detected);
+    const localModelItems = localModels
+      .filter(m => m.detected)
+      .map(model => (
+        <SelectItem key={model.id} value={model.id}>
+          <div className="flex items-center justify-between w-full">
+            <span>{model.name}</span>
+            <span className="text-xs text-green-500">Detectado</span>
+          </div>
+        </SelectItem>
+      ));
 
     if (isDetecting) {
       return <Skeleton className="h-10 w-full" />;
@@ -73,15 +84,8 @@ export default function SettingsPage() {
           </SelectGroup>
           <SelectGroup>
             <SelectLabel>{localLabel}</SelectLabel>
-            {detectedLocalModels.length > 0 ? (
-              detectedLocalModels.map(model => (
-                <SelectItem key={model.id} value={model.id}>
-                   <div className="flex items-center justify-between w-full">
-                    <span>{model.name}</span>
-                    <span className="text-xs text-green-500">Detectado</span>
-                  </div>
-                </SelectItem>
-              ))
+            {localModelItems.length > 0 ? (
+              localModelItems
             ) : (
               <SelectItem value="no-local" disabled>No se detectaron modelos locales</SelectItem>
             )}
@@ -209,7 +213,7 @@ export default function SettingsPage() {
         </CardHeader>
         <CardContent className="space-y-6">
             <div className="space-y-4">
-                <h3 className="font-medium">Datos de Mercado</h3>
+                <h3 className="font-medium">Datos de Mercado Nacional</h3>
                 <div className="flex items-center justify-between p-4 border rounded-lg">
                     <div>
                         <Label htmlFor="api-inegi">API de INEGI (México)</Label>
@@ -240,6 +244,30 @@ export default function SettingsPage() {
                 </div>
             </div>
             <Separator />
+            <div className="space-y-4">
+                <h3 className="font-medium">Datos de Comercio Internacional</h3>
+                <div className="flex items-center justify-between p-4 border rounded-lg">
+                    <div>
+                        <Label htmlFor="api-itc">API de ITC (Market Access Map)</Label>
+                        <p className="text-xs text-muted-foreground">Aranceles, acuerdos comerciales y estadísticas de importación/exportación.</p>
+                    </div>
+                     <div className="flex items-center gap-4">
+                         <Badge variant="destructive">Requiere API Key</Badge>
+                        <Input id="api-itc" placeholder="Introduce tu API Key..." className="w-64" />
+                    </div>
+                </div>
+                <div className="flex items-center justify-between p-4 border rounded-lg">
+                    <div>
+                        <Label htmlFor="api-wco">API de WCO (Trade)</Label>
+                        <p className="text-xs text-muted-foreground">Clasificación arancelaria (HS Code) y datos de aduanas.</p>
+                    </div>
+                     <div className="flex items-center gap-4">
+                         <Badge variant="destructive">Requiere API Key</Badge>
+                        <Input id="api-wco" placeholder="Introduce tu API Key..." className="w-64" />
+                    </div>
+                </div>
+            </div>
+            <Separator />
              <div className="space-y-4">
                 <h3 className="font-medium">Datos Financieros</h3>
                  <div className="flex items-center justify-between p-4 border rounded-lg">
@@ -258,5 +286,3 @@ export default function SettingsPage() {
     </div>
   );
 }
-
-    
