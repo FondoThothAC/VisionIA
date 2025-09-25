@@ -16,6 +16,8 @@ import {
   PlusCircle,
   Search,
   Settings,
+  Flag,
+  ListTodo,
 } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from "recharts";
 
@@ -36,40 +38,45 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Progress } from "@/components/ui/progress";
-import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 
-const projects = [
+const milestones = [
     {
-        name: "Plan de Negocio - Café 'Aroma de Montaña'",
-        lead: "Ana Gómez",
-        lastModified: "Hace 2 horas",
-        progress: 75,
-        status: "En progreso",
-    },
-    {
-        name: "Proyecciones Financieras - App de Fitness",
-        lead: "Sofía Lara",
-        lastModified: "Hace 3 días",
-        progress: 90,
-        status: "Revisión",
-    },
-    {
-        name: "Estudio de Mercado - Moda Sostenible",
-        lead: "Carlos Ruiz",
-        lastModified: "Hace 1 día",
-        progress: 40,
-        status: "En progreso",
-    },
-    {
-        name: "Estrategia de Marketing - Servicios de Consultoría",
-        lead: "Javier Torres",
-        lastModified: "Hace 5 días",
-        progress: 100,
+        name: "Validación del Modelo de Negocio (MVP)",
+        date: "30 Sep, 2024",
         status: "Completado",
     },
+    {
+        name: "Desarrollo del Plan Financiero Detallado",
+        date: "15 Oct, 2024",
+        status: "En progreso",
+    },
+     {
+        name: "Registro de Marca y Aspectos Legales",
+        date: "25 Oct, 2024",
+        status: "En progreso",
+    },
+    {
+        name: "Asegurar Ronda de Financiación Semilla ($50k)",
+        date: "15 Nov, 2024",
+        status: "Pendiente",
+    },
+    {
+        name: "Lanzamiento Beta al Público",
+        date: "01 Dic, 2024",
+        status: "Pendiente",
+    },
 ];
+
+const tasks = [
+    { id: "task1", label: "Finalizar el análisis de la competencia.", done: true },
+    { id: "task2", label: "Definir la estrategia de precios para el plan de suscripción.", done: true },
+    { id: "task3", label: "Crear proyecciones de flujo de efectivo para el Año 1.", done: false },
+    { id: "task4", label: "Diseñar el borrador del logo y la identidad visual.", done: false },
+    { id: "task5", label: "Contactar a 3 posibles proveedores de empaques.", done: false },
+]
 
 const ganttData = [
   { project: "Café 'Aroma de Montaña'", "Investigación": 2, "Escritura": 4, "Finanzas": 3, "Revisión": 1, },
@@ -84,6 +91,19 @@ const chartConfig = {
   "Finanzas": { label: "Finanzas", color: "hsl(var(--chart-3))" },
   "Revisión": { label: "Revisión", color: "hsl(var(--chart-4))" },
 };
+
+const getStatusBadgeVariant = (status: string) => {
+    switch (status) {
+        case "Completado":
+            return "default";
+        case "En progreso":
+            return "secondary";
+        case "Pendiente":
+            return "outline";
+        default:
+            return "outline";
+    }
+}
 
 
 export default function DashboardPage() {
@@ -174,41 +194,36 @@ export default function DashboardPage() {
             <Bell className="h-5 w-5 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">7</div>
+            <div className="text-2xl font-bold">3</div>
             <p className="text-xs text-muted-foreground">3 para esta semana</p>
           </CardContent>
         </Card>
       </div>
       
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        {/* Recent Projects */}
-        <div className="lg:col-span-2">
-            <Card>
+        {/* Milestones & Tasks */}
+        <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+             <Card>
                 <CardHeader>
-                    <CardTitle>Proyectos Recientes</CardTitle>
-                    <CardDescription>Un vistazo a los últimos planes de negocio en los que has trabajado.</CardDescription>
+                    <CardTitle className="flex items-center gap-2"><Flag /> Hitos del Proyecto</CardTitle>
+                    <CardDescription>Las grandes metas que marcan el progreso de tu plan.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead>Nombre del Proyecto</TableHead>
-                                <TableHead>Responsable</TableHead>
-                                <TableHead>Última Modificación</TableHead>
-                                <TableHead>Progreso</TableHead>
+                                <TableHead>Hito</TableHead>
+                                <TableHead>Fecha Límite</TableHead>
+                                <TableHead className="text-right">Estado</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {projects.map((project) => (
-                                <TableRow key={project.name}>
-                                    <TableCell className="font-medium">{project.name}</TableCell>
-                                    <TableCell>{project.lead}</TableCell>
-                                    <TableCell className="text-muted-foreground">{project.lastModified}</TableCell>
-                                    <TableCell>
-                                        <div className="flex items-center gap-2">
-                                            <Progress value={project.progress} className="w-24"/>
-                                            <span className="text-xs text-muted-foreground">{project.progress}%</span>
-                                        </div>
+                            {milestones.map((milestone) => (
+                                <TableRow key={milestone.name}>
+                                    <TableCell className="font-medium">{milestone.name}</TableCell>
+                                    <TableCell className="text-muted-foreground">{milestone.date}</TableCell>
+                                    <TableCell className="text-right">
+                                       <Badge variant={getStatusBadgeVariant(milestone.status)}>{milestone.status}</Badge>
                                     </TableCell>
                                 </TableRow>
                             ))}
@@ -216,7 +231,28 @@ export default function DashboardPage() {
                     </Table>
                 </CardContent>
             </Card>
+            <Card>
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2"><ListTodo /> Tareas Pendientes</CardTitle>
+                    <CardDescription>Las acciones inmediatas para avanzar en tu proyecto.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    {tasks.map((task) => (
+                        <div key={task.id} className="flex items-center space-x-3">
+                            <Checkbox id={task.id} checked={task.done} />
+                            <Label htmlFor={task.id} className={cn("text-sm", task.done && "line-through text-muted-foreground")}>
+                                {task.label}
+                            </Label>
+                        </div>
+                    ))}
+                     <Button variant="outline" size="sm" className="w-full mt-4">
+                        <PlusCircle className="mr-2 h-4 w-4" />
+                        Añadir Tarea
+                    </Button>
+                </CardContent>
+            </Card>
         </div>
+
 
         {/* Gantt Chart Simulation */}
         <div className="lg:col-span-1">
@@ -259,5 +295,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    
