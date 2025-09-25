@@ -20,10 +20,14 @@ export default function SettingsPage() {
     { id: 'phi-3-local', name: 'Phi 3 (Local)', detected: false },
   ]);
   const [localFinanceModels, setLocalFinanceModels] = useState<LocalModel[]>([
-     { id: 'finance-llama-local', name: 'Llama 3 (Finanzas Local)', detected: false },
+     { id: 'finance-llama-local', name: 'Finance-Llama (Local)', detected: false },
+     { id: 'finbert-local', name: 'FinBERT (Local)', detected: false },
   ]);
   const [localImageModels, setLocalImageModels] = useState<LocalModel[]>([
     { id: 'stable-diffusion-local', name: 'Stable Diffusion (Local)', detected: false },
+  ]);
+  const [localVideoModels, setLocalVideoModels] = useState<LocalModel[]>([
+    { id: 'local-video-ollama', name: 'Modelo de Video Local (Ollama)', detected: false },
   ]);
 
   const [isDetecting, setIsDetecting] = useState(true);
@@ -36,11 +40,11 @@ export default function SettingsPage() {
       setLocalTextModels(prev => prev.map(m => m.id === 'llama-3-local' ? { ...m, detected: true } : m));
       setLocalImageModels(prev => prev.map(m => m.id === 'stable-diffusion-local' ? { ...m, detected: true } : m));
       
-      // Simulamos que el modelo de finanzas local no está disponible
-      setLocalFinanceModels(prev => prev.map(m => ({ ...m, detected: false })));
+      // Simulamos que FinBERT está disponible localmente
+      setLocalFinanceModels(prev => prev.map(m => m.id === 'finbert-local' ? { ...m, detected: true } : m));
 
       setIsDetecting(false);
-    }, 2000); // Aumentamos el tiempo para que la simulación sea más perceptible
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -133,7 +137,7 @@ export default function SettingsPage() {
             </div>
             <div className="grid gap-3">
               <Label htmlFor="finance-model-select">Análisis Financiero</Label>
-              <Select defaultValue="finance-specialist-v1">
+              <Select defaultValue="finbert-local">
                 <SelectTrigger id="finance-model-select">
                   <SelectValue placeholder="Selecciona un modelo" />
                 </SelectTrigger>
@@ -188,6 +192,10 @@ export default function SettingsPage() {
                     <SelectItem value="veo">Veo</SelectItem>
                     <SelectItem value="sora">Sora</SelectItem>
                   </SelectGroup>
+                   <SelectGroup>
+                    <SelectLabel>Modelos Locales</SelectLabel>
+                    {renderLocalModels(localVideoModels)}
+                  </SelectGroup>
                 </SelectContent>
               </Select>
                <p className="text-sm text-muted-foreground">
@@ -199,3 +207,5 @@ export default function SettingsPage() {
     </div>
   );
 }
+
+    
