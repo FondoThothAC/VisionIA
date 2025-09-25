@@ -12,6 +12,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import PageHeader from "@/components/page-header";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
 
 const sections = [
     {
@@ -95,9 +98,33 @@ const sections = [
     },
 ];
 
+const businessModels = [
+    { id: 'venta-unica', label: 'Venta Única' },
+    { id: 'suscripcion', label: 'Suscripción' },
+    { id: 'freemium', label: 'Freemium' },
+    { id: 'bait-hook', label: 'Bait & Hook (Cebo y Anzuelo)' },
+    { id: 'marketplace', label: 'Marketplace (Plataforma)' },
+    { id: 'publicidad', label: 'Publicidad' },
+    { id: 'afiliacion', label: 'Afiliación' },
+];
+
+type BusinessModelsState = Record<string, boolean>;
+
+
 export default function GuiaPlanNegociosPage() {
     const [companySize, setCompanySize] = useState<string>("");
     const [projectNature, setProjectNature] = useState<string>("");
+    const [selectedModels, setSelectedModels] = useState<BusinessModelsState>({});
+
+    const handleModelChange = (id: string) => {
+        setSelectedModels(prev => ({ ...prev, [id]: !prev[id] }));
+    }
+
+    const getSelectedModelLabels = () => {
+        return businessModels
+            .filter(model => selectedModels[model.id])
+            .map(model => model.label);
+    }
 
     return (
         <div className="space-y-8">
@@ -110,10 +137,10 @@ export default function GuiaPlanNegociosPage() {
                 <CardHeader>
                     <CardTitle>Personaliza tu Guía</CardTitle>
                     <CardDescription>
-                        Selecciona el tamaño y la naturaleza de tu empresa para adaptar las recomendaciones. (Funcionalidad futura)
+                        Selecciona las características de tu empresa para adaptar las recomendaciones. (Funcionalidad futura)
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="space-y-2">
                         <Label htmlFor="company-size">Tamaño de la Empresa</Label>
                         <Select value={companySize} onValueChange={setCompanySize}>
@@ -125,6 +152,7 @@ export default function GuiaPlanNegociosPage() {
                                 <SelectItem value="micro">Microempresa (hasta 10 empleados)</SelectItem>
                                 <SelectItem value="small">Pequeña Empresa (11-50 empleados)</SelectItem>
                                 <SelectItem value="medium">Mediana Empresa (51-250 empleados)</SelectItem>
+                                <SelectItem value="large">Empresa Grande (más de 250 empleados)</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
@@ -144,6 +172,37 @@ export default function GuiaPlanNegociosPage() {
                                 <SelectItem value="unique">Proyecto Único / Finito (Evento, construcción, etc.)</SelectItem>
                             </SelectContent>
                         </Select>
+                    </div>
+                    <div className="space-y-2">
+                         <Label>Modelo(s) de Negocio</Label>
+                         <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline" className="w-full justify-start text-left font-normal">
+                                    <div className="flex-grow">
+                                        {getSelectedModelLabels().length === 0 && <span className="text-muted-foreground">Selecciona uno o más modelos...</span>}
+                                        {getSelectedModelLabels().length > 0 && 
+                                            <div className="flex flex-wrap gap-1">
+                                                {getSelectedModelLabels().map(label => <Badge key={label} variant="secondary">{label}</Badge>)}
+                                            </div>
+                                        }
+                                    </div>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-64" align="start">
+                                <DropdownMenuLabel>Selecciona los modelos aplicables</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                {businessModels.map(model => (
+                                    <DropdownMenuCheckboxItem
+                                        key={model.id}
+                                        checked={selectedModels[model.id] || false}
+                                        onCheckedChange={() => handleModelChange(model.id)}
+                                        onSelect={(e) => e.preventDefault()}
+                                    >
+                                        {model.label}
+                                    </DropdownMenuCheckboxItem>
+                                ))}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
                 </CardContent>
             </Card>
@@ -176,3 +235,5 @@ export default function GuiaPlanNegociosPage() {
         </div>
     );
 }
+
+    
