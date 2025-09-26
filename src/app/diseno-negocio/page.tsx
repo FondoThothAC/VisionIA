@@ -29,6 +29,12 @@ const businessModelCanvases = [
     fields: ["Socios Clave", "Actividades Clave", "Recursos Clave", "Propuesta de Valor", "Relación con Clientes", "Canales", "Segmentos de Clientes", "Estructura de Costos", "Fuentes de Ingresos"],
     href: "/diseno-negocio/business-model-canvas"
   },
+  {
+    name: 'Lienzo de la Flor del Servicio',
+    description: 'Para diseñar y visualizar todos los servicios suplementarios que rodean y añaden valor a tu producto principal.',
+    fields: ["Información", "Consulta", "Toma de Pedidos", "Hospitalidad", "Cuidado de Pertenencias", "Excepciones", "Facturación", "Pago"],
+    href: null
+  },
   { 
     name: 'Lean Canvas', 
     description: 'Adaptación del Business Model Canvas para startups, enfocada en problema, solución, métricas y ventaja.',
