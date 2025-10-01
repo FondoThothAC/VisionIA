@@ -138,42 +138,40 @@ const chartOfAccounts = [
 
 
 const kpis = [
+    // --- Rentabilidad y Valor ---
+    { id: "ebitda", name: "EBITDA", formula: "Utilidad Operativa + Depreciación + Amortización", description: "Mide la rentabilidad de la operación principal del negocio antes de intereses, impuestos, depreciaciones y amortizaciones. Es un indicador de la capacidad de generar efectivo." },
+    { id: "capex", name: "CAPEX (Inversiones en Activos Fijos)", formula: "Compra de Propiedad, Planta y Equipo", description: "Representa las inversiones en activos de largo plazo que la empresa realiza para mantener o expandir su capacidad productiva." },
+    { id: "value-investing", name: "Principios de Value Investing", formula: "Precio < Valor Intrínseco", description: "Filosofía de inversión que busca comprar activos por debajo de su valor real (intrínseco). Implica un análisis fundamental profundo para determinar el verdadero valor de un negocio." },
+    { id: "fundamental-analysis", name: "Análisis Fundamental", formula: "Análisis de Estados Financieros, Industria y Economía", description: "Método para evaluar el valor de un activo analizando factores económicos, financieros y cualitativos. El objetivo es encontrar activos infravalorados o sobrevalorados." },
+    { id: "roas", name: "ROAS (Retorno de la Inversión Publicitaria)", formula: "(Ingresos por Publicidad / Costo de Publicidad) x 100", description: "Mide los ingresos brutos generados por cada dólar gastado en publicidad." },
+    { id: "romi", name: "ROMI (Retorno de la Inversión en Marketing)", formula: "((Ingresos por Marketing - Costos de Marketing) / Costos de Marketing) x 100", description: "Mide la rentabilidad de las actividades de marketing." },
+
+    // --- Métricas de Cliente ---
+    { id: "nps", name: "NPS (Net Promoter Score)", formula: "% Promotores - % Detractores", description: "Mide la lealtad del cliente preguntando qué tan probable es que recomienden tu empresa." },
+    { id: "csat", name: "CSAT (Customer Satisfaction Score)", formula: "(Número de Respuestas Positivas / Número Total de Respuestas) x 100", description: "Mide la satisfacción del cliente con un producto o servicio específico." },
+    { id: "ces", name: "CES (Customer Effort Score)", formula: "Suma de todas las puntuaciones / Número de respuestas", description: "Mide cuánto esfuerzo tuvo que hacer un cliente para resolver un problema." },
     { id: "cac", name: "CAC (Costo de Adquisición de Cliente)", formula: "(Inversión en Marketing y Ventas) / (Nuevos Clientes)", description: "Mide cuánto cuesta adquirir un nuevo cliente." },
     { id: "clv", name: "CLV (Valor del Ciclo de Vida del Cliente)", formula: "(Ticket Promedio) x (Frecuencia de Compra) x (Vida del Cliente)", description: "Predice el beneficio neto atribuido a toda la futura relación con un cliente." },
     { id: "clv-cac", name: "Relación CLV:CAC", formula: "CLV / CAC", description: "Compara el valor de un cliente con lo que costó adquirirlo. Un ratio saludable suele ser 3:1 o superior." },
+    { id: "churn", name: "Tasa de Churn", formula: "(Clientes Perdidos / Clientes al Inicio) x 100", description: "Porcentaje de clientes que dejan de usar tu servicio en un período determinado." },
+    { id: "retention", name: "Tasa de Retención", formula: "((Clientes al Final - Nuevos Clientes) / Clientes al Inicio) x 100", description: "Porcentaje de clientes que continúan contigo durante un período." },
+
+    // --- Métricas de Ventas y Marketing Digital ---
     { id: "aov", name: "Ticket Promedio (AOV)", formula: "Ingresos Totales / Número de Pedidos", description: "La cantidad promedio que un cliente gasta en una sola transacción." },
     { id: "purchase-freq", name: "Frecuencia de Compra", formula: "Número de Pedidos / Número de Clientes Únicos", description: "Con qué frecuencia tus clientes realizan una compra en un período." },
     { id: "repurchase-rate", name: "Tasa de Recompra", formula: "(Clientes que Compraron Más de Una Vez / Clientes Totales) x 100", description: "Porcentaje de clientes que vuelven a comprar." },
-    { id: "churn", name: "Tasa de Churn", formula: "(Clientes Perdidos / Clientes al Inicio) x 100", description: "Porcentaje de clientes que dejan de usar tu servicio en un período determinado." },
-    { id: "retention", name: "Tasa de Retención", formula: "((Clientes al Final - Nuevos Clientes) / Clientes al Inicio) x 100", description: "Porcentaje de clientes que continúan contigo durante un período." },
     { id: "conversion", name: "Tasa de Conversión", formula: "(Número de Conversiones / Número de Visitantes) x 100", description: "Porcentaje de usuarios que realizan una acción deseada (compra, registro, etc.)." },
     { id: "ctr", name: "CTR (Click-Through Rate)", formula: "(Clics / Impresiones) x 100", description: "Porcentaje de personas que hacen clic en un enlace o anuncio después de verlo." },
     { id: "cpc", name: "CPC (Costo por Clic)", formula: "Costo Total de la Campaña / Número de Clics", description: "Costo que pagas por cada clic en uno de tus anuncios." },
     { id: "cpm", name: "CPM (Costo por Mil Impresiones)", formula: "(Costo de la Campaña / Número de Impresiones) x 1000", description: "Costo de mil visualizaciones (impresiones) de un anuncio." },
     { id: "cpa", name: "CPA (Costo por Adquisición)", formula: "Costo Total / Número de Adquisiciones", description: "Costo de adquirir un cliente, que puede incluir más que solo marketing." },
-    { id: "roas", name: "ROAS (Retorno de la Inversión Publicitaria)", formula: "(Ingresos por Publicidad / Costo de Publicidad) x 100", description: "Mide los ingresos brutos generados por cada dólar gastado en publicidad." },
-    { id: "romi", name: "ROMI (Retorno de la Inversión en Marketing)", formula: "((Ingresos por Marketing - Costos de Marketing) / Costos de Marketing) x 100", description: "Mide la rentabilidad de las actividades de marketing." },
-    { id: "nps", name: "NPS (Net Promoter Score)", formula: "% Promotores - % Detractores", description: "Mide la lealtad del cliente preguntando qué tan probable es que recomienden tu empresa." },
-    { id: "csat", name: "CSAT (Customer Satisfaction Score)", formula: "(Número de Respuestas Positivas / Número Total de Respuestas) x 100", description: "Mide la satisfacción del cliente con un producto o servicio específico." },
-    { id: "ces", name: "CES (Customer Effort Score)", formula: "Suma de todas las puntuaciones / Número de respuestas", description: "Mide cuánto esfuerzo tuvo que hacer un cliente para resolver un problema." },
-    { id: "fcr", name: "FCR (First Contact Resolution)", formula: "(Casos Resueltos en el Primer Contacto / Casos Totales) x 100", description: "Porcentaje de problemas de clientes resueltos en el primer contacto." },
-    { id: "aht", name: "AHT (Average Handle Time)", formula: "(Tiempo Total de Conversación + Tiempo en Espera + Tareas Posteriores) / Llamadas Totales", description: "El tiempo promedio que un agente de servicio al cliente dedica a una interacción." },
-    { id: "bounce-rate", name: "Tasa de Rebote (Bounce Rate)", formula: "(Visitas de una Sola Página / Visitas Totales) x 100", description: "Porcentaje de visitantes de un sitio web que se van después de ver solo una página." },
-    { id: "cart-abandonment", name: "Abandono de Carrito", formula: "1 - (Transacciones Completadas / Carritos Creados) x 100", description: "Porcentaje de compradores en línea que agregan artículos a un carrito pero no completan la compra." },
-    { id: "sov", name: "Share of Voice (SoV)", formula: "(Visibilidad de tu Marca / Visibilidad Total del Mercado) x 100", description: "La cuota de participación de tu marca en las conversaciones en línea en comparación con tus competidores." },
-    { id: "market-share", name: "Cuota de Mercado (Market Share)", formula: "(Ventas de tu Empresa / Ventas Totales del Mercado) x 100", description: "El porcentaje de las ventas totales en una industria generado por una empresa en particular." },
+    
+    // --- Métricas Operativas y de Eficiencia ---
     { id: "inventory-turnover", name: "Rotación de Inventario", formula: "Costo de Mercancías Vendidas / Inventario Promedio", description: "Cuántas veces una empresa vende y reemplaza su inventario durante un período." },
-    { id: "dio", name: "DIO (Días de Inventario Pendiente)", formula: "(Inventario Promedio / Costo de Ventas) x 365", description: "El número promedio de días que una empresa mantiene su inventario." },
-    { id: "dso", name: "DSO (Días de Cuentas por Cobrar)", formula: "(Cuentas por Cobrar / Ventas a Crédito Totales) x 365", description: "El número promedio de días que tarda una empresa en cobrar el pago después de una venta." },
-    { id: "dpo", name: "DPO (Días de Cuentas por Pagar)", formula: "(Cuentas por Pagar / Costo de Ventas) x 365", description: "El número promedio de días que tarda una empresa en pagar a sus proveedores." },
     { id: "ccc", name: "CCC (Ciclo de Conversión de Efectivo)", formula: "DIO + DSO - DPO", description: "El tiempo que tarda una empresa en convertir sus inversiones en inventario y otros recursos en efectivo." },
-    { id: "defects-rate", name: "Tasa de Defectos", formula: "(Unidades Defectuosas / Unidades Producidas) x 100", description: "Porcentaje de productos que no cumplen con los estándares de calidad." },
     { id: "on-time-delivery", name: "Entregas a Tiempo (On-Time Delivery)", formula: "(Pedidos Entregados a Tiempo / Pedidos Totales) x 100", description: "Porcentaje de pedidos entregados dentro del plazo prometido." },
-    { id: "fill-rate", name: "Tasa de Cumplimiento (Fill Rate)", formula: "(Pedidos Enviados Completos / Pedidos Totales) x 100", description: "Porcentaje de la demanda del cliente que se cumple desde el stock disponible." },
-    { id: "lead-time", name: "Lead Time (Tiempo de Entrega)", formula: "Fecha de Entrega del Pedido - Fecha de Realización del Pedido", description: "El tiempo total desde que se inicia un proceso hasta que se completa." },
-    { id: "returns-rate", name: "Tasa de Devoluciones", formula: "(Número de Artículos Devueltos / Número de Artículos Vendidos) x 100", description: "Porcentaje de productos vendidos que son devueltos por los clientes." },
-    { id: "claims-rate", name: "Tasa de Reclamaciones", formula: "(Número de Reclamaciones / Número de Pedidos) x 100", description: "Porcentaje de pedidos que resultan en una reclamación del cliente." }
 ];
+
 
 const chartConfig = {
   Ingresos: {
@@ -887,4 +885,6 @@ export default function FinancialsPage() {
 }
 
     
+    
+
     
