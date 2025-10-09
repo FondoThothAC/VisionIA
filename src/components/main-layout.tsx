@@ -68,7 +68,7 @@ const menuItems = [
   },
   {
     href: '/retrieval',
-    label: 'Recuperación de Documentos',
+    label: 'Consulta de Documentos (RAG)',
     icon: Search,
   },
     {
