@@ -2,6 +2,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import {
     Card,
     CardContent,
@@ -19,6 +20,7 @@ const strategicAnalysisCanvases = [
   { 
     name: 'Análisis FODA', 
     description: 'Para evaluar las Fortalezas, Oportunidades, Debilidades y Amenazas de tu negocio.',
+    href: '/analisis-estrategico/foda',
     fields: [
       { title: "Fortalezas", description: "Capacidades internas que dan una ventaja." },
       { title: "Oportunidades", description: "Factores externos que se pueden aprovechar." },
@@ -29,6 +31,7 @@ const strategicAnalysisCanvases = [
   { 
     name: 'Análisis PESTEL', 
     description: 'Para identificar factores del macroentorno que pueden ser oportunidades o amenazas para tu plan.',
+    href: '/analisis-estrategico/pestel',
     fields: [
       { title: "Políticos", description: "Leyes gubernamentales, políticas fiscales, estabilidad política." },
       { title: "Económicos", description: "Crecimiento económico, tasas de interés, inflación, tipos de cambio." },
@@ -41,6 +44,7 @@ const strategicAnalysisCanvases = [
   {
     name: 'Lienzo de Asignación de Recursos (FPP)',
     description: 'Ayuda a visualizar los trade-offs al asignar recursos limitados entre dos iniciativas competidoras.',
+    href: '/analisis-estrategico/fpp',
     fields: [
       { title: "Actividad / Producto A", description: "La primera iniciativa en la que puedes invertir recursos." },
       { title: "Actividad / Producto B", description: "La segunda iniciativa que compite por los mismos recursos." },
@@ -73,9 +77,11 @@ export default function AnalisisEstrategicoPage() {
                           </ul>
                         </CardContent>
                         <CardFooter className="mt-auto flex justify-between items-center">
-                            <Button disabled>
-                                <ArrowRightSquare className="mr-2 h-4 w-4" />
-                                Usar Lienzo
+                            <Button asChild>
+                                <Link href={canvas.href}>
+                                    <ArrowRightSquare className="mr-2 h-4 w-4" />
+                                    Usar Lienzo
+                                </Link>
                             </Button>
                             <div className="flex items-center space-x-2">
                                 <Checkbox id={`na-${canvas.name}`} />
@@ -90,5 +96,3 @@ export default function AnalisisEstrategicoPage() {
         </div>
     )
 }
-
-    

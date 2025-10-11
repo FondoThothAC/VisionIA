@@ -21,7 +21,7 @@ const businessModelCanvases = [
     name: 'Lienzo de la Propuesta de Valor', 
     description: 'Para asegurar que tu producto o servicio resuelve problemas y crea alegrías reales para tus clientes.',
     fields: ["Propuesta de Valor", "Segmento(s) de Clientes", "Alegrías", "Frustraciones", "Productos y Servicios", "Creadores de Alegrías", "Aliviadores de Frustraciones"],
-    href: null
+    href: "/clientes"
   },
   { 
     name: 'Lienzo del Modelo de Negocio', 
@@ -33,19 +33,19 @@ const businessModelCanvases = [
     name: 'Lienzo de la Flor del Servicio',
     description: 'Para diseñar y visualizar todos los servicios suplementarios que rodean y añaden valor a tu producto principal.',
     fields: ["Información", "Consulta", "Toma de Pedidos", "Hospitalidad", "Cuidado de Pertenencias", "Excepciones", "Facturación", "Pago"],
-    href: null
+    href: "/diseno-negocio/flor-servicio"
   },
   { 
     name: 'Lean Canvas', 
     description: 'Adaptación del Business Model Canvas para startups, enfocada en problema, solución, métricas y ventaja.',
     fields: ["Problema", "Solución", "Métricas Clave", "Propuesta de Valor Única", "Ventaja Injusta", "Canales", "Segmentos de Clientes", "Estructura de Costos", "Flujos de Ingresos"],
-    href: null
+    href: "/diseno-negocio/lean-canvas"
   },
   { 
     name: 'Product Canvas', 
     description: 'Para definir la visión, objetivos, funcionalidades y métricas de un producto específico.',
     fields: ["Visión del Producto", "Público Objetivo", "Necesidades", "Características Principales", "Métricas de Éxito", "Restricciones y Riesgos"],
-    href: null
+    href: "/diseno-negocio/product-canvas"
   },
 ];
 
@@ -98,5 +98,3 @@ export default function DisenoNegocioPage() {
         </div>
     )
 }
-
-    

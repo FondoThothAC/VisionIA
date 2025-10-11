@@ -24,6 +24,11 @@ import {
   Edit,
   Megaphone,
   ClipboardCheck,
+  Flower,
+  Feather,
+  Box,
+  Swords,
+  Scaling,
 } from 'lucide-react';
 
 import {
@@ -37,8 +42,14 @@ import {
   SidebarTrigger,
   useSidebar,
   SidebarRail,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
 } from '@/components/ui/sidebar';
 import Logo from '@/components/logo';
+import { Button } from './ui/button';
 
 const menuItems = [
   {
@@ -77,14 +88,25 @@ const menuItems = [
     icon: Users,
   },
   {
-    href: '/diseno-negocio',
-    label: 'Diseño de Negocio',
+    isGroup: true,
+    label: 'Diseño del Negocio',
     icon: Briefcase,
+    items: [
+        { href: '/diseno-negocio/business-model-canvas', label: 'Lienzo de Modelo de Negocio', icon: Box },
+        { href: '/diseno-negocio/lean-canvas', label: 'Lean Canvas', icon: Feather },
+        { href: '/diseno-negocio/product-canvas', label: 'Product Canvas', icon: Package },
+        { href: '/diseno-negocio/flor-servicio', label: 'Flor del Servicio', icon: Flower },
+    ]
   },
-    {
-    href: '/analisis-estrategico',
+  {
+    isGroup: true,
     label: 'Análisis Estratégico',
     icon: Telescope,
+    items: [
+        { href: '/analisis-estrategico/foda', label: 'Análisis FODA', icon: Swords },
+        { href: '/analisis-estrategico/pestel', label: 'Análisis PESTEL', icon: Telescope },
+        { href: '/analisis-estrategico/fpp', label: 'Asignación de Recursos (FPP)', icon: Scaling },
+    ]
   },
   {
     href: '/competencia',
@@ -134,6 +156,59 @@ const secondaryMenuItems = [
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { isMobile } = useSidebar();
+  const [openSubmenus, setOpenSubmenus] = React.useState<Record<string, boolean>>({});
+
+  const toggleSubmenu = (label: string) => {
+    setOpenSubmenus(prev => ({...prev, [label]: !prev[label]}));
+  }
+  
+  const renderMenuItem = (item: any) => {
+    if (item.isGroup) {
+      const isSubmenuActive = item.items.some((subItem: any) => pathname.startsWith(subItem.href));
+      const isOpen = openSubmenus[item.label] ?? isSubmenuActive;
+
+      return (
+        <SidebarMenuItem key={item.label} className="relative">
+          <SidebarMenuButton
+            isActive={isSubmenuActive}
+            onClick={() => toggleSubmenu(item.label)}
+            tooltip={item.label}
+          >
+            <item.icon />
+            <span>{item.label}</span>
+          </SidebarMenuButton>
+          {isOpen && (
+             <SidebarMenuSub>
+                {item.items.map((subItem: any) => (
+                    <SidebarMenuSubItem key={subItem.href}>
+                         <Link href={subItem.href}>
+                             <SidebarMenuSubButton isActive={pathname === subItem.href}>
+                                <subItem.icon/>
+                                <span>{subItem.label}</span>
+                            </SidebarMenuSubButton>
+                         </Link>
+                    </SidebarMenuSubItem>
+                ))}
+             </SidebarMenuSub>
+          )}
+        </SidebarMenuItem>
+      )
+    }
+
+    return (
+      <SidebarMenuItem key={item.href}>
+        <Link href={item.href}>
+          <SidebarMenuButton
+            isActive={pathname === item.href}
+            tooltip={item.label}
+          >
+            <item.icon />
+            <span>{item.label}</span>
+          </SidebarMenuButton>
+        </Link>
+      </SidebarMenuItem>
+    );
+  }
 
   return (
     <>
@@ -144,19 +219,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
-            {menuItems.map((item) => (
-              <SidebarMenuItem key={item.href}>
-                <Link href={item.href}>
-                  <SidebarMenuButton
-                    isActive={pathname === item.href}
-                    tooltip={item.label}
-                  >
-                    <item.icon />
-                    <span>{item.label}</span>
-                  </SidebarMenuButton>
-                </Link>
-              </SidebarMenuItem>
-            ))}
+            {menuItems.map(renderMenuItem)}
           </SidebarMenu>
           <div className="mt-auto">
             <SidebarMenu>
