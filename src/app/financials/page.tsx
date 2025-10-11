@@ -32,7 +32,7 @@ import {
 } from '@/components/ui/table';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { FileDown, TrendingDown, TrendingUp, DollarSign, Users, AlertCircle, BookOpen, Info, Trash2, PlusCircle } from 'lucide-react';
+import { FileDown, TrendingDown, TrendingUp, DollarSign, Users, AlertCircle, BookOpen, Info, Trash2, PlusCircle, Package, Calculator } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PageHeader from "@/components/page-header";
@@ -83,7 +83,7 @@ const chartOfAccounts = [
   { code: '1.2.2.3', name: 'Dep. Acum. de Equipo de Cómputo', type: 'Account', note: 'Cuenta de valuación, resta al activo' },
   { code: '1.2.2.4', name: 'Dep. Acum. de Equipo de Transporte', type: 'Account', note: 'Cuenta de valuación, resta al activo' },
   { code: '1.2.3', name: 'Activos Intangibles', type: 'SubHeader' },
-  { code: '1.2.3.1', name: 'Patentes y Marcas', type: 'Account' },
+  { code: '12.3.1', name: 'Patentes y Marcas', type: 'Account' },
   { code: '1.2.3.2', name: 'Licencias y Software', type: 'Account' },
   { code: '1.2.3.3', name: 'Crédito Mercantil (Goodwill)', type: 'Account' },
   
@@ -654,7 +654,7 @@ export default function FinancialsPage() {
             
             {/* Column 2: Costs */}
             <div className="space-y-6 lg:col-span-2 xl:col-span-1">
-                <Accordion type="single" collapsible defaultValue="item-1">
+                <Accordion type="single" collapsible defaultValue="item-1" className="space-y-6">
                     <Card>
                         <AccordionItem value="item-1" className="border-b-0">
                             <AccordionTrigger className="p-6">
@@ -677,8 +677,78 @@ export default function FinancialsPage() {
                             </AccordionContent>
                         </AccordionItem>
                     </Card>
+
+                    <Card>
+                         <AccordionItem value="item-2" className="border-b-0">
+                            <AccordionTrigger className="p-6">
+                                <CardTitle className="flex items-center gap-2"><Calculator className="h-5 w-5 text-primary"/>Costeo de Producto (BOM)</CardTitle>
+                            </AccordionTrigger>
+                            <AccordionContent className="p-6 pt-0">
+                                <p className="text-sm text-muted-foreground mb-4">
+                                    Define los costos directos para producir una unidad de tu producto principal.
+                                </p>
+                                <div className="space-y-4">
+                                    <div className="space-y-2">
+                                        <Label htmlFor="productName">Nombre del Producto</Label>
+                                        <Input id="productName" placeholder="Ej: Pizza Grande de Pepperoni" />
+                                    </div>
+                                    <Separator />
+                                     <Label>Ingredientes / Materia Prima</Label>
+                                    <div className="p-3 border rounded-lg space-y-3">
+                                        <div className="grid grid-cols-5 gap-2 items-end">
+                                            <div className="col-span-2">
+                                                <Label className="text-xs">Ingrediente</Label>
+                                                <Input placeholder="Harina" className="h-9"/>
+                                            </div>
+                                             <div>
+                                                <Label className="text-xs">Cantidad</Label>
+                                                <Input type="number" placeholder="0.5" className="h-9"/>
+                                            </div>
+                                             <div>
+                                                <Label className="text-xs">Unidad</Label>
+                                                <Input placeholder="kg" className="h-9"/>
+                                            </div>
+                                             <div>
+                                                <Label className="text-xs">Costo Unit.</Label>
+                                                <Input type="number" placeholder="20" className="h-9"/>
+                                            </div>
+                                        </div>
+                                         <Button variant="outline" size="sm" className="w-full">
+                                            <PlusCircle className="mr-2 h-4 w-4" /> Añadir Ingrediente
+                                        </Button>
+                                    </div>
+                                     <div className="grid grid-cols-2 gap-4">
+                                        <div className="space-y-2">
+                                            <Label htmlFor="laborCost">Costo de Mano de Obra / Unidad</Label>
+                                            <Input id="laborCost" type="number" placeholder="Ej: 15" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="packagingCost">Costo de Empaque / Unidad</Label>
+                                            <Input id="packagingCost" type="number" placeholder="Ej: 5" />
+                                        </div>
+                                    </div>
+                                     <Separator />
+                                    <div className="grid grid-cols-3 gap-4">
+                                        <div className="space-y-2">
+                                            <Label>Costo Total</Label>
+                                            <Input value={formatCurrency(0)} disabled className="font-bold"/>
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="sellingPrice">Precio de Venta</Label>
+                                            <Input id="sellingPrice" type="number" placeholder="200" />
+                                        </div>
+                                         <div className="space-y-2">
+                                            <Label>Margen (%)</Label>
+                                            <Input value={"0%"} disabled className="font-bold text-green-600"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Card>
                 </Accordion>
             </div>
+
 
             {/* Column 3: Projections & Chart */}
             <div className="lg:col-span-3 xl:col-span-2">
@@ -883,8 +953,3 @@ export default function FinancialsPage() {
     </div>
   );
 }
-
-    
-    
-
-    

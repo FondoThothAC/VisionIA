@@ -62,6 +62,7 @@ const sections = [
         title: "5. Análisis de Mercado",
         intro: "Demuestra que entiendes la industria, tus clientes y tu competencia.",
         subtopics: [
+            { title: "Validación de Demanda (Empírica)", description: "¿Realizaste preventas, encuestas o entrevistas para confirmar el interés?" },
             { title: "Demanda", description: "Perfil del cliente potencial (segmentación), poder adquisitivo, hábitos de consumo." },
             { title: "Oferta", description: "Análisis de la competencia directa e indirecta (fortalezas, debilidades, precios)." },
             { title: "Cálculo del Mercado Potencial", description: "Tamaño total del mercado y participación esperada (market share)." },
@@ -76,6 +77,7 @@ const sections = [
             { title: "Estrategia de Precios", description: "¿Cómo fijarás tus precios? (Basado en costos, competencia, valor)." },
             { title: "Promoción y Publicidad", description: "¿Cómo te darás a conocer?" },
             { title: "Propuesta Única de Valor (PUV)", description: "¿Qué te hace diferente y especial?" },
+            { title: "Alianzas Locales Estratégicas", description: "Colaboraciones con negocios o grupos locales para promoción cruzada." },
         ],
     },
     {
@@ -92,24 +94,28 @@ const sections = [
             { title: "Proceso", description: "Diagrama de flujo del proceso productivo o de servicio." },
             { title: "Localización y Distribución", description: "Descripción y croquis del local." },
             { title: "Equipamiento y Proveedores", description: "Lista de maquinaria necesaria y proveedores clave." },
-            { title: "Normatividad", description: "Permisos y licencias requeridos para operar." },
+            { title: "Costeo Unitario de Producto (BOM)", description: "Desglose de costos por cada unidad de producto." },
+            { title: "Normatividad y Cumplimiento Legal", description: "Permisos y licencias requeridos para operar según el giro." },
         ],
     },
     {
         value: "item-9",
         title: "9. Plan de Recursos Humanos",
-        intro: "Define la estructura de tu equipo.",
+        intro: "Define la estructura de tu equipo y el impacto personal.",
         subtopics: [
             { title: "Organigrama", description: "Estructura de roles y jerarquía." },
             { title: "Perfiles de Puesto", description: "Responsabilidades y habilidades por rol." },
             { title: "Plan de Capacitación", description: "¿Qué formación necesita el equipo?" },
+            { title: "Impacto Familiar y Personal", description: "Cómo el proyecto mejora el ingreso familiar y personal." },
         ],
     },
     {
         value: "item-10",
-        title: "10. Cronograma de Ejecución",
-        intro: "Implementar un Diagrama de Gantt simple donde el usuario pueda listar actividades clave y asignarles fechas de inicio y fin.",
-        subtopics: [],
+        title: "10. Cronograma de Ejecución y Lanzamiento",
+        intro: "Implementar un Diagrama de Gantt simple para planificar las actividades clave en el tiempo.",
+        subtopics: [
+            { title: "Plan de Lanzamiento (Primeros 90 días)", description: "Acciones concretas para las primeras 12 semanas." }
+        ],
     },
     {
         value: "item-11",
@@ -117,7 +123,7 @@ const sections = [
         intro: "Los números que respaldan todo lo dicho anteriormente.",
         subtopics: [
             { title: "Inversión Inicial", description: "Activos fijos, diferidos y capital de trabajo." },
-            { title: "Proyección de Ingresos", description: "Ventas estimadas (volumen x precio)." },
+            { title: "Proyección de Ingresos", description: "Ventas estimadas (volumen x precio), considerando estacionalidad y picos de venta." },
             { title: "Proyección de Costos", description: "Costos fijos y variables." },
             { title: "Estado de Resultados Proyectado", description: "" },
             { title: "Punto de Equilibrio", description: "" },
@@ -128,10 +134,9 @@ const sections = [
     {
         value: "item-12",
         title: "12. Análisis de Riesgos",
-        intro: "Identifica posibles problemas y cómo los enfrentarás.",
+        intro: "Implementar una matriz para identificar riesgos, su probabilidad, impacto y planes de mitigación.",
         subtopics: [
-            { title: "Identificación de Riesgos", description: "De mercado, operativos, financieros." },
-            { title: "Estrategias de Mitigación", description: "¿Qué harás si esos riesgos ocurren?" },
+            { title: "Matriz de Riesgos", description: "Identificar riesgos (operativos, financieros, de mercado, etc.), su categoría, probabilidad, impacto, plan de mitigación y contingencia." },
         ],
     },
     {
@@ -146,9 +151,12 @@ const sections = [
     },
     {
         value: "item-14",
-        title: "14. Anexos",
-        intro: "Implementar una sección para que el usuario pueda subir archivos de soporte como cotizaciones, croquis, etc.",
-        subtopics: [],
+        title: "14. Anexos y Evidencias",
+        intro: "Implementar una sección para que el usuario pueda subir archivos de soporte.",
+        subtopics: [
+            { title: "Evidencia de Ventas Iniciales", description: "Tickets, transferencias, pedidos de WhatsApp." },
+            { title: "Documentos de Soporte", description: "Cotizaciones, croquis, currículums, etc." },
+        ],
     },
 ];
 
