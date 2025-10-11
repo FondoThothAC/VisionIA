@@ -54,6 +54,12 @@ const fppData: Record<string, FppState> = {
         actividadB: "Invertir en una copiadora/impresora multifuncional de alta capacidad para ofrecer servicios de copiado e impresión a color y en gran volumen.",
         recursoLimitado: "Capital de trabajo inicial ($47,633.40).",
         costoOportunidad: "Cada $5,000 invertidos en hilos y estambres son $5,000 que no se destinan a la compra de una impresora más robusta. El inventario de mercería diversifica la oferta, mientras que los servicios de copiado generan un flujo de ingreso constante y de mayor margen."
+    },
+    "cocina-economica": {
+        actividadA: "Invertir en una campaña de publicidad en radio local para llegar a todo el municipio.",
+        actividadB: "Ofrecer descuentos y promociones especiales directamente en los puntos de acceso de la mina.",
+        recursoLimitado: "Presupuesto inicial de promoción.",
+        costoOportunidad: "Cada peso gastado en radio tiene un alcance más amplio pero menos directo, mientras que cada descuento ofrecido en la mina impacta directamente al cliente objetivo pero reduce el margen de ganancia por platillo."
     }
 };
 
@@ -94,6 +100,7 @@ export default function FppPage() {
                                 <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
                                 <SelectItem value="pizzeria-siglo-xxi">Proyecto: Pizzería Siglo XXI</SelectItem>
                                 <SelectItem value="papeleria-la-sirena">Proyecto: Papelería La Sirena</SelectItem>
+                                <SelectItem value="cocina-economica">Proyecto: Cocina Económica Nacozari</SelectItem>
                               </SelectContent>
                             </Select>
                         }

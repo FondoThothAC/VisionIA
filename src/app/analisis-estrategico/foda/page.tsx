@@ -59,6 +59,12 @@ const fodaData: Record<string, FodaState> = {
         oportunidades: "- La competencia es escasa y se encuentra a una distancia retirada.\n- Demanda considerable debido a la existencia de siete planteles educativos en la comunidad.",
         debilidades: "- Falta de capital para la inversión inicial.\n- La necesidad de trasladarse 107 km a Hermosillo para abastecerse de los proveedores mayoristas.",
         amenazas: "- Variación en el costo de los productos.\n- El surgimiento de más competencia en el futuro."
+    },
+     "cocina-economica": {
+        fortalezas: "- Disponibilidad de mano de obra con experiencia en elaboración de alimentos y trato al cliente.\n- Precios accesibles para todo tipo de bolsillo.\n- Alimentación saludable y variedad de productos.",
+        oportunidades: "- Cercanía a la mina 'La Caridad de Nacozari'.\n- Ubicación en los accesos a la mina.\n- Gran población minera en la región con demanda constante de alimentos.",
+        debilidades: "- Falta de recursos para invertir.\n- Falta de prestigio por ser un negocio de apertura.",
+        amenazas: "- Variación en el precio de los ingredientes.\n- Tendencia de la comunidad a consumir comida chatarra."
     }
 };
 
@@ -100,6 +106,7 @@ export default function FodaPage() {
                                 <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
                                 <SelectItem value="pizzeria-siglo-xxi">Proyecto: Pizzería Siglo XXI</SelectItem>
                                 <SelectItem value="papeleria-la-sirena">Proyecto: Papelería La Sirena</SelectItem>
+                                <SelectItem value="cocina-economica">Proyecto: Cocina Económica Nacozari</SelectItem>
                               </SelectContent>
                             </Select>
                         }

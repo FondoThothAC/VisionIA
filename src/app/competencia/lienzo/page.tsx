@@ -106,6 +106,62 @@ const competitorData: Record<string, Competitor[]> = {
             weaknesses: "Precios más altos, lo que abre una oportunidad para un servicio más económico.",
             marketingStrategy: "Publicidad local y ubicación.",
         },
+    ],
+    "pizzeria-siglo-xxi": [
+        {
+            id: 1,
+            name: "Pizzerías de cadena (ej. Domino's, Little Caesars)",
+            valueProposition: "Pizza rápida, económica y predecible.",
+            customerSegment: "Familias y jóvenes que buscan una opción de comida rápida y económica.",
+            pricing: "Precios bajos y promociones constantes (ej. 2x1).",
+            strengths: "Fuerte reconocimiento de marca. Logística de entrega muy optimizada. Precios muy competitivos.",
+            weaknesses: "Calidad de ingredientes estándar, no artesanal. Experiencia de cliente impersonal. Nulo enfoque social.",
+            marketingStrategy: "Publicidad masiva en TV y medios digitales. Marketing de promociones.",
+        },
+        {
+            id: 2,
+            name: "Pizzerías locales artesanales",
+            valueProposition: "Pizza de alta calidad con ingredientes gourmet o locales.",
+            customerSegment: "Foodies, parejas y grupos de amigos que valoran la calidad y la experiencia gastronómica.",
+            pricing: "Precios premium, por encima del promedio.",
+            strengths: "Ingredientes de alta calidad. Sabor y experiencia únicos. Ambiente acogedor en el local.",
+            weaknesses: "Menor capacidad de producción. Precios más elevados. Marketing menos agresivo.",
+            marketingStrategy: "Marketing en redes sociales (Instagram), reseñas en blogs gastronómicos, reputación de boca en boca.",
+        },
+    ],
+    "papeleria-la-sirena": [
+        {
+            id: 1,
+            name: "Papelería Lupita",
+            valueProposition: "Surtido básico de artículos escolares.",
+            customerSegment: "Estudiantes y familias de la comunidad.",
+            pricing: "Precios estándar de mercado.",
+            strengths: "Ubicación conocida en la comunidad.",
+            weaknesses: "Surtido limitado, no ofrece servicios adicionales como copiado o mercería.",
+            marketingStrategy: "Existencia y reputación local.",
+        },
+        {
+            id: 2,
+            name: "Papelería Marlet",
+            valueProposition: "Papelería con algo de mercería.",
+            customerSegment: "Comunidad local en general.",
+            pricing: "Similar a otras papelerías de la zona.",
+            strengths: "Ofrece algunos productos de mercería.",
+            weaknesses: "Distancia considerable del nuevo punto de venta. No tiene la ventaja de la ubicación para todas las escuelas.",
+            marketingStrategy: "Reputación local.",
+        },
+    ],
+    "cocina-economica": [
+        {
+            id: 1,
+            name: "Otras cocinas económicas en el centro",
+            valueProposition: "Comida casera a bajo precio.",
+            customerSegment: "Población general y trabajadores del centro de Nacozari.",
+            pricing: "Económico, menú del día a precio fijo.",
+            strengths: "Ubicación céntrica, clientes establecidos.",
+            weaknesses: "No están ubicadas cerca de los accesos a la mina, perdiendo al cliente obrero principal.",
+            marketingStrategy: "Reputación local de boca en boca.",
+        },
     ]
 };
 
@@ -212,6 +268,9 @@ export default function CompetitionCanvasPage() {
                         <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                         <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
                         <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
+                        <SelectItem value="pizzeria-siglo-xxi">Proyecto: Pizzería Siglo XXI</SelectItem>
+                        <SelectItem value="papeleria-la-sirena">Proyecto: Papelería La Sirena</SelectItem>
+                        <SelectItem value="cocina-economica">Proyecto: Cocina Económica Nacozari</SelectItem>
                       </SelectContent>
                     </Select>
                 }

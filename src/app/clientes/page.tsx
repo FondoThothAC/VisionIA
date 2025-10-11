@@ -55,75 +55,167 @@ type SurveyState = {
     questions: SurveyQuestion[];
 };
 
-const initialEmpathyMap: EmpathyMapState = {
-    thinksAndFeels: "Preocupado por el impacto ambiental, busca productos éticos. Se siente bien al apoyar a pequeños productores. Valora la calidad y la historia detrás del producto.",
-    sees: "Publicidad de grandes marcas de café. Amigos publicando fotos de cafés de especialidad en redes sociales. Noticias sobre cambio climático y comercio justo.",
-    hears: "Podcasts sobre sostenibilidad. Recomendaciones de amigos. Baristas explicando el origen del café.",
-    saysAndDoes: "Pregunta sobre el origen del café en las cafeterías. Compra café en grano para molerlo en casa. Lee etiquetas y certificaciones. Comparte sus descubrimientos en Instagram.",
-    pains: [
-      { id: 1, description: "Dificultad para encontrar información transparente sobre el origen.", solution: "Ofrecer un código QR en cada bolsa que lleva a la historia de la finca y el productor." },
-      { id: 2, description: "Precios elevados sin justificación clara de la calidad.", solution: "Comunicar claramente el valor: tostado fresco, comercio justo, calidad de especialidad." },
-      { id: 3, description: "Falta de opciones sostenibles en supermercados.", solution: "Crear un modelo de suscripción online para un acceso fácil y recurrente." },
-    ],
-    gains: [
-        { id: 1, description: "Sentimiento de contribución a una buena causa.", creator: "Destinar un porcentaje de cada venta a proyectos de desarrollo comunitario en la región cafetalera." },
-        { id: 2, description: "Disfrutar de un café de alta calidad con perfiles de sabor únicos.", creator: "Ofrecer guías de catación y notas de sabor detalladas con cada café." },
-        { id: 3, description: "Descubrir nuevos sabores y orígenes.", creator: "Lanzar 'micro-lotes' de edición limitada de fincas experimentales cada mes." },
-    ]
+type ProjectData = {
+    empathyMap: EmpathyMapState;
+    buyerPersona: BuyerPersonaState;
+    journeyMap: CustomerJourneyMapState;
+    survey: SurveyState;
 };
 
-const initialBuyerPersona: BuyerPersonaState = {
-    demographics: "Ana, 32 años, diseñadora gráfica, vive en una ciudad grande, ingresos medios-altos, soltera.",
-    goals: "Encontrar un café de alta calidad que se alinee con sus valores de sostenibilidad. Disfrutar de un ritual matutino placentero y significativo.",
-    frustrations: "El café comercial sabe 'quemado'. No confía en las etiquetas 'orgánicas' sin una historia detrás. Poca disponibilidad de café fresco.",
-    motivations: "Apoyar el comercio local y justo. La calidad y el sabor. La estética de los empaques y la marca.",
-    communicationChannels: "Instagram, blogs de estilo de vida y sostenibilidad, email newsletters de marcas que le gustan.",
-    story: "Ana trabaja desde casa y su café matutino es un momento sagrado. Ha probado muchas marcas, pero busca 'su' café definitivo: uno que no solo sea delicioso, sino que también la haga sentir bien con su compra."
+const initialProjectData: Record<string, ProjectData> = {
+    "cafe-aroma": {
+        empathyMap: {
+            thinksAndFeels: "Preocupado por el impacto ambiental, busca productos éticos. Se siente bien al apoyar a pequeños productores. Valora la calidad y la historia detrás del producto.",
+            sees: "Publicidad de grandes marcas de café. Amigos publicando fotos de cafés de especialidad en redes sociales. Noticias sobre cambio climático y comercio justo.",
+            hears: "Podcasts sobre sostenibilidad. Recomendaciones de amigos. Baristas explicando el origen del café.",
+            saysAndDoes: "Pregunta sobre el origen del café en las cafeterías. Compra café en grano para molerlo en casa. Lee etiquetas y certificaciones. Comparte sus descubrimientos en Instagram.",
+            pains: [
+              { id: 1, description: "Dificultad para encontrar información transparente sobre el origen.", solution: "Ofrecer un código QR en cada bolsa que lleva a la historia de la finca y el productor." },
+              { id: 2, description: "Precios elevados sin justificación clara de la calidad.", solution: "Comunicar claramente el valor: tostado fresco, comercio justo, calidad de especialidad." },
+              { id: 3, description: "Falta de opciones sostenibles en supermercados.", solution: "Crear un modelo de suscripción online para un acceso fácil y recurrente." },
+            ],
+            gains: [
+                { id: 1, description: "Sentimiento de contribución a una buena causa.", creator: "Destinar un porcentaje de cada venta a proyectos de desarrollo comunitario en la región cafetalera." },
+                { id: 2, description: "Disfrutar de un café de alta calidad con perfiles de sabor únicos.", creator: "Ofrecer guías de catación y notas de sabor detalladas con cada café." },
+                { id: 3, description: "Descubrir nuevos sabores y orígenes.", creator: "Lanzar 'micro-lotes' de edición limitada de fincas experimentales cada mes." },
+            ]
+        },
+        buyerPersona: {
+            demographics: "Ana, 32 años, diseñadora gráfica, vive en una ciudad grande, ingresos medios-altos, soltera.",
+            goals: "Encontrar un café de alta calidad que se alinee con sus valores de sostenibilidad. Disfrutar de un ritual matutino placentero y significativo.",
+            frustrations: "El café comercial sabe 'quemado'. No confía en las etiquetas 'orgánicas' sin una historia detrás. Poca disponibilidad de café fresco.",
+            motivations: "Apoyar el comercio local y justo. La calidad y el sabor. La estética de los empaques y la marca.",
+            communicationChannels: "Instagram, blogs de estilo de vida y sostenibilidad, email newsletters de marcas que le gustan.",
+            story: "Ana trabaja desde casa y su café matutino es un momento sagrado. Ha probado muchas marcas, pero busca 'su' café definitivo: uno que no solo sea delicioso, sino que también la haga sentir bien con su compra."
+        },
+        journeyMap: {
+            awareness: "Ana ve un anuncio en Instagram sobre 'Aroma de Montaña' y le atrae la fotografía y el mensaje de comercio justo.",
+            consideration: "Visita la web, lee la historia de los productores en Chiapas, compara los precios de suscripción y lee reseñas de otros clientes.",
+            purchase: "Decide probar con una bolsa de tueste medio. El proceso de compra es fácil y rápido. Recibe un correo de confirmación con detalles del envío.",
+            service: "Recibe el paquete en un empaque ecológico con una nota de agradecimiento escrita a mano. El café llega en 3 días. Tiene una duda sobre el método de preparación y recibe una respuesta rápida y amable por chat.",
+            loyalty: "El café es excelente. Ana publica una historia en Instagram etiquetando a la marca. Se suscribe al plan mensual para recibir café automáticamente y obtener un descuento."
+        },
+        survey: {
+            objective: "Validar el interés en un servicio de suscripción de café de especialidad de origen ético y medir la disposición a pagar un precio premium.",
+            questions: [
+                { id: 1, text: "¿Con qué frecuencia consumes café de especialidad (no comercial)?", type: 'demanda' },
+                { id: 2, text: "¿Qué es lo más importante para ti al elegir un café?", type: 'necesidad' },
+                { id: 3, text: "Si existiera un servicio que te entrega café recién tostado de pequeños productores a tu puerta, ¿qué tan interesado estarías?", type: 'deseo' },
+                { id: 4, text: "¿Cuánto estarías dispuesto a pagar mensualmente por 500g de café de alta calidad y origen transparente?", type: 'demanda' },
+                { id: 5, text: "¿Cuál es tu rango de edad?", type: 'demografico' },
+            ]
+        }
+    },
+    "pizzeria-siglo-xxi": {
+        empathyMap: {
+            thinksAndFeels: "Quiere apoyar a negocios con causa social. Busca comida rica y de buena calidad para compartir en familia. Se siente bien al saber que su compra contribuye a la inclusión.",
+            sees: "Publicaciones en redes sociales sobre restaurantes con impacto social. Amigos compartiendo fotos de pizzas artesanales. Reportajes sobre la importancia de la diversidad en el trabajo.",
+            hears: "Comentarios positivos sobre 'esa pizzería donde trabajan chicos con síndrome de Down'. Recomendaciones de grupos comunitarios. Noticias sobre responsabilidad social empresarial.",
+            saysAndDoes: "Elige conscientemente dónde gastar su dinero. Comparte en sus redes sociales los negocios que admira. Pregunta sobre la misión del restaurante. Prefiere la calidad sobre el precio.",
+            pains: [
+              { id: 1, description: "A veces es difícil encontrar lugares que combinen buena comida con una buena causa.", solution: "Comunicar claramente nuestra doble propuesta de valor: pizzas deliciosas y una misión de inclusión." },
+              { id: 2, description: "Preocupación de que la calidad del servicio pueda ser inconsistente.", solution: "Mostrar testimonios de clientes satisfechos y destacar la profesionalidad de nuestro equipo capacitado." },
+              { id: 3, description: "Falta de opciones de comida para llevar que se sientan 'especiales' o con propósito.", solution: "Ofrecer empaques de alta calidad con información sobre nuestra misión y el empleado que preparó la pizza." },
+            ],
+            gains: [
+                { id: 1, description: "Sentir que su consumo tiene un impacto positivo directo en la comunidad.", creator: "Incluir una tarjeta en cada pedido que cuente la historia de uno de nuestros empleados." },
+                { id: 2, description: "Disfrutar de una pizza y galletas artesanales con ingredientes de calidad.", creator: "Destacar la frescura de nuestros ingredientes y el proceso artesanal de elaboración." },
+                { id: 3, description: "Educar a su familia sobre la importancia de la inclusión y la diversidad.", creator: "Crear contenido en redes sociales que celebre los logros y talentos de nuestro equipo." },
+            ]
+        },
+        buyerPersona: {
+            demographics: "Laura, 45 años, madre de dos adolescentes, trabaja en recursos humanos, vive en una zona residencial.",
+            goals: "Encontrar opciones de comida para la familia que sean sabrosas, convenientes y que se alineen con sus valores de responsabilidad social. Enseñar a sus hijos sobre la importancia de la empatía y la inclusión.",
+            frustrations: "Las cadenas de comida rápida son impersonales y de calidad variable. Los restaurantes con propósito social a veces son difíciles de encontrar o no tienen opciones para toda la familia.",
+            motivations: "El bienestar de su familia. Apoyar a la comunidad local. La sensación de hacer una 'compra inteligente' que beneficia a otros.",
+            communicationChannels: "Grupos de Facebook para padres, Instagram, blogs sobre crianza y responsabilidad social.",
+            story: "Laura busca simplificar las cenas de los viernes en familia sin recurrir a las grandes cadenas. Quiere una opción que todos disfruten pero que también le permita sentirse bien con su compra. Descubrió 'Pizzería Siglo XXI' a través de un grupo de madres y le encantó la idea de apoyar un negocio que ofrece oportunidades a personas con síndrome de Down."
+        },
+        journeyMap: {
+            awareness: "Laura lee un post en un grupo de Facebook local sobre 'una nueva pizzería con una misión increíble'.",
+            consideration: "Visita la página de Instagram de la pizzería, ve fotos de las pizzas y lee la historia de la empresa y sus empleados.",
+            purchase: "Decide hacer un pedido en línea para la cena del viernes. El menú es claro y el proceso de pedido es sencillo.",
+            service: "El repartidor es amable y puntual. La caja de la pizza incluye un pequeño folleto sobre el impacto del negocio.",
+            loyalty: "La pizza es un éxito con su familia. Laura deja una reseña positiva en Google y recomienda la pizzería a sus colegas del departamento de RRHH para futuros eventos de la empresa."
+        },
+        survey: {
+            objective: "Validar el interés del mercado local en una pizzería con un modelo de negocio de inclusión social y medir la importancia de la 'misión' en la decisión de compra.",
+            questions: [
+                { id: 1, text: "¿Con qué frecuencia pides pizza a domicilio al mes?", type: 'demanda' },
+                { id: 2, text: "Al elegir una pizzería, ¿qué es lo más importante para ti? (Calidad, Precio, Rapidez, Misión social)", type: 'necesidad' },
+                { id: 3, text: "¿Estarías más dispuesto/a a pedir de una pizzería que emplea a personas con síndrome de Down, asumiendo que la calidad y el precio son competitivos?", type: 'deseo' },
+                { id: 4, text: "¿Pagarías un 5-10% más por un producto si sabes que la empresa tiene un impacto social positivo?", type: 'demanda' },
+                { id: 5, text: "¿A través de qué canal sueles descubrir nuevos restaurantes? (Redes sociales, Recomendación, Publicidad, etc.)", type: 'demografico' },
+            ]
+        }
+    },
+     "cocina-economica": {
+        empathyMap: {
+            thinksAndFeels: "Cansado después de una larga jornada en la mina. Busca comida abundante, sabrosa y a buen precio. Valora la rapidez del servicio para poder descansar. Se siente frustrado si tiene que esperar mucho o si la comida no es llenadora.",
+            sees: "Compañeros de trabajo comiendo en el mismo lugar. Anuncios de comida rápida. Pocas opciones de comida casera cerca del trabajo.",
+            hears: "Recomendaciones de colegas sobre dónde comer bueno, bonito y barato. El ruido de la maquinaria al salir del turno. Quejas sobre la falta de opciones de comida saludable.",
+            saysAndDoes: "Pregunta '¿qué hay de comer hoy?'. Paga en efectivo. Come rápidamente. Busca un lugar donde pueda sentarse cómodamente.",
+            pains: [
+              { id: 1, description: "Poco tiempo para comer entre turnos o después del trabajo.", solution: "Tener los platillos del día listos para servir de inmediato. Ofrecer un servicio para llevar eficiente." },
+              { id: 2, description: "La comida de otros lugares es grasosa o poco saludable.", solution: "Ofrecer un menú balanceado con opciones de comida casera, incluyendo siempre una opción de ensalada o verduras." },
+              { id: 3, description: "Los precios de otros establecimientos son elevados para el día a día.", solution: "Mantener precios competitivos y ofrecer 'paquetes' de comida completa (plato fuerte, bebida, postre) a un precio fijo." },
+            ],
+            gains: [
+                { id: 1, description: "Sentirse satisfecho y con energía para el resto del día.", creator: "Servir porciones generosas y asegurar que cada platillo esté bien sazonado." },
+                { id: 2, description: "Ahorrar dinero en comparación con otras opciones de comida.", creator: "Crear un programa de lealtad simple (ej. 'En tu décima comida, el agua fresca es gratis')." },
+                { id: 3, description: "Disfrutar del sabor de una comida 'como hecha en casa'.", creator: "Usar recetas tradicionales y sazón casero, rotando el menú para ofrecer variedad." },
+            ]
+        },
+        buyerPersona: {
+            demographics: "Juan, 42 años, trabajador de la mina 'La Caridad', vive en Nacozari, casado, con 3 hijos.",
+            goals: "Alimentarse de forma rápida, económica y sustanciosa durante su jornada laboral. Encontrar un lugar de confianza donde la comida sea buena y el trato amable.",
+            frustrations: "Las opciones de comida cerca de la mina son limitadas y a menudo poco saludables. Perder tiempo de su descanso esperando por la comida.",
+            motivations: "El ahorro de dinero. El sabor de la comida casera. La conveniencia y la rapidez en el servicio.",
+            communicationChannels: "Recomendaciones de boca en boca de sus compañeros de trabajo. Anuncios y volantes cerca de la mina.",
+            story: "Juan termina su turno en la mina cansado y hambriento. No tiene tiempo ni ganas de cocinar al llegar a casa. Busca un lugar que le ofrezca un plato de comida casera, que le recuerde a la de su casa, que sea rápido y que no le cueste un ojo de la cara. Su principal fuente de información son sus colegas, y si uno le recomienda un lugar, es muy probable que lo pruebe."
+        },
+        journeyMap: {
+            awareness: "Juan escucha a un compañero de trabajo hablar sobre 'la nueva cocina económica cerca de la salida de la mina'.",
+            consideration: "Al salir de su turno, pasa por enfrente del local y ve el menú del día anunciado en una pizarra. Le parece accesible.",
+            purchase: "Decide entrar y pide el menú del día para llevar. El servicio es rápido y en menos de 5 minutos ya tiene su comida.",
+            service: "La comida está caliente, bien servida y tiene buen sabor. El empaque es práctico y no se derrama.",
+            loyalty: "Juan queda satisfecho y regresa al día siguiente. Se convierte en un cliente habitual y recomienda la cocina económica a otros compañeros de su cuadrilla."
+        },
+        survey: {
+            objective: "Medir la satisfacción de los trabajadores de la mina con la oferta actual de alimentos y validar el interés en un nuevo servicio de cocina económica con comida casera.",
+            questions: [
+                { id: 1, text: "¿Cuántas veces a la semana comes fuera de casa durante tu jornada laboral?", type: 'demanda' },
+                { id: 2, text: "Al elegir un lugar para comer, ¿qué es lo más importante para ti? (Precio, Rapidez, Sabor, Variedad)", type: 'necesidad' },
+                { id: 3, text: "¿Te gustaría tener una opción de comida casera y saludable cerca de tu lugar de trabajo?", type: 'deseo' },
+                { id: 4, text: "¿Cuánto estarías dispuesto a pagar por un menú completo (plato fuerte, guarnición y agua fresca)?", type: 'demanda' },
+                { id: 5, text: "¿Prefieres comer en el lugar o pedir para llevar?", type: 'demografico' },
+            ]
+        }
+    },
+    // ... add other projects here
 };
 
-const initialCustomerJourneyMap: CustomerJourneyMapState = {
-    awareness: "Ana ve un anuncio en Instagram sobre 'Aroma de Montaña' y le atrae la fotografía y el mensaje de comercio justo.",
-    consideration: "Visita la web, lee la historia de los productores en Chiapas, compara los precios de suscripción y lee reseñas de otros clientes.",
-    purchase: "Decide probar con una bolsa de tueste medio. El proceso de compra es fácil y rápido. Recibe un correo de confirmación con detalles del envío.",
-    service: "Recibe el paquete en un empaque ecológico con una nota de agradecimiento escrita a mano. El café llega en 3 días. Tiene una duda sobre el método de preparación y recibe una respuesta rápida y amable por chat.",
-    loyalty: "El café es excelente. Ana publica una historia en Instagram etiquetando a la marca. Se suscribe al plan mensual para recibir café automáticamente y obtener un descuento."
-}
-
-const initialSurvey: SurveyState = {
-    objective: "Validar el interés en un servicio de suscripción de café de especialidad de origen ético y medir la disposición a pagar un precio premium.",
-    questions: [
-        { id: 1, text: "¿Con qué frecuencia consumes café de especialidad (no comercial)?", type: 'demanda' },
-        { id: 2, text: "¿Qué es lo más importante para ti al elegir un café?", type: 'necesidad' },
-        { id: 3, text: "Si existiera un servicio que te entrega café recién tostado de pequeños productores a tu puerta, ¿qué tan interesado estarías?", type: 'deseo' },
-        { id: 4, text: "¿Cuánto estarías dispuesto a pagar mensualmente por 500g de café de alta calidad y origen transparente?", type: 'demanda' },
-        { id: 5, text: "¿Cuál es tu rango de edad?", type: 'demografico' },
-    ]
+const emptyProjectData: ProjectData = {
+    empathyMap: { thinksAndFeels: '', sees: '', hears: '', saysAndDoes: '', pains: [], gains: [] },
+    buyerPersona: { demographics: '', goals: '', frustrations: '', motivations: '', communicationChannels: '', story: '' },
+    journeyMap: { awareness: '', consideration: '', purchase: '', service: '', loyalty: '' },
+    survey: { objective: '', questions: [] }
 };
-
 
 export default function ClientesPage() {
     const [selectedProject, setSelectedProject] = useState("cafe-aroma");
-    const [empathyMap, setEmpathyMap] = useState<EmpathyMapState>(initialEmpathyMap);
-    const [buyerPersona, setBuyerPersona] = useState<BuyerPersonaState>(initialBuyerPersona);
-    const [journeyMap, setJourneyMap] = useState<CustomerJourneyMapState>(initialCustomerJourneyMap);
-    const [survey, setSurvey] = useState<SurveyState>(initialSurvey);
+    const [empathyMap, setEmpathyMap] = useState<EmpathyMapState>(initialProjectData[selectedProject].empathyMap);
+    const [buyerPersona, setBuyerPersona] = useState<BuyerPersonaState>(initialProjectData[selectedProject].buyerPersona);
+    const [journeyMap, setJourneyMap] = useState<CustomerJourneyMapState>(initialProjectData[selectedProject].journeyMap);
+    const [survey, setSurvey] = useState<SurveyState>(initialProjectData[selectedProject].survey);
 
     const handleProjectChange = (projectId: string) => {
         setSelectedProject(projectId);
-        // NOTE: Data for other projects would be loaded here.
-        // For now, we only have data for 'cafe-aroma'.
-        if (projectId === 'cafe-aroma') {
-            setEmpathyMap(initialEmpathyMap);
-            setBuyerPersona(initialBuyerPersona);
-            setJourneyMap(initialCustomerJourneyMap);
-            setSurvey(initialSurvey);
-        } else {
-            // Reset to empty state for other projects
-            setEmpathyMap({ thinksAndFeels: '', sees: '', hears: '', saysAndDoes: '', pains: [], gains: [] });
-            setBuyerPersona({ demographics: '', goals: '', frustrations: '', motivations: '', communicationChannels: '', story: '' });
-            setJourneyMap({ awareness: '', consideration: '', purchase: '', service: '', loyalty: '' });
-            setSurvey({ objective: '', questions: [] });
-        }
+        const projectData = initialProjectData[projectId as keyof typeof initialProjectData] || emptyProjectData;
+        setEmpathyMap(projectData.empathyMap);
+        setBuyerPersona(projectData.buyerPersona);
+        setJourneyMap(projectData.journeyMap);
+        setSurvey(projectData.survey);
     };
 
     const handleSave = () => {
@@ -208,6 +300,10 @@ export default function ClientesPage() {
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
+                                <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
+                                <SelectItem value="pizzeria-siglo-xxi">Proyecto: Pizzería Siglo XXI</SelectItem>
+                                <SelectItem value="papeleria-la-sirena">Proyecto: Papelería La Sirena</SelectItem>
+                                <SelectItem value="cocina-economica">Proyecto: Cocina Económica Nacozari</SelectItem>
                               </SelectContent>
                             </Select>
                         }

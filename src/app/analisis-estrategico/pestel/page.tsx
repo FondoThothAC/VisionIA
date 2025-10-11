@@ -67,6 +67,14 @@ const pestelData: Record<string, PestelState> = {
         tecnologicos: "- Oferta de servicios de impresión y copiado como fuente de ingresos clave (Oportunidad).\n- Competencia de tiendas en línea con catálogos más amplios (Amenaza).",
         ecologicos: "- Demanda de productos reciclados o ecológicos (Oportunidad).\n- Normativas sobre el uso de bolsas de plástico (Amenaza/Oportunidad).",
         legales: "- Cumplimiento de normativas fiscales y de operación comercial (Amenaza).\n- Protección al consumidor en cuanto a la calidad de los productos (Amenaza)."
+    },
+    "cocina-economica": {
+        politicos: "- Programas de apoyo a mujeres emprendedoras (PROMETE) (Oportunidad).\n- Estabilidad política local que favorece la inversión.",
+        economicos: "- La principal actividad económica de la región es la minería, generando una gran población flotante con necesidad de servicios de alimentación (Oportunidad).\n- Variación en el precio de los ingredientes (Amenaza).",
+        sociales: "- Tendencia de los trabajadores a buscar opciones de comida casera y económica (Oportunidad).\n- Riesgo de preferencia por comida chatarra (Amenaza).",
+        tecnologicos: "- Uso de redes sociales (Facebook, WhatsApp) para tomar pedidos y promocionar el menú del día a bajo costo (Oportunidad).",
+        ecologicos: "- Normativas sobre manejo de residuos de alimentos (Amenaza).\n- Oportunidad de usar empaques biodegradables como diferenciador.",
+        legales: "- Requisitos y permisos de salubridad para el manejo de alimentos (Amenaza).\n- Necesidad de constituirse legalmente para acceder a más apoyos (Oportunidad)."
     }
 };
 
@@ -107,6 +115,7 @@ export default function PestelPage() {
                                 <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
                                 <SelectItem value="pizzeria-siglo-xxi">Proyecto: Pizzería Siglo XXI</SelectItem>
                                 <SelectItem value="papeleria-la-sirena">Proyecto: Papelería La Sirena</SelectItem>
+                                <SelectItem value="cocina-economica">Proyecto: Cocina Económica Nacozari</SelectItem>
                               </SelectContent>
                             </Select>
                         }

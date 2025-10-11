@@ -54,6 +54,39 @@ const canvasDataSets = {
       customerSegments: "- Propietarios de vehículos particulares que han sufrido un accidente menor.\n- Personas que buscan mejorar la estética de su auto para uso personal o reventa.\n- Clientes que buscan una opción económica sin sacrificar calidad.",
       costStructure: "- Materiales (pintura, solventes, lijas, pulimento).\n- Salarios del personal.\n- Renta del taller.\n- Servicios (luz, agua).\n- Publicidad.",
       revenueStreams: "- Cobro por pieza pintada.\n- Reparaciones de golpes y abolladuras.\n- Servicios de pulido y encerado.\n- Trabajos de pintura general."
+    },
+    "pizzeria-siglo-xxi": {
+        keyPartners: "- Organizaciones para la inclusión laboral de personas con discapacidad.\n- Proveedores de ingredientes de calidad (harina, queso, etc.).\n- Empresas locales interesadas en colaborar con un negocio social.",
+        keyActivities: "- Producción de pizzas y galletas artesanales.\n- Capacitación y soporte continuo para personal con síndrome de Down.\n- Marketing y promoción de la marca y su misión social.\n- Desarrollo de relaciones con clientes y la comunidad.",
+        keyResources: "- Personal capacitado y motivado (panaderos con síndrome de Down).\n- Local y equipamiento de cocina.\n- Plataforma digital para ventas en línea y promoción.",
+        valueProposition: "Pizzas y galletas artesanales que satisfacen a los clientes, creadas en un ambiente inclusivo que proporciona empleo y formación a personas con síndrome de Down.",
+        customerRelationships: "- Servicio al cliente personalizado y de calidad.\n- Comunicación abierta sobre los productos y la misión de inclusión.\n- Creación de una comunidad que apoya la inclusión laboral.",
+        channels: "- Local de venta al público.\n- Ventas en línea con servicio de entrega a domicilio.\n- Redes sociales para marketing y contar historias.",
+        customerSegments: "- Familias y personas que disfrutan de comida artesanal.\n- Empresas y oficinas buscando opciones de catering con impacto social.\n- Comunidad que apoya activamente la inclusión laboral de personas con discapacidad.",
+        costStructure: "- Costos de producción (ingredientes, materiales).\n- Costos laborales (salarios) y de capacitación para el personal.\n- Alquiler y mantenimiento del local y equipamiento.\n- Costos de marketing y promoción.",
+        revenueStreams: "- Venta de pizzas y galletas al público en general.\n- Venta a restaurantes y comercios locales.\n- Catering para eventos de empresas."
+    },
+    "papeleria-la-sirena": {
+        keyPartners: "- Proveedores mayoristas de papelería (Dany's, Tuksonora).\n- Escuelas locales para posibles convenios.\n- Negocios cercanos para promoción cruzada.",
+        keyActivities: "- Comercialización de artículos de papelería y mercería.\n- Gestión de inventario y compras a proveedores en Hermosillo.\n- Servicio de fotocopiado e impresión.\n- Atención al cliente en punto de venta.",
+        keyResources: "- Local comercial en Kino Viejo.\n- Inventario de productos de alta demanda.\n- Equipo de copiado e impresión.\n- Socios con experiencia en comercialización.",
+        valueProposition: "La papelería y mercería más completa y convenientemente ubicada en Kino Viejo, ofreciendo todos los útiles escolares y servicios de copiado necesarios para la comunidad estudiantil y las familias locales.",
+        customerRelationships: "- Atención directa y personalizada en el local.\n- Conocimiento de las necesidades de los clientes locales (listas de útiles, etc.).",
+        channels: "- Punto de venta físico y bien ubicado.\n- Publicidad visual en el local y sus alrededores.\n- Recomendación de boca en boca dentro de la comunidad.",
+        customerSegments: "- Estudiantes de los 7 planteles educativos de la comunidad.\n- Familias de Kino Viejo y comunidades aledañas.\n- Maestros y personal administrativo de las escuelas.",
+        costStructure: "- Compra de inventario a proveedores mayoristas.\n- Costos de traslado a Hermosillo para reabastecimiento.\n- Costos operativos del local (luz, agua).\n- Salarios del personal.",
+        revenueStreams: "- Venta de artículos de papelería y mercería.\n- Ingresos por servicio de fotocopiado e impresión de documentos."
+    },
+    "cocina-economica": {
+        keyPartners: "- Proveedores locales de alimentos (carnicerías, verdulerías).\n- Mina 'La Caridad de Nacozari' para posibles convenios de comida para trabajadores.\n- Negocios locales para promoción.",
+        keyActivities: "- Elaboración de comida casera y menús del día.\n- Venta directa en el local.\n- Limpieza y mantenimiento de la cocina.\n- Compras y gestión de inventario de insumos.",
+        keyResources: "- Mano de obra con experiencia en la elaboración de comida casera.\n- Local ubicado estratégicamente cerca de la mina.\n- Recetas de comida tradicional.",
+        valueProposition: "Comida casera, saludable y económica para los trabajadores de la mina y la comunidad de Nacozari, ofreciendo una opción rápida y nutritiva cerca del lugar de trabajo.",
+        customerRelationships: "- Trato amable y rápido, enfocado en el horario de comida de los trabajadores.\n- Relación directa con los clientes en el punto de venta.",
+        channels: "- Venta directa en la cocina económica.\n- Publicidad local a través de volantes y carteles.\n- Posible servicio de entrega a las instalaciones de la mina.",
+        customerSegments: "- Obreros y trabajadores de la mina 'La Caridad de Nacozari'.\n- Familias y residentes de la Colonia Presidentes y alrededores.\n- Personas que buscan una opción de comida casera y económica.",
+        costStructure: "- Compra de insumos (carne, verduras, abarrotes).\n- Salarios del personal.\n- Costos de servicios del local (luz, agua, gas).\n- Renta del local (si aplica).",
+        revenueStreams: "- Venta de platillos del menú del día.\n- Venta de bebidas (refrescos, aguas frescas).\n- Posibles contratos de servicio de comedor para cuadrillas de la mina."
     }
 };
 
@@ -103,7 +136,7 @@ export default function BusinessModelCanvasPage() {
 
   const handleProjectChange = (projectId: string) => {
       setSelectedProject(projectId);
-      setCanvasData(canvasDataSets[projectId as keyof typeof canvasDataSets]);
+      setCanvasData(canvasDataSets[projectId as keyof typeof canvasDataSets] || canvasDataSets["cafe-aroma"]);
   };
 
   const handleContentChange = (key: CanvasKey, value: string) => {
@@ -135,6 +168,9 @@ export default function BusinessModelCanvasPage() {
                         <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                         <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
                         <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
+                        <SelectItem value="pizzeria-siglo-xxi">Proyecto: Pizzería Siglo XXI</SelectItem>
+                        <SelectItem value="papeleria-la-sirena">Proyecto: Papelería La Sirena</SelectItem>
+                        <SelectItem value="cocina-economica">Proyecto: Cocina Económica Nacozari</SelectItem>
                       </SelectContent>
                     </Select>
                 }

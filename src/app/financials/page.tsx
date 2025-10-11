@@ -151,6 +151,70 @@ const projectsData: Record<string, FinancialAssumptions> = {
       other: 1000,
     },
   },
+    "pizzeria-siglo-xxi": {
+        initialInvestment: 131366, // Aproximado del documento
+        monthlyRevenue: 170443,
+        monthlyGrowth: 5,
+        inflationRate: 4.5,
+        employeeRoles: [
+            { id: 1, name: 'Panadero', count: 10, salary: (225.5 * 30), riskClass: 'II' },
+            { id: 2, name: 'Jefe de Cocina', count: 1, salary: (278.89 * 30), riskClass: 'I' },
+            { id: 3, name: 'Maestro Capacitador', count: 1, salary: (312.54 * 30), riskClass: 'I' },
+            { id: 4, name: 'Auxiliar Capacitación', count: 1, salary: (250.12 * 30), riskClass: 'I' },
+            { id: 5, name: 'Conserje', count: 1, salary: (225.5 * 30), riskClass: 'I' },
+        ],
+        costs: {
+            rent: 10000, // Asumido
+            utilities: 5589 + 3259, // gas y electricidad
+            marketing: 3000, // Asumido
+            software: 500, // Asumido
+            supplies: 26960, // Materia prima
+            insurance: 2000, // Asumido
+            transport: 1500, // Asumido
+            other: 1000, // Asumido
+        },
+    },
+    "papeleria-la-sirena": {
+        initialInvestment: 142933,
+        monthlyRevenue: 69068,
+        monthlyGrowth: 2.5,
+        inflationRate: 4.5,
+        employeeRoles: [
+            { id: 1, name: 'Administración', count: 1, salary: (150 * 28), riskClass: 'I' },
+            { id: 2, name: 'Servicio al Cliente 1', count: 1, salary: (150 * 28), riskClass: 'I' },
+            { id: 3, name: 'Servicio al Cliente 2', count: 1, salary: (140 * 28), riskClass: 'I' },
+            { id: 4, name: 'Inventarios', count: 1, salary: (150 * 28), riskClass: 'I' },
+            { id: 5, name: 'Servicio al Cliente 3', count: 1, salary: (150 * 28), riskClass: 'I' },
+        ],
+        costs: {
+            utilities: 1000, // Agua y Luz
+            admin: 600, // Contador, permisos
+            supplies: 47633, // Mercancia
+            transport: 2000, // Asumido para ir a Hermosillo
+            other: 500,
+        },
+    },
+    "cocina-economica": {
+        initialInvestment: 138666,
+        monthlyRevenue: 46913, // Promedio mensual
+        monthlyGrowth: 3,
+        inflationRate: 4.5,
+        employeeRoles: [
+            { id: 1, name: 'Administrador', count: 1, salary: (200 * 7 * 4), riskClass: 'I' }, // Asumiendo 7 días/semana
+            { id: 2, name: 'Encargada de Cocina', count: 1, salary: (200 * 6 * 4), riskClass: 'II' },
+            { id: 3, name: 'Cocinera 1', count: 1, salary: (186.40 * 6 * 4), riskClass: 'II' },
+            { id: 4, name: 'Cocinera 2', count: 1, salary: (186.40 * 6 * 4), riskClass: 'II' },
+            { id: 5, name: 'Mesera', count: 1, salary: (178 * 6 * 4), riskClass: 'I' },
+            { id: 6, name: 'Repartidora', count: 1, salary: (150 * 6 * 4), riskClass: 'III' },
+        ],
+        costs: {
+            utilities: 414 + 859 + 441, // Gas + Agua + Elec
+            admin: 2261, // Gasto de Administración
+            supplies: 26955, // Platillos
+            maintenance: 1500, // Mantenimiento local
+            other: 1000,
+        },
+    }
 };
   
 const chartOfAccounts = [
@@ -633,6 +697,9 @@ export default function FinancialsPage() {
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
                                 <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
+                                <SelectItem value="pizzeria-siglo-xxi">Proyecto: Pizzería Siglo XXI</SelectItem>
+                                <SelectItem value="papeleria-la-sirena">Proyecto: Papelería La Sirena</SelectItem>
+                                <SelectItem value="cocina-economica">Proyecto: Cocina Económica Nacozari</SelectItem>
                             </SelectContent>
                         </Select>
                     }
@@ -1076,5 +1143,3 @@ export default function FinancialsPage() {
     </div>
   );
 }
-
-    
