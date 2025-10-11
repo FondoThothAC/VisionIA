@@ -284,5 +284,3 @@ export default function DevelopmentGuidePage() {
         </div>
     );
 }
-
-    
