@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useEffect } from "react";
@@ -72,6 +73,10 @@ export default function SettingsPage() {
     const savedInegiKey = typeof process !== 'undefined' ? process.env.INEGI_API_TOKEN || '' : '';
     if (savedInegiKey) {
         setApiKeys(prev => ({...prev, inegi: savedInegiKey}));
+    }
+    const savedAlphaVantageKey = typeof process !== 'undefined' ? process.env.ALPHA_VANTAGE_API_TOKEN || '' : '';
+    if (savedAlphaVantageKey) {
+        setApiKeys(prev => ({...prev, alphaVantage: savedAlphaVantageKey}));
     }
 
     return () => clearTimeout(timer);
@@ -276,7 +281,8 @@ export default function SettingsPage() {
             <div className="space-y-4">
                 <h3 className="font-semibold text-lg">Datos de Comercio Internacional</h3>
                 {renderApiInput('itc', 'API de ITC (Market Access Map)', 'Aranceles, acuerdos comerciales y estadísticas de importación/exportación.')}
-                {renderApi-input('wco', 'API de WCO (Trade)', 'Clasificación arancelaria (HS Code) y datos de aduanas.')}
+                {renderApiInput('wco', 'API de WCO (Trade)', 'Clasificación arancelaria (HS Code) y datos de aduanas.')}
+            }
             </div>
             <Separator />
              <div className="space-y-4">
