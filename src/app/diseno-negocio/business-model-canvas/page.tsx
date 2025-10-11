@@ -43,6 +43,17 @@ const canvasDataSets = {
         customerSegments: "- Ecoturistas y amantes de la naturaleza (principalmente de Arizona).\n- Estudiantes y académicos de biología, geología y antropología.\n- Fotógrafos de paisaje y naturaleza.\n- Grupos en busca de retiros y desconexión.",
         costStructure: "- Mantenimiento de instalaciones y equipo.\n- Salarios de guías y personal operativo.\n- Costos de permisos y cumplimiento de normativas ambientales.\n- Inversión en marketing y comercialización.",
         revenueStreams: "- Venta de paquetes de recorridos ecoturísticos.\n- Cobro por hospedaje en las instalaciones.\n- Renta de equipo (bicicletas, kayaks).\n- Venta de artesanías locales y productos regionales."
+    },
+    "taller-carroceria": {
+      keyPartners: "- Aseguradoras de autos.\n- Proveedores de pintura y materiales (Axalta, 3M).\n- Talleres mecánicos para referidos.\n- Flotillas de empresas locales.",
+      keyActivities: "- Reparación de colisiones (chapa).\n- Aplicación de pintura y acabados.\n- Pulido y detallado automotriz.\n- Gestión de presupuestos y atención al cliente.",
+      keyResources: "- Taller equipado (compresora, pistolas, herramientas).\n- Personal técnico calificado.\n- Cabina de pintura (futura adquisición).\n- Relación con proveedores.",
+      valueProposition: "Servicio rápido, económico y de calidad en carrocería y pintura, con atención personalizada y seguimiento post-servicio para garantizar la satisfacción total del cliente.",
+      customerRelationships: "- Atención directa y personalizada.\n- Seguimiento post-servicio para control de calidad.\n- Garantía sobre el trabajo realizado.",
+      channels: "- Publicidad local (volantes, periódicos).\n- Redes sociales (Facebook, Instagram) para mostrar trabajos.\n- Referidos de clientes satisfechos.\n- Convenios con empresas y aseguradoras.",
+      customerSegments: "- Propietarios de vehículos particulares que han sufrido un accidente menor.\n- Personas que buscan mejorar la estética de su auto para uso personal o reventa.\n- Clientes que buscan una opción económica sin sacrificar calidad.",
+      costStructure: "- Materiales (pintura, solventes, lijas, pulimento).\n- Salarios del personal.\n- Renta del taller.\n- Servicios (luz, agua).\n- Publicidad.",
+      revenueStreams: "- Cobro por pieza pintada.\n- Reparaciones de golpes y abolladuras.\n- Servicios de pulido y encerado.\n- Trabajos de pintura general."
     }
 };
 
@@ -123,6 +134,7 @@ export default function BusinessModelCanvasPage() {
                         <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                         <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                         <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
+                        <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
                       </SelectContent>
                     </Select>
                 }
