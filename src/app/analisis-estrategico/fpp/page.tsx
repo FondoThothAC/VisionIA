@@ -36,6 +36,12 @@ const fppData: Record<string, FppState> = {
         actividadB: "Invertir en equipamiento especializado para tours (kayaks, bicicletas de montaña, telescopio) y capacitación de guías.",
         recursoLimitado: "Capital de inversión inicial de $520,000 MXN.",
         costoOportunidad: "Construir una cabaña (costo aprox. $100,000) implica no poder comprar 5 kayaks de alta gama y un telescopio profesional. Aumentar la capacidad de alojamiento puede generar más ingresos por noche, pero los tours especializados podrían atraer un mercado de mayor poder adquisitivo y mejorar la reputación del lugar."
+    },
+    "taller-carroceria": {
+        actividadA: "Invertir en una cabina de pintura profesional para acabados de alta gama y mayor rapidez.",
+        actividadB: "Contratar a dos pintores adicionales para aumentar la capacidad de trabajos simultáneos.",
+        recursoLimitado: "Inversión inicial de $110,899 del INAES.",
+        costoOportunidad: "Invertir en la cabina de pintura (~$80,000) consume la mayor parte del capital, retrasando la contratación de personal que podría aumentar el volumen de trabajo a corto plazo, aunque con acabados estándar. Contratar personal primero aumenta la capacidad pero crea cuellos de botella en el proceso de secado y acabado."
     }
 };
 
@@ -73,6 +79,7 @@ export default function FppPage() {
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
+                                <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
                               </SelectContent>
                             </Select>
                         }

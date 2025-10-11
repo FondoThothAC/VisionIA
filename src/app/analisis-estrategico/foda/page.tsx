@@ -40,7 +40,13 @@ const fodaData: Record<string, FodaState> = {
         fortalezas: "- Atractivos naturales únicos (desierto y mar).\n- Conocimiento profundo del área por parte de los ejidatarios.\n- Apoyo y relación con instituciones como CONANP y CONAFOR.\n- Riqueza histórica y cultural (asentamientos Pápago).",
         oportunidades: "- Cercanía a la frontera con EE.UU. (mercado de Arizona).\n- Aumento del interés en ecoturismo y experiencias auténticas.\n- Devaluación del peso abarata servicios para turistas extranjeros.\n- Infraestructura carretera recién inaugurada (Carretera Costera).",
         debilidades: "- Infraestructura de servicios básicos (agua, luz) muy pobre o inexistente.\n- Falta de capital para inversión inicial fuerte.\n- Poca experiencia en la industria del turismo y gestión de negocios.\n- Residencia de ejidatarios fuera del territorio del proyecto.",
-        amenazas: "- Clima extremo en invierno y verano.\n- Desconocimiento general del público sobre la existencia de estos atractivos.\n- Falta de cultura sobre el cuidado de la naturaleza por parte de algunos visitantes."
+        amenazas: "- Clima extremo en invierno y en verano.\n- Desconocimiento general del público sobre la existencia de estos atractivos.\n- Falta de cultura sobre el cuidado de la naturaleza por parte de algunos visitantes."
+    },
+    "taller-carroceria": {
+        fortalezas: "- Más de 10 años de experiencia de los integrantes en el servicio de carrocería y pintura.\n- Enfoque en la atención personalizada y seguimiento post-servicio para generar confianza.\n- Estrategia de precios competitivos, manteniéndose por debajo de la competencia directa.",
+        oportunidades: "- Mercado constante debido a daños por accidentes o desgaste natural de los vehículos.\n- Posibilidad de captar clientes que buscan calidad a un precio económico.\n- El incremento en el valor de reventa de un auto bien cuidado es un buen argumento de venta.",
+        debilidades: "- El taller necesita remodelación y equipamiento nuevo.\n- Ubicación no céntrica, dependiendo de vías de acceso principales como el Blvd. Solidaridad.\n- Es una empresa nueva que compite contra talleres ya establecidos y con experiencia en el mercado.",
+        amenazas: "- Competencia fuerte con empresas ya instaladas y con mayor equipamiento.\n- Aumento constante en el precio de los materiales (pintura, thinner, bondo).\n- Percepción del cliente de que un precio más bajo podría significar menor calidad."
     }
 };
 
@@ -79,6 +85,7 @@ export default function FodaPage() {
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
+                                <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
                               </SelectContent>
                             </Select>
                         }

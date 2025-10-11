@@ -43,6 +43,14 @@ const pestelData: Record<string, PestelState> = {
         tecnologicos: "- Oportunidad de usar energía solar para la operación (paneles, bombas solares).\n- Uso de redes sociales y marketing digital para alcanzar nichos de mercado (académico, observadores de aves).",
         ecologicos: "- Ubicación dentro de la Reserva de la Biósfera es un atractivo central.\n- Riqueza de ecosistemas (mar-desierto), flora y fauna únicos.",
         legales: "- El proyecto está sujeto a las regulaciones y Plan de Manejo de la Reserva del Alto Golfo.\n- Necesidad de permisos específicos para construcción y operación en un área natural protegida."
+    },
+    "taller-carroceria": {
+        politicos: "- Programas gubernamentales de apoyo a PyMEs (Oportunidad).\n- Regulaciones ambientales más estrictas sobre el manejo de solventes y pinturas (Amenaza).",
+        economicos: "- Inestabilidad económica puede reducir el gasto discrecional en reparaciones estéticas (Amenaza).\n- El aumento del parque vehicular en la ciudad incrementa el mercado potencial (Oportunidad).",
+        sociales: "- Tendencia a conservar los vehículos por más tiempo en lugar de comprar nuevos (Oportunidad).\n- Valoración de la apariencia del vehículo como símbolo de estatus (Oportunidad).",
+        tecnologicos: "- Nuevas tecnologías en pintura y materiales de reparación que mejoran la calidad y eficiencia (Oportunidad).\n- Necesidad de inversión y capacitación constante para usar nuevas herramientas y técnicas (Amenaza).",
+        ecologicos: "- Exigencia de un manejo adecuado de residuos tóxicos (Amenaza).\n- Oportunidad de usar productos y pinturas con base de agua, más ecológicos, como diferenciador.",
+        legales: "- Requisitos de protección civil y permisos de operación municipal (Amenaza).\n- Normas sobre garantías en servicios de reparación que deben cumplirse (Amenaza)."
     }
 };
 
@@ -80,6 +88,7 @@ export default function PestelPage() {
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
+                                <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
                               </SelectContent>
                             </Select>
                         }
