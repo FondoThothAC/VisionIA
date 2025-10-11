@@ -13,7 +13,7 @@ const TradeInfoSchema = z.object({
   query: z
     .string()
     .describe(
-      'The specific trade, business, or financial question (e.g., "tariffs for exporting coffee from Mexico to the EU", "top importers of avocados worldwide", "restaurantes en Guadalajara", "statistics on e-commerce growth", "USD to MXN exchange rate", "precio del aguacate en CDMX segun PROFECO").'
+      'The specific trade, business, or financial question (e.g., "tariffs for exporting coffee from Mexico to the EU", "top importers of avocados worldwide", "restaurantes en Guadalajara", "statistics on e-commerce growth", "USD to MXN exchange rate", "precio del aguacate en CDMX segun PROFECO", "population of Canada").'
     ),
 });
 
@@ -21,7 +21,7 @@ export const getTradeInformation = ai.defineTool(
   {
     name: 'getTradeInformation',
     description:
-      'Provides information on trade tariffs, market access (ITC/WCO), local business data for Mexico (INEGI DENUE), price comparisons (PROFECO), market statistics (Statista), and financial data like stock prices or exchange rates (Alpha Vantage). Use this to enrich business plans with real-world data.',
+      'Provides information from multiple sources: international trade data (ITC/WCO), local business data for Mexico (INEGI DENUE), price comparisons (PROFECO), market statistics (Statista), financial data (Alpha Vantage), and global demographic/economic indicators (UN Data). Use this to enrich business plans with real-world data.',
     inputSchema: TradeInfoSchema,
     outputSchema: z.string().describe('A summary of the requested trade, business, or financial data.'),
   },
@@ -90,6 +90,12 @@ export const getTradeInformation = ai.defineTool(
              return `[Simulated Alpha Vantage Response] Financial data for your query is available and would be fetched here.`;
         }
         return `[Alpha Vantage] A query for financial data was detected, but the Alpha Vantage API key is not configured in the settings.`;
+    }
+
+    // Check if query is about international demographic or economic data
+    const unDataKeywords = ['population', 'gdp', 'hdi', 'demographics', 'población', 'pib'];
+    if (unDataKeywords.some(keyword => query.toLowerCase().includes(keyword))) {
+        return `[Simulated UN Data Response] According to UN Data, the population of Canada is projected to be 40 million in 2025. This information is vital for calculating the potential market size for products targeting this country.`;
     }
     
     // Fallback to mock data for international trade
