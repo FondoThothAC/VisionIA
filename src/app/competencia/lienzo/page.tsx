@@ -51,8 +51,40 @@ const competitorData: Record<string, Competitor[]> = {
             marketingStrategy: "Venta directa y equipo comercial. Sin marketing digital visible.",
         }
     ],
-    "restaurante-gambusinos": [],
-    "ecoturismo-la-salina": [],
+    "restaurante-gambusinos": [
+        {
+            id: 1,
+            name: "Restaurantes de comida corrida en Aconchi",
+            valueProposition: "Comida casera y económica para locales y trabajadores.",
+            customerSegment: "Trabajadores locales, familias que buscan una opción rápida.",
+            pricing: "Económico, menú del día a precio fijo.",
+            strengths: "Precios bajos, rapidez en el servicio.",
+            weaknesses: "Poca o nula ambientación, menú limitado, no es un destino turístico.",
+            marketingStrategy: "Reputación local de boca en boca, ubicación céntrica.",
+        },
+    ],
+    "ecoturismo-la-salina": [
+        {
+            id: 1,
+            name: "Reserva de la Biosfera El Pinacate",
+            valueProposition: "Recorridos vehiculares y senderismo en un paisaje volcánico protegido y reconocido mundialmente.",
+            customerSegment: "Turismo general, familias, entusiastas de la geología.",
+            pricing: "Cuota de entrada fija por persona, administrada por el gobierno.",
+            strengths: "Infraestructura bien establecida (centro de visitantes, caminos). Reconocimiento internacional (UNESCO).",
+            weaknesses: "Enfocado en el paisaje desértico-volcánico, no en la costa. Actividades más pasivas (observación).",
+            marketingStrategy: "Promoción a través de canales gubernamentales de turismo y CONANP.",
+        },
+        {
+            id: 2,
+            name: "CEDO (Centro Intercultural de Estudios de Desiertos y Océanos)",
+            valueProposition: "Tours educativos y científicos enfocados en la vida marina y los estuarios.",
+            customerSegment: "Estudiantes, académicos, turistas con alto interés en biología marina.",
+            pricing: "Precios por tour, enfocados en grupos pequeños y con valor educativo.",
+            strengths: "Personal científico (biólogos). Reputación académica. Enfoque especializado.",
+            weaknesses: "Oferta de tours limitada y con horarios específicos. Menos enfocado en la aventura o la experiencia cultural.",
+            marketingStrategy: "Alianzas con universidades, promoción en círculos académicos y de conservación.",
+        },
+    ],
     "taller-carroceria": [
          {
             id: 1,
@@ -76,7 +108,6 @@ const competitorData: Record<string, Competitor[]> = {
         },
     ]
 };
-
 
 const CompetitorCard = ({ competitor, onUpdate, onRemove }: { competitor: Competitor, onUpdate: (id: number, field: keyof Competitor, value: string) => void, onRemove: (id: number) => void }) => {
   return (
