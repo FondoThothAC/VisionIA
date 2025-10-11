@@ -20,81 +20,135 @@ const sections = [
     {
         value: "item-1",
         title: "1. Resumen Ejecutivo",
-        intro: "Es la sección más importante. Una síntesis de 1-2 páginas de todos los puntos clave. Aunque va al principio, se escribe al final.",
-        questions: [
-            "¿Qué es la empresa y qué hace?",
-            "¿Qué problema resuelve?",
-            "¿Quiénes son sus clientes?",
-            "¿Quién está detrás del proyecto?",
-            "¿Cuáles son los puntos financieros más destacados (ventas proyectadas, rentabilidad)?",
-            "¿Cuánto financiamiento se necesita y para qué se usará?",
+        intro: "Preguntas Guía: ¿Cuál es tu negocio en una frase? ¿Qué problema solucionas? ¿Cuál es tu misión y visión? ¿Cuánto necesitas para empezar y cuál es el retorno esperado?",
+        subtopics: [
+            { title: "Nota para la app", description: "Este módulo se auto-rellenará con la información de las otras secciones una vez completadas." }
         ],
     },
     {
         value: "item-2",
-        title: "2. Descripción de la Empresa",
-        intro: "La carta de presentación formal de tu negocio. Aquí se detalla la idea general, la misión, la visión y los objetivos.",
-        questions: [
-            "¿Cuál es la misión (el propósito) y la visión (a dónde quiere llegar) de la empresa?",
-            "¿Cuál es su estructura legal (Persona Física con Actividad Empresarial, S.A.S., S.A. de C.V., etc.)?",
-            "¿En qué etapa se encuentra el negocio (idea, startup, en operación)?",
-            "¿Cuáles son las ventajas competitivas clave?",
+        title: "2. Descripción General del Negocio",
+        intro: "Presentación formal de tu negocio, detallando la idea, misión, visión y objetivos.",
+        subtopics: [
+            { title: "Nombre y Giro del Proyecto", description: "" },
+            { title: "Ubicación (Estado, Municipio, Comunidad)", description: "" },
+            { title: "Producto o Servicio Principal", description: "" },
+            { title: "Justificación (Oportunidad de mercado, necesidad social)", description: "" },
         ],
     },
     {
         value: "item-3",
-        title: "3. Análisis de Mercado",
-        intro: "La evidencia de que existe una oportunidad real para tu negocio. Demuestra que entiendes la industria, tus clientes y tu competencia.",
-        questions: [
-            "Industria: ¿Qué tan grande es el mercado? ¿Está creciendo o disminuyendo? ¿Cuáles son las tendencias actuales?",
-            "Cliente Ideal (Target Market): ¿Quiénes son tus clientes? (Demografía, comportamiento, necesidades).",
-            "Competencia: ¿Quiénes son tus competidores directos e indirectos? ¿Qué hacen bien y qué hacen mal (tu oportunidad)?",
-            "Análisis FODA: ¿Cuáles son las Fortalezas, Oportunidades, Debilidades y Amenazas de tu proyecto en este mercado en este mercado?",
+        title: "3. Perfil del Grupo / Emprendedor",
+        intro: "Describe quién está detrás del proyecto.",
+        subtopics: [
+            { title: "Historia y motivación del grupo o individuo", description: "" },
+            { title: "Experiencia y habilidades relevantes", description: "" },
+            { title: "Recursos existentes (activos con los que ya cuentan)", description: "" },
         ],
     },
     {
         value: "item-4",
-        title: "4. Organización y Gestión",
-        intro: "Un negocio es tan bueno como el equipo que lo dirige. Esta sección presenta a las personas clave detrás del proyecto.",
-        questions: [
-            "¿Quiénes forman el equipo directivo y qué experiencia relevante tienen?",
-            "¿Cuál es la estructura organizativa (organigrama)?",
-            "¿Qué roles y responsabilidades tiene cada miembro del equipo?",
-            "¿Se necesita contratar personal clave en el futuro?",
+        title: "4. Objetivos y Metas (SMART)",
+        intro: "Define el gran propósito y las acciones concretas para alcanzarlo.",
+        subtopics: [
+            { title: "Objetivo General", description: "El gran propósito." },
+            { title: "Objetivos Específicos", description: "Acciones concretas." },
+            { title: "Metas Cuantificables", description: "Ventas proyectadas, empleos a generar, utilidades." },
+            { title: "Plazos", description: "Corto (1 año), Mediano (2-3 años), Largo (5 años)." },
         ],
     },
     {
         value: "item-5",
-        title: "5. Productos o Servicios",
-        intro: "Aquí se describe en detalle lo que vendes.",
-        questions: [
-            "¿Qué producto o servicio ofreces? ¿Cómo funciona?",
-            "¿Qué lo hace único o mejor que las alternativas existentes? (Propuesta Única de Valor).",
-            "¿Cómo está protegido (patentes, marcas registradas, derechos de autor)?",
-            "¿Cuál es el ciclo de vida del producto? ¿Hay planes para futuros productos o versiones?",
+        title: "5. Análisis de Mercado",
+        intro: "Demuestra que entiendes la industria, tus clientes y tu competencia.",
+        subtopics: [
+            { title: "Demanda", description: "Perfil del cliente potencial (segmentación), poder adquisitivo, hábitos de consumo." },
+            { title: "Oferta", description: "Análisis de la competencia directa e indirecta (fortalezas, debilidades, precios)." },
+            { title: "Cálculo del Mercado Potencial", description: "Tamaño total del mercado y participación esperada (market share)." },
         ],
     },
     {
         value: "item-6",
-        title: "6. Estrategia de Marketing y Ventas",
-        intro: "Es el plan de acción para llegar a tus clientes y convencerlos de comprar.",
-        questions: [
-            "Marketing (Cómo te conocerán): ¿Qué canales usarás para llegar a tu público objetivo (redes sociales, SEO, publicidad online, etc.)?",
-            "Ventas (Cómo comprarán): ¿Cuál será tu proceso de ventas (tienda en línea, equipo de ventas directas, distribuidores)?",
-            "Precio: ¿Cuál es tu estrategia de precios y por qué?",
-            "Posicionamiento: ¿Cómo quieres que los clientes perciban tu marca?",
+        title: "6. Estrategia de Comercialización",
+        intro: "Plan de acción para llegar a tus clientes y convencerlos de comprar.",
+        subtopics: [
+            { title: "Canales de Venta", description: "¿Cómo llegarás al cliente? (Tienda física, online, redes sociales)." },
+            { title: "Estrategia de Precios", description: "¿Cómo fijarás tus precios? (Basado en costos, competencia, valor)." },
+            { title: "Promoción y Publicidad", description: "¿Cómo te darás a conocer?" },
+            { title: "Propuesta Única de Valor (PUV)", description: "¿Qué te hace diferente y especial?" },
         ],
     },
     {
         value: "item-7",
-        title: "7. Plan Financiero",
-        intro: "Son los números que respaldan todo lo dicho anteriormente. Es la sección más examinada por los inversores. Esta sección se cubre en profundidad en nuestra pestaña de 'Finanzas'.",
-        questions: [
-            "Proyecciones Financieras: ¿Cuáles son tus pronósticos de ingresos, costos y gastos para los próximos 3 a 5 años?",
-            "Análisis de Punto de Equilibrio: ¿Cuánto necesitas vender para empezar a ser rentable?",
-            "Requerimiento de Financiamiento: Si buscas inversión, ¿cuánto dinero necesitas, en qué lo vas a usar y qué ofreces a cambio?",
-            "Supuestos Clave: ¿Cuáles son las suposiciones más importantes en las que se basan tus proyecciones?",
+        title: "7. Modelo de Negocio (Business Model Canvas)",
+        intro: "Implementar un lienzo interactivo del Business Model Canvas con sus 9 bloques.",
+        subtopics: [],
+    },
+    {
+        value: "item-8",
+        title: "8. Estudio Técnico y Operativo",
+        intro: "Detalla cómo funcionará tu negocio en el día a día.",
+        subtopics: [
+            { title: "Proceso", description: "Diagrama de flujo del proceso productivo o de servicio." },
+            { title: "Localización y Distribución", description: "Descripción y croquis del local." },
+            { title: "Equipamiento y Proveedores", description: "Lista de maquinaria necesaria y proveedores clave." },
+            { title: "Normatividad", description: "Permisos y licencias requeridos para operar." },
         ],
+    },
+    {
+        value: "item-9",
+        title: "9. Plan de Recursos Humanos",
+        intro: "Define la estructura de tu equipo.",
+        subtopics: [
+            { title: "Organigrama", description: "Estructura de roles y jerarquía." },
+            { title: "Perfiles de Puesto", description: "Responsabilidades y habilidades por rol." },
+            { title: "Plan de Capacitación", description: "¿Qué formación necesita el equipo?" },
+        ],
+    },
+    {
+        value: "item-10",
+        title: "10. Cronograma de Ejecución",
+        intro: "Implementar un Diagrama de Gantt simple donde el usuario pueda listar actividades clave y asignarles fechas de inicio y fin.",
+        subtopics: [],
+    },
+    {
+        value: "item-11",
+        title: "11. Análisis Financiero (Proyecciones a 5 años)",
+        intro: "Los números que respaldan todo lo dicho anteriormente.",
+        subtopics: [
+            { title: "Inversión Inicial", description: "Activos fijos, diferidos y capital de trabajo." },
+            { title: "Proyección de Ingresos", description: "Ventas estimadas (volumen x precio)." },
+            { title: "Proyección de Costos", description: "Costos fijos y variables." },
+            { title: "Estado de Resultados Proyectado", description: "" },
+            { title: "Punto de Equilibrio", description: "" },
+            { title: "Flujo de Efectivo Proyectado", description: "" },
+            { title: "Indicadores de Rentabilidad", description: "VAN, TIR y B/C." },
+        ],
+    },
+    {
+        value: "item-12",
+        title: "12. Análisis de Riesgos",
+        intro: "Identifica posibles problemas y cómo los enfrentarás.",
+        subtopics: [
+            { title: "Identificación de Riesgos", description: "De mercado, operativos, financieros." },
+            { title: "Estrategias de Mitigación", description: "¿Qué harás si esos riesgos ocurren?" },
+        ],
+    },
+    {
+        value: "item-13",
+        title: "13. Impacto Social y Sostenibilidad (Si aplica)",
+        intro: "Describe el impacto positivo de tu proyecto más allá de lo económico.",
+        subtopics: [
+            { title: "Generación de empleo en grupos vulnerables", description: "" },
+            { title: "Sostenibilidad ambiental", description: "" },
+            { title: "Inclusión social", description: "" },
+        ],
+    },
+    {
+        value: "item-14",
+        title: "14. Anexos",
+        intro: "Implementar una sección para que el usuario pueda subir archivos de soporte como cotizaciones, croquis, etc.",
+        subtopics: [],
     },
 ];
 
@@ -129,8 +183,8 @@ export default function GuiaPlanNegociosPage() {
     return (
         <div className="space-y-8">
             <PageHeader
-                title="Guía Estructurada del Plan de Negocios"
-                description="Tu hoja de ruta para un proyecto exitoso. Usa esta guía como referencia al completar las secciones de tu plan."
+                title="Guía Definitiva para Planes de Negocio"
+                description="Tu hoja de ruta para un proyecto exitoso, basada en la estructura común de casos de éxito."
             />
 
             <Card>
@@ -209,7 +263,7 @@ export default function GuiaPlanNegociosPage() {
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Estructura Fundamental</CardTitle>
+                    <CardTitle>Estructura Estandarizada VisionIA</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <Accordion type="single" collapsible className="w-full">
@@ -220,12 +274,19 @@ export default function GuiaPlanNegociosPage() {
                                 </AccordionTrigger>
                                 <AccordionContent className="prose prose-sm max-w-none dark:prose-invert">
                                     <p className="lead">{section.intro}</p>
-                                    <h4>Preguntas que responde:</h4>
-                                    <ul>
-                                        {section.questions.map((question, index) => (
-                                            <li key={index}>{question}</li>
-                                        ))}
-                                    </ul>
+                                    {section.subtopics.length > 0 && (
+                                        <>
+                                            <h4>Subtemas Clave:</h4>
+                                            <ul>
+                                                {section.subtopics.map((sub, index) => (
+                                                    <li key={index}>
+                                                        <strong>{sub.title}:</strong>
+                                                        {sub.description && ` ${sub.description}`}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </>
+                                    )}
                                 </AccordionContent>
                             </AccordionItem>
                         ))}
@@ -235,5 +296,3 @@ export default function GuiaPlanNegociosPage() {
         </div>
     );
 }
-
-    
