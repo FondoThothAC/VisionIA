@@ -15,6 +15,8 @@ import { Label } from "@/components/ui/label";
 import PageHeader from "@/components/page-header";
 import { Save, PlusCircle, Trash2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 
 type EmpathyMapState = {
   thinksAndFeels: string;
@@ -41,6 +43,17 @@ type CustomerJourneyMapState = {
     service: string;
     loyalty: string;
 }
+
+type SurveyQuestion = {
+    id: number;
+    text: string;
+    type: 'deseo' | 'necesidad' | 'demanda' | 'demografico' | 'abierta';
+};
+
+type SurveyState = {
+    objective: string;
+    questions: SurveyQuestion[];
+};
 
 const initialEmpathyMap: EmpathyMapState = {
     thinksAndFeels: "Preocupado por el impacto ambiental, busca productos éticos. Se siente bien al apoyar a pequeños productores. Valora la calidad y la historia detrás del producto.",
@@ -76,14 +89,27 @@ const initialCustomerJourneyMap: CustomerJourneyMapState = {
     loyalty: "El café es excelente. Ana publica una historia en Instagram etiquetando a la marca. Se suscribe al plan mensual para recibir café automáticamente y obtener un descuento."
 }
 
+const initialSurvey: SurveyState = {
+    objective: "Validar el interés en un servicio de suscripción de café de especialidad de origen ético y medir la disposición a pagar un precio premium.",
+    questions: [
+        { id: 1, text: "¿Con qué frecuencia consumes café de especialidad (no comercial)?", type: 'demanda' },
+        { id: 2, text: "¿Qué es lo más importante para ti al elegir un café?", type: 'necesidad' },
+        { id: 3, text: "Si existiera un servicio que te entrega café recién tostado de pequeños productores a tu puerta, ¿qué tan interesado estarías?", type: 'deseo' },
+        { id: 4, text: "¿Cuánto estarías dispuesto a pagar mensualmente por 500g de café de alta calidad y origen transparente?", type: 'demanda' },
+        { id: 5, text: "¿Cuál es tu rango de edad?", type: 'demografico' },
+    ]
+};
+
 
 export default function ClientesPage() {
     const [empathyMap, setEmpathyMap] = useState<EmpathyMapState>(initialEmpathyMap);
     const [buyerPersona, setBuyerPersona] = useState<BuyerPersonaState>(initialBuyerPersona);
     const [journeyMap, setJourneyMap] = useState<CustomerJourneyMapState>(initialCustomerJourneyMap);
+    const [survey, setSurvey] = useState<SurveyState>(initialSurvey);
+
 
     const handleSave = () => {
-        console.log("Guardando datos del cliente:", { empathyMap, buyerPersona, journeyMap });
+        console.log("Guardando datos del cliente:", { empathyMap, buyerPersona, journeyMap, survey });
         alert("Datos del cliente guardados en la consola.");
     }
 
@@ -127,6 +153,26 @@ export default function ClientesPage() {
         }));
     };
 
+    const handleSurveyChange = (field: 'objective' | 'questions', value: any) => {
+        setSurvey(prev => ({ ...prev, [field]: value }));
+    };
+
+    const handleQuestionChange = (id: number, field: 'text' | 'type', value: string) => {
+        const updatedQuestions = survey.questions.map(q => 
+            q.id === id ? { ...q, [field]: value } : q
+        );
+        handleSurveyChange('questions', updatedQuestions);
+    };
+
+    const addQuestion = () => {
+        const newQuestion: SurveyQuestion = { id: Date.now(), text: "", type: 'abierta' };
+        handleSurveyChange('questions', [...survey.questions, newQuestion]);
+    };
+
+    const removeQuestion = (id: number) => {
+        const updatedQuestions = survey.questions.filter(q => q.id !== id);
+        handleSurveyChange('questions', updatedQuestions);
+    };
 
     return (
         <div className="space-y-8">
@@ -224,6 +270,64 @@ export default function ClientesPage() {
                     </CardContent>
                 </Card>
 
+                {/* Survey Builder */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Encuesta de Validación de Mercado</CardTitle>
+                        <CardDescription>Crea una encuesta para obtener datos reales de tus clientes potenciales.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                        <div className="space-y-2">
+                            <Label htmlFor="survey-objective">Objetivo de la Encuesta</Label>
+                            <Textarea
+                                id="survey-objective"
+                                value={survey.objective}
+                                onChange={(e) => handleSurveyChange('objective', e.target.value)}
+                                placeholder="¿Qué quieres descubrir con esta encuesta?"
+                            />
+                        </div>
+                        <div className="space-y-4">
+                            <Label>Preguntas de la Encuesta</Label>
+                            {survey.questions.map((q, index) => (
+                                <div key={q.id} className="flex items-start gap-3 p-3 border rounded-lg relative">
+                                    <span className="font-semibold text-muted-foreground pt-2">{index + 1}.</span>
+                                    <div className="flex-grow space-y-2">
+                                        <Input
+                                            value={q.text}
+                                            onChange={(e) => handleQuestionChange(q.id, 'text', e.target.value)}
+                                            placeholder="Escribe tu pregunta aquí..."
+                                        />
+                                        <Select value={q.type} onValueChange={(value) => handleQuestionChange(q.id, 'type', value)}>
+                                            <SelectTrigger className="w-[180px]">
+                                                <SelectValue placeholder="Tipo de pregunta" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="necesidad">Necesidad</SelectItem>
+                                                <SelectItem value="deseo">Deseo</SelectItem>
+                                                <SelectItem value="demanda">Demanda</SelectItem>
+                                                <SelectItem value="demografico">Demográfica</SelectItem>
+                                                <SelectItem value="abierta">Abierta</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                    <Button variant="ghost" size="icon" onClick={() => removeQuestion(q.id)} className="shrink-0">
+                                        <Trash2 className="h-4 w-4 text-destructive/70 hover:text-destructive" />
+                                    </Button>
+                                </div>
+                            ))}
+                             <Button variant="outline" onClick={addQuestion} className="w-full">
+                                <PlusCircle className="mr-2 h-4 w-4" /> Añadir Pregunta
+                            </Button>
+                        </div>
+                        <div className="space-y-2">
+                            <Label>Resultados y Análisis (Próximamente)</Label>
+                             <div className="p-8 border-2 border-dashed rounded-lg flex items-center justify-center text-muted-foreground">
+                                Los resultados de tu encuesta se visualizarán aquí.
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
                 {/* Buyer Persona */}
                 <Card>
                     <CardHeader>
@@ -291,3 +395,5 @@ export default function ClientesPage() {
         </div>
     )
 }
+
+    
