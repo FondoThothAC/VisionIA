@@ -1,8 +1,8 @@
 'use server';
 /**
- * @fileOverview Defines a Genkit tool for retrieving information from the "Guía de Recursos Estándar para Planes y Modelos de Negocio".
+ * @fileOverview Defines a Genkit tool for retrieving information from various business and economic data sources.
  *
- * - businessPlanGuideTool - A tool that provides information from the guide.
+ * - getTradeInformation - A tool that provides information from multiple APIs.
  */
 
 import {ai} from '@/ai/genkit';
@@ -12,7 +12,7 @@ const TradeInfoSchema = z.object({
   query: z
     .string()
     .describe(
-      'The specific trade-related question (e.g., "tariffs for exporting coffee from Mexico to the EU", "top importers of avocados worldwide", "restaurantes en Guadalajara", "statistics on e-commerce growth").'
+      'The specific trade, business, or financial question (e.g., "tariffs for exporting coffee from Mexico to the EU", "top importers of avocados worldwide", "restaurantes en Guadalajara", "statistics on e-commerce growth", "USD to MXN exchange rate").'
     ),
 });
 
@@ -20,15 +20,16 @@ export const getTradeInformation = ai.defineTool(
   {
     name: 'getTradeInformation',
     description:
-      'Provides information on trade tariffs, market access conditions, and trade flows using international data sources like ITC Trade Map or WCO. It can also query local business information for Mexico using the INEGI DENUE API, and retrieve market statistics and industry trends from Statista.',
+      'Provides information on trade tariffs, market access (ITC/WCO), local business data for Mexico (INEGI DENUE), market statistics (Statista), and financial data like stock prices or exchange rates (Alpha Vantage).',
     inputSchema: TradeInfoSchema,
-    outputSchema: z.string().describe('A summary of the requested trade or business data.'),
+    outputSchema: z.string().describe('A summary of the requested trade, business, or financial data.'),
   },
   async ({query}) => {
     console.log(`[Trade Tool] Answering query: ${query}`);
     
     const inegiToken = process.env.INEGI_API_TOKEN;
     const statistaToken = process.env.STATISTA_API_TOKEN;
+    const alphaVantageToken = process.env.ALPHA_VANTAGE_API_TOKEN;
     
     // Check if the query is about local businesses in Mexico
     if (inegiToken && query.toLowerCase().includes(' en ')) {
@@ -68,6 +69,19 @@ export const getTradeInformation = ai.defineTool(
             return `[Simulated Statista Response] According to Statista, the e-commerce market in Mexico is projected to grow by 15% annually over the next 3 years, driven by increasing internet penetration and consumer trust.`;
         }
         return `[Statista] A query for statistics was detected, but the Statista API key is not configured in the settings.`;
+    }
+    
+    // Check if the query is about financial data
+    const financialKeywords = ['exchange rate', 'stock price', 'forex', 'tipo de cambio', 'precio de acción'];
+    if (financialKeywords.some(keyword => query.toLowerCase().includes(keyword))) {
+        if (alphaVantageToken) {
+            // Here you would implement the actual fetch to Alpha Vantage API
+            if (query.toLowerCase().includes('usd to mxn')) {
+                 return `[Simulated Alpha Vantage Response] The current USD to MXN exchange rate is 17.05. This data is essential for financial projections involving international transactions.`;
+            }
+             return `[Simulated Alpha Vantage Response] Financial data for your query is available and would be fetched here.`;
+        }
+        return `[Alpha Vantage] A query for financial data was detected, but the Alpha Vantage API key is not configured in the settings.`;
     }
     
     // Fallback to mock data for international trade

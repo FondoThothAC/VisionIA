@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import PageHeader from "@/components/page-header";
@@ -49,13 +49,18 @@ export default function SettingsPage() {
 
   const handleSaveApiKeys = () => {
     // In a real app, you'd save these to a secure backend or local storage.
-    // For this prototype, we'll just log them to the console.
-    console.log("Saving API Keys:", apiKeys);
-    alert("API Keys guardadas en la consola (en una app real, esto sería seguro).");
-    // You could also update process.env here if running in a Node.js-like environment,
-    // but that's complex on the client-side. This setup assumes keys are set on the server.
+    // For this prototype, we'll just log them to the console and update process.env if possible.
+    // NOTE: Client-side process.env updates are not standard and usually don't persist.
+    // This is for demonstration; a real implementation would use a backend service.
+    if (typeof process !== 'undefined' && process.env) {
+      if(apiKeys.inegi) (process.env as any).INEGI_API_TOKEN = apiKeys.inegi;
+      if(apiKeys.statista) (process.env as any).STATISTA_API_TOKEN = apiKeys.statista;
+      if(apiKeys.alphaVantage) (process.env as any).ALPHA_VANTAGE_API_TOKEN = apiKeys.alphaVantage;
+    }
+    console.log("Saving API Keys. Note: These are set for the current session only.", apiKeys);
+    alert("API Keys guardadas para la sesión actual (ver consola). En una app real, esto sería persistente y seguro.");
   };
-
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       setLocalTextModels(prev => prev.map(m => m.id === 'llama-3-local' ? { ...m, detected: true } : m));
@@ -64,13 +69,10 @@ export default function SettingsPage() {
       setIsDetecting(false);
     }, 2000);
 
-    // Here you would also fetch any previously saved API keys from your storage
-    // For now, we'll just initialize them as empty.
-    const savedInegiKey = process.env.NEXT_PUBLIC_INEGI_API_TOKEN || '';
+    const savedInegiKey = typeof process !== 'undefined' ? process.env.INEGI_API_TOKEN || '' : '';
     if (savedInegiKey) {
         setApiKeys(prev => ({...prev, inegi: savedInegiKey}));
     }
-
 
     return () => clearTimeout(timer);
   }, []);
@@ -123,18 +125,14 @@ export default function SettingsPage() {
   };
 
   const renderApiInput = (id: keyof typeof apiKeys, label: string, description: string) => {
-      const isInegi = id === 'inegi';
-      const isConnected = isInegi; // Logic to determine if connected, for now only INEGI is "connected" by default
+      const isConnected = !!apiKeys[id];
       return (
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border rounded-lg">
-            <div className="mb-4 sm:mb-0">
-                <Label htmlFor={`api-${id}`}>{label}</Label>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border rounded-lg gap-4">
+            <div className="flex-grow">
+                <Label htmlFor={`api-${id}`} className="font-semibold">{label}</Label>
                 <p className="text-xs text-muted-foreground">{description}</p>
             </div>
-            <div className="flex w-full sm:w-auto flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                <Badge variant={isConnected ? "default" : "destructive"}>
-                    {isConnected ? 'Conectado' : 'Requiere API Key'}
-                </Badge>
+            <div className="flex w-full sm:w-auto flex-col sm:flex-row items-stretch sm:items-center gap-2">
                 <Input 
                     id={`api-${id}`} 
                     name={id}
@@ -144,6 +142,9 @@ export default function SettingsPage() {
                     onChange={handleApiKeyChange}
                     type="password"
                 />
+                 <Badge variant={isConnected ? "default" : "destructive"} className="h-fit py-1 justify-center">
+                    {isConnected ? 'Conectado' : 'No Conectado'}
+                </Badge>
             </div>
         </div>
       );
@@ -262,29 +263,29 @@ export default function SettingsPage() {
         <CardHeader>
             <CardTitle>Fuentes de Datos y APIs</CardTitle>
             <CardDescription>
-                Conecta la aplicación a fuentes de datos externas para enriquecer tu análisis de mercado y financiero.
+                Conecta la aplicación a fuentes de datos externas para enriquecer tu análisis de mercado y financiero. Las claves se guardan solo para tu sesión actual.
             </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
             <div className="space-y-4">
-                <h3 className="font-medium">Datos de Mercado Nacional</h3>
-                {renderApiInput('inegi', 'API de INEGI (México)', 'Datos demográficos y económicos de México.')}
+                <h3 className="font-semibold text-lg">Datos de Mercado Nacional</h3>
+                {renderApiInput('inegi', 'API de INEGI (DENUE)', 'Datos demográficos y de unidades económicas de México.')}
                 {renderApiInput('statista', 'API de Statista', 'Estadísticas y reportes de industria globales.')}
             </div>
             <Separator />
             <div className="space-y-4">
-                <h3 className="font-medium">Datos de Comercio Internacional</h3>
+                <h3 className="font-semibold text-lg">Datos de Comercio Internacional</h3>
                 {renderApiInput('itc', 'API de ITC (Market Access Map)', 'Aranceles, acuerdos comerciales y estadísticas de importación/exportación.')}
-                {renderApiInput('wco', 'API de WCO (Trade)', 'Clasificación arancelaria (HS Code) y datos de aduanas.')}
+                {renderApi-input('wco', 'API de WCO (Trade)', 'Clasificación arancelaria (HS Code) y datos de aduanas.')}
             </div>
             <Separator />
              <div className="space-y-4">
-                <h3 className="font-medium">Datos Financieros</h3>
+                <h3 className="font-semibold text-lg">Datos Financieros</h3>
                 {renderApiInput('alphaVantage', 'API de Alpha Vantage', 'Datos de mercados de valores y tipos de cambio.')}
             </div>
         </CardContent>
         <CardFooter>
-            <Button onClick={handleSaveApiKeys}>Guardar Claves de API</Button>
+            <Button onClick={handleSaveApiKeys}>Guardar Claves de API para la Sesión</Button>
         </CardFooter>
       </Card>
     </div>
