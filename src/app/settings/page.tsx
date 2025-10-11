@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useEffect } from "react";
@@ -10,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 
 type LocalModel = {
   id: string;
@@ -34,16 +34,43 @@ export default function SettingsPage() {
   ]);
 
   const [isDetecting, setIsDetecting] = useState(true);
+  const [apiKeys, setApiKeys] = useState({
+    inegi: '',
+    statista: '',
+    itc: '',
+    wco: '',
+    alphaVantage: '',
+  });
+
+  const handleApiKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = e.target;
+    setApiKeys(prev => ({...prev, [name]: value}));
+  }
+
+  const handleSaveApiKeys = () => {
+    // In a real app, you'd save these to a secure backend or local storage.
+    // For this prototype, we'll just log them to the console.
+    console.log("Saving API Keys:", apiKeys);
+    alert("API Keys guardadas en la consola (en una app real, esto sería seguro).");
+    // You could also update process.env here if running in a Node.js-like environment,
+    // but that's complex on the client-side. This setup assumes keys are set on the server.
+  };
 
   useEffect(() => {
-    // Simulación de una llamada de red a un servidor local que comprueba Ollama.
-    // En una implementación real, aquí harías un fetch a 'http://localhost:XXXX/api/local-models'.
     const timer = setTimeout(() => {
       setLocalTextModels(prev => prev.map(m => m.id === 'llama-3-local' ? { ...m, detected: true } : m));
       setLocalImageModels(prev => prev.map(m => m.id === 'stable-diffusion-local' ? { ...m, detected: true } : m));
       setLocalFinanceModels(prev => prev.map(m => m.id === 'finbert-local' ? { ...m, detected: true } : m));
       setIsDetecting(false);
     }, 2000);
+
+    // Here you would also fetch any previously saved API keys from your storage
+    // For now, we'll just initialize them as empty.
+    const savedInegiKey = process.env.NEXT_PUBLIC_INEGI_API_TOKEN || '';
+    if (savedInegiKey) {
+        setApiKeys(prev => ({...prev, inegi: savedInegiKey}));
+    }
+
 
     return () => clearTimeout(timer);
   }, []);
@@ -94,6 +121,33 @@ export default function SettingsPage() {
       </Select>
     );
   };
+
+  const renderApiInput = (id: keyof typeof apiKeys, label: string, description: string) => {
+      const isInegi = id === 'inegi';
+      const isConnected = isInegi; // Logic to determine if connected, for now only INEGI is "connected" by default
+      return (
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border rounded-lg">
+            <div className="mb-4 sm:mb-0">
+                <Label htmlFor={`api-${id}`}>{label}</Label>
+                <p className="text-xs text-muted-foreground">{description}</p>
+            </div>
+            <div className="flex w-full sm:w-auto flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                <Badge variant={isConnected ? "default" : "destructive"}>
+                    {isConnected ? 'Conectado' : 'Requiere API Key'}
+                </Badge>
+                <Input 
+                    id={`api-${id}`} 
+                    name={id}
+                    placeholder="Introduce tu API Key..." 
+                    className="w-full sm:w-64"
+                    value={apiKeys[id]}
+                    onChange={handleApiKeyChange}
+                    type="password"
+                />
+            </div>
+        </div>
+      );
+  }
 
 
   return (
@@ -214,77 +268,25 @@ export default function SettingsPage() {
         <CardContent className="space-y-6">
             <div className="space-y-4">
                 <h3 className="font-medium">Datos de Mercado Nacional</h3>
-                <div className="flex items-center justify-between p-4 border rounded-lg">
-                    <div>
-                        <Label htmlFor="api-inegi">API de INEGI (México)</Label>
-                        <p className="text-xs text-muted-foreground">Datos demográficos y económicos de México.</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <Badge variant="default">Conectado</Badge>
-                        <Select defaultValue="enabled">
-                            <SelectTrigger className="w-[120px]">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="enabled">Habilitado</SelectItem>
-                                <SelectItem value="disabled">Deshabilitado</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
-                </div>
-                 <div className="flex items-center justify-between p-4 border rounded-lg">
-                    <div>
-                        <Label htmlFor="api-statista">API de Statista</Label>
-                        <p className="text-xs text-muted-foreground">Estadísticas y reportes de industria globales.</p>
-                    </div>
-                     <div className="flex items-center gap-4">
-                         <Badge variant="destructive">Requiere API Key</Badge>
-                        <Input id="api-statista" placeholder="Introduce tu API Key..." className="w-64" />
-                    </div>
-                </div>
+                {renderApiInput('inegi', 'API de INEGI (México)', 'Datos demográficos y económicos de México.')}
+                {renderApiInput('statista', 'API de Statista', 'Estadísticas y reportes de industria globales.')}
             </div>
             <Separator />
             <div className="space-y-4">
                 <h3 className="font-medium">Datos de Comercio Internacional</h3>
-                <div className="flex items-center justify-between p-4 border rounded-lg">
-                    <div>
-                        <Label htmlFor="api-itc">API de ITC (Market Access Map)</Label>
-                        <p className="text-xs text-muted-foreground">Aranceles, acuerdos comerciales y estadísticas de importación/exportación.</p>
-                    </div>
-                     <div className="flex items-center gap-4">
-                         <Badge variant="destructive">Requiere API Key</Badge>
-                        <Input id="api-itc" placeholder="Introduce tu API Key..." className="w-64" />
-                    </div>
-                </div>
-                <div className="flex items-center justify-between p-4 border rounded-lg">
-                    <div>
-                        <Label htmlFor="api-wco">API de WCO (Trade)</Label>
-                        <p className="text-xs text-muted-foreground">Clasificación arancelaria (HS Code) y datos de aduanas.</p>
-                    </div>
-                     <div className="flex items-center gap-4">
-                         <Badge variant="destructive">Requiere API Key</Badge>
-                        <Input id="api-wco" placeholder="Introduce tu API Key..." className="w-64" />
-                    </div>
-                </div>
+                {renderApiInput('itc', 'API de ITC (Market Access Map)', 'Aranceles, acuerdos comerciales y estadísticas de importación/exportación.')}
+                {renderApiInput('wco', 'API de WCO (Trade)', 'Clasificación arancelaria (HS Code) y datos de aduanas.')}
             </div>
             <Separator />
              <div className="space-y-4">
                 <h3 className="font-medium">Datos Financieros</h3>
-                 <div className="flex items-center justify-between p-4 border rounded-lg">
-                    <div>
-                        <Label htmlFor="api-alpha-vantage">API de Alpha Vantage</Label>
-                        <p className="text-xs text-muted-foreground">Datos de mercados de valores y tipos de cambio.</p>
-                    </div>
-                     <div className="flex items-center gap-4">
-                        <Badge variant="destructive">Requiere API Key</Badge>
-                        <Input id="api-alpha-vantage" placeholder="Introduce tu API Key..." className="w-64" />
-                    </div>
-                </div>
+                {renderApiInput('alphaVantage', 'API de Alpha Vantage', 'Datos de mercados de valores y tipos de cambio.')}
             </div>
         </CardContent>
+        <CardFooter>
+            <Button onClick={handleSaveApiKeys}>Guardar Claves de API</Button>
+        </CardFooter>
       </Card>
     </div>
   );
 }
-
-    

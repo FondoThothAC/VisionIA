@@ -12,7 +12,7 @@ const TradeInfoSchema = z.object({
   query: z
     .string()
     .describe(
-      'The specific trade-related question (e.g., "tariffs for exporting coffee from Mexico to the EU", "top importers of avocados worldwide", "restaurantes en Guadalajara").'
+      'The specific trade-related question (e.g., "tariffs for exporting coffee from Mexico to the EU", "top importers of avocados worldwide", "restaurantes en Guadalajara", "statistics on e-commerce growth").'
     ),
 });
 
@@ -20,7 +20,7 @@ export const getTradeInformation = ai.defineTool(
   {
     name: 'getTradeInformation',
     description:
-      'Provides information on trade tariffs, market access conditions, and trade flows using international data sources like ITC Trade Map or WCO. It can also query local business information for Mexico using the INEGI DENUE API.',
+      'Provides information on trade tariffs, market access conditions, and trade flows using international data sources like ITC Trade Map or WCO. It can also query local business information for Mexico using the INEGI DENUE API, and retrieve market statistics and industry trends from Statista.',
     inputSchema: TradeInfoSchema,
     outputSchema: z.string().describe('A summary of the requested trade or business data.'),
   },
@@ -28,6 +28,7 @@ export const getTradeInformation = ai.defineTool(
     console.log(`[Trade Tool] Answering query: ${query}`);
     
     const inegiToken = process.env.INEGI_API_TOKEN;
+    const statistaToken = process.env.STATISTA_API_TOKEN;
     
     // Check if the query is about local businesses in Mexico
     if (inegiToken && query.toLowerCase().includes(' en ')) {
@@ -57,6 +58,16 @@ export const getTradeInformation = ai.defineTool(
         console.error(`[Trade Tool] Error calling INEGI API: ${error.message}`);
         return 'Error al contactar el servicio de datos de INEGI. Por favor, verifica la conexión o el token.';
       }
+    }
+
+    // Check if the query is about statistics or trends (likely for Statista)
+    const statistaKeywords = ['statistics', 'stats', 'market size', 'growth', 'trends', 'estadísticas', 'crecimiento', 'tendencias'];
+    if (statistaKeywords.some(keyword => query.toLowerCase().includes(keyword))) {
+        if (statistaToken) {
+             // Here you would implement the actual fetch to Statista API
+            return `[Simulated Statista Response] According to Statista, the e-commerce market in Mexico is projected to grow by 15% annually over the next 3 years, driven by increasing internet penetration and consumer trust.`;
+        }
+        return `[Statista] A query for statistics was detected, but the Statista API key is not configured in the settings.`;
     }
     
     // Fallback to mock data for international trade
