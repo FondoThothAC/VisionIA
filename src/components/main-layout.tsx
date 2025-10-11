@@ -29,6 +29,7 @@ import {
   Box,
   Swords,
   Scaling,
+  ChevronDown,
 } from 'lucide-react';
 
 import {
@@ -241,10 +242,23 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         </SidebarContent>
       </Sidebar>
       <SidebarInset>
-        <header className="flex items-center p-4 border-b lg:hidden">
-            <SidebarTrigger />
-            <div className="flex-1 text-center">
-                <Logo iconOnly={true} className="inline-flex" />
+        <header className="flex items-center justify-between p-4 border-b">
+            <div className="flex items-center gap-4">
+                <SidebarTrigger className="lg:hidden" />
+                 <Logo iconOnly={true} className="lg:hidden" />
+            </div>
+
+            <div className="flex items-center gap-4">
+                <Button variant="outline" className="rounded-full border-2 border-primary/50 font-bold text-primary hover:bg-primary/10 hover:text-primary pl-6 pr-5 relative -top-1 -mr-2 shadow-sm">
+                    Proyecto
+                    <div className="absolute top-0 right-0 -mr-px -mt-px w-3 h-3 border-l-2 border-t-2 border-primary/50 rounded-tl-sm" />
+                    <div className="absolute bottom-0 right-0 -mr-px -mb-px w-3 h-3 border-l-2 border-t-2 border-primary/50 transform -rotate-90" />
+                    <div className="absolute top-0 left-0 -ml-px -mt-px w-3 h-3 border-r-2 border-b-2 border-primary/50 transform -rotate-90" />
+                     <div className="absolute bottom-0 left-0 -ml-px -mb-px w-3 h-3 border-r-2 border-b-2 border-primary/50" />
+                </Button>
+                 <Button>
+                    Guardar y Continuar
+                </Button>
             </div>
         </header>
         <main className="p-4 md:p-6 lg:p-8">

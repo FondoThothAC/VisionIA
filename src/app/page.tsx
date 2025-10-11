@@ -40,6 +40,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import PageHeader from "@/components/page-header";
 
 
 const milestones = [
@@ -111,10 +112,10 @@ export default function DashboardPage() {
     <div className="flex flex-col gap-8">
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="font-headline text-3xl font-bold">Panel Principal</h1>
-          <p className="text-muted-foreground">Bienvenido de nuevo, aquí tienes un resumen de tu actividad.</p>
-        </div>
+        <PageHeader 
+          title="Panel Principal"
+          description="Bienvenido de nuevo, aquí tienes un resumen de tu actividad."
+        />
         <div className="flex items-center gap-4">
            <div className="flex items-center gap-2">
             <Avatar>
