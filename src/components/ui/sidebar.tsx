@@ -116,18 +116,24 @@ const SidebarProvider = React.forwardRef<
     // We add a state so that we can do data-state="expanded" or "collapsed".
     // This makes it easier to style the sidebar with Tailwind classes.
     const state = open ? "expanded" : "collapsed"
+    
+    // Defer mobile state until after hydration
+    const [isClient, setIsClient] = React.useState(false)
+    React.useEffect(() => {
+      setIsClient(true)
+    }, [])
 
     const contextValue = React.useMemo<SidebarContext>(
       () => ({
         state,
         open,
         setOpen,
-        isMobile,
+        isMobile: isClient ? isMobile : false,
         openMobile,
         setOpenMobile,
         toggleSidebar,
       }),
-      [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
+      [state, open, setOpen, isClient, isMobile, openMobile, setOpenMobile, toggleSidebar]
     )
 
     return (
@@ -762,3 +768,5 @@ export {
   SidebarTrigger,
   useSidebar,
 }
+
+    
