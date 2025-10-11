@@ -35,6 +35,14 @@ const pestelData: Record<string, PestelState> = {
         tecnologicos: "- Uso de redes sociales para promoción a bajo costo (Oportunidad).\n- Sistemas de punto de venta en la nube para una mejor administración (Oportunidad).",
         ecologicos: "- Regulaciones sobre el manejo de residuos de restaurantes (Amenaza).\n- Creciente interés de los turistas en prácticas sostenibles (Oportunidad).",
         legales: "- Requisitos para la licencia de venta de alcohol (Amenaza).\n- Normas de salubridad y protección civil que deben cumplirse estrictamente (Amenaza)."
+    },
+    "ecoturismo-la-salina": {
+        politicos: "- Buena relación con instituciones públicas (CONANP, CONAFOR).\n- Ubicación estratégica cerca de la frontera con EE.UU., facilitando el acceso a un mercado dolarizado.",
+        economicos: "- Devaluación del peso frente al dólar hace el destino más atractivo para el turismo extranjero.\n- Polo de desarrollo turístico en Puerto Peñasco genera demanda complementaria.",
+        sociales: "- Creciente interés en turismo de naturaleza, cultural y de conservación.\n- Valoración de experiencias auténticas y contacto con comunidades locales (Pápagos).",
+        tecnologicos: "- Oportunidad de usar energía solar para la operación (paneles, bombas solares).\n- Uso de redes sociales y marketing digital para alcanzar nichos de mercado (académico, observadores de aves).",
+        ecologicos: "- Ubicación dentro de la Reserva de la Biósfera es un atractivo central.\n- Riqueza de ecosistemas (mar-desierto), flora y fauna únicos.",
+        legales: "- El proyecto está sujeto a las regulaciones y Plan de Manejo de la Reserva del Alto Golfo.\n- Necesidad de permisos específicos para construcción y operación en un área natural protegida."
     }
 };
 
@@ -71,7 +79,7 @@ export default function PestelPage() {
                               <SelectContent>
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
-                                <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
+                                <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
                               </SelectContent>
                             </Select>
                         }

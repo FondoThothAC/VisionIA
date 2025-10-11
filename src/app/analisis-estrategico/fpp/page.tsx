@@ -30,6 +30,12 @@ const fppData: Record<string, FppState> = {
         actividadB: "Crear un programa de lealtad y eventos especiales para fidelizar a la población local.",
         recursoLimitado: "Presupuesto de Marketing y Promoción ($20,000 MXN mensuales).",
         costoOportunidad: "Cada $5,000 invertidos en anuncios para turistas en redes sociales son $5,000 que no se usan para organizar un evento de música en vivo para la gente del pueblo, lo que podría generar mayor recurrencia."
+    },
+    "ecoturismo-la-salina": {
+        actividadA: "Invertir en la construcción de 4 cabañas adicionales para aumentar la capacidad de hospedaje.",
+        actividadB: "Invertir en equipamiento especializado para tours (kayaks, bicicletas de montaña, telescopio) y capacitación de guías.",
+        recursoLimitado: "Capital de inversión inicial de $520,000 MXN.",
+        costoOportunidad: "Construir una cabaña (costo aprox. $100,000) implica no poder comprar 5 kayaks de alta gama y un telescopio profesional. Aumentar la capacidad de alojamiento puede generar más ingresos por noche, pero los tours especializados podrían atraer un mercado de mayor poder adquisitivo y mejorar la reputación del lugar."
     }
 };
 
@@ -66,7 +72,7 @@ export default function FppPage() {
                               <SelectContent>
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
-                                <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
+                                <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
                               </SelectContent>
                             </Select>
                         }

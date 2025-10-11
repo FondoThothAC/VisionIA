@@ -35,6 +35,12 @@ const fodaData: Record<string, FodaState> = {
         oportunidades: "- Demanda de servicios de restaurante insatisfecha en el municipio.\n- Turismo constante por atractivos como las aguas termales.\n- Mercado de trabajadores de la minería con poder adquisitivo.",
         debilidades: "- La sociedad propietaria tiene experiencia limitada en la gestión directa de restaurantes.\n- El éxito depende de estandarizar procesos y recetas desde el día uno.\n- El formato de bar podría disuadir a una parte del público familiar en ciertos horarios.",
         amenazas: "- Competencia de otros establecimientos de comida en la región aunque no tengan el mismo concepto.\n- Dependencia del flujo turístico que puede ser estacional.\n- Aumento en el costo de los insumos y materias primas regionales."
+    },
+    "ecoturismo-la-salina": {
+        fortalezas: "- Atractivos naturales únicos (desierto y mar).\n- Conocimiento profundo del área por parte de los ejidatarios.\n- Apoyo y relación con instituciones como CONANP y CONAFOR.\n- Riqueza histórica y cultural (asentamientos Pápago).",
+        oportunidades: "- Cercanía a la frontera con EE.UU. (mercado de Arizona).\n- Aumento del interés en ecoturismo y experiencias auténticas.\n- Devaluación del peso abarata servicios para turistas extranjeros.\n- Infraestructura carretera recién inaugurada (Carretera Costera).",
+        debilidades: "- Infraestructura de servicios básicos (agua, luz) muy pobre o inexistente.\n- Falta de capital para inversión inicial fuerte.\n- Poca experiencia en la industria del turismo y gestión de negocios.\n- Residencia de ejidatarios fuera del territorio del proyecto.",
+        amenazas: "- Clima extremo en invierno y verano.\n- Desconocimiento general del público sobre la existencia de estos atractivos.\n- Falta de cultura sobre el cuidado de la naturaleza por parte de algunos visitantes."
     }
 };
 
@@ -72,7 +78,7 @@ export default function FodaPage() {
                               <SelectContent>
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
-                                <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
+                                <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
                               </SelectContent>
                             </Select>
                         }
