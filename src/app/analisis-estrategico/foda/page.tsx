@@ -65,6 +65,12 @@ const fodaData: Record<string, FodaState> = {
         oportunidades: "- Cercanía a la mina 'La Caridad de Nacozari'.\n- Ubicación en los accesos a la mina.\n- Gran población minera en la región con demanda constante de alimentos.",
         debilidades: "- Falta de recursos para invertir.\n- Falta de prestigio por ser un negocio de apertura.",
         amenazas: "- Variación en el precio de los ingredientes.\n- Tendencia de la comunidad a consumir comida chatarra."
+    },
+    "restaurante-mariscos": {
+        fortalezas: "- Acceso a mariscos y pescados frescos directamente de los pescadores locales.\n- Atractivos turísticos y paisajes en la comunidad que atraen clientes potenciales.\n- Mano de obra disponible con experiencia en el trato a turistas.",
+        oportunidades: "- Demanda insatisfecha de restaurantes en la región de Bahía del Tobari.\n- Cercanía a la carretera costera, facilitando el acceso a turistas.\n- Oportunidad de incrementar la actividad económica y generar empleo local.",
+        debilidades: "- Falta de recursos iniciales para invertir.\n- Infraestructura deficiente en la región.",
+        amenazas: "- Clima adverso en temporada de ciclones y huracanes.\n- Malas condiciones en tramos de la carretera que pueden desincentivar al turismo.\n- Estacionalidad en el consumo de mariscos (veda)."
     }
 };
 
@@ -107,6 +113,7 @@ export default function FodaPage() {
                                 <SelectItem value="pizzeria-siglo-xxi">Proyecto: Pizzería Siglo XXI</SelectItem>
                                 <SelectItem value="papeleria-la-sirena">Proyecto: Papelería La Sirena</SelectItem>
                                 <SelectItem value="cocina-economica">Proyecto: Cocina Económica Nacozari</SelectItem>
+                                <SelectItem value="restaurante-mariscos">Proyecto: Restaurante de Mariscos</SelectItem>
                               </SelectContent>
                             </Select>
                         }
