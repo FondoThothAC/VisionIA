@@ -29,7 +29,14 @@ const initialState: ProductCanvasState = {
 };
 
 export default function ProductCanvasPage() {
+    const [selectedProject, setSelectedProject] = useState("cafe-aroma");
     const [state, setState] = useState<ProductCanvasState>(initialState);
+
+    const handleProjectChange = (projectId: string) => {
+        setSelectedProject(projectId);
+        // Data would be loaded based on projectId
+        setState(initialState);
+    };
 
     const handleSave = () => {
         console.log("Guardando Product Canvas:", state);
@@ -48,18 +55,30 @@ export default function ProductCanvasPage() {
                         title="Product Canvas"
                         description="Define y alinea la visión, objetivos, funcionalidades y métricas de un producto específico."
                         projectSelector={
-                           <Select defaultValue="cafe-aroma">
+                           <Select value={selectedProject} onValueChange={handleProjectChange}>
                               <SelectTrigger className="w-auto border-none shadow-none text-xl font-bold p-0 focus:ring-0">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
-                                <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
+                                <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
+                                <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
                               </SelectContent>
                             </Select>
                         }
                         author="Roberto"
-                        aiModel="Phi 4 Mini"
+                        aiModel={
+                            <Select defaultValue="phi-4-mini">
+                                <SelectTrigger className="w-auto border-none shadow-none focus:ring-0">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="phi-4-mini">Phi 4 Mini</SelectItem>
+                                    <SelectItem value="llama-3">Llama 3</SelectItem>
+                                    <SelectItem value="gemini-1.5">Gemini 1.5</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        }
                     />
                 </div>
                  <div className="flex items-center gap-2">

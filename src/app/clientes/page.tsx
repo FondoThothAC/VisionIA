@@ -102,11 +102,29 @@ const initialSurvey: SurveyState = {
 
 
 export default function ClientesPage() {
+    const [selectedProject, setSelectedProject] = useState("cafe-aroma");
     const [empathyMap, setEmpathyMap] = useState<EmpathyMapState>(initialEmpathyMap);
     const [buyerPersona, setBuyerPersona] = useState<BuyerPersonaState>(initialBuyerPersona);
     const [journeyMap, setJourneyMap] = useState<CustomerJourneyMapState>(initialCustomerJourneyMap);
     const [survey, setSurvey] = useState<SurveyState>(initialSurvey);
 
+    const handleProjectChange = (projectId: string) => {
+        setSelectedProject(projectId);
+        // NOTE: Data for other projects would be loaded here.
+        // For now, we only have data for 'cafe-aroma'.
+        if (projectId === 'cafe-aroma') {
+            setEmpathyMap(initialEmpathyMap);
+            setBuyerPersona(initialBuyerPersona);
+            setJourneyMap(initialCustomerJourneyMap);
+            setSurvey(initialSurvey);
+        } else {
+            // Reset to empty state for other projects
+            setEmpathyMap({ thinksAndFeels: '', sees: '', hears: '', saysAndDoes: '', pains: [], gains: [] });
+            setBuyerPersona({ demographics: '', goals: '', frustrations: '', motivations: '', communicationChannels: '', story: '' });
+            setJourneyMap({ awareness: '', consideration: '', purchase: '', service: '', loyalty: '' });
+            setSurvey({ objective: '', questions: [] });
+        }
+    };
 
     const handleSave = () => {
         console.log("Guardando datos del cliente:", { empathyMap, buyerPersona, journeyMap, survey });
@@ -182,18 +200,30 @@ export default function ClientesPage() {
                         title="Entendiendo a tu Cliente"
                         description="Utiliza estas herramientas para analizar y empatizar con tu público objetivo."
                         projectSelector={
-                           <Select defaultValue="cafe-aroma">
+                           <Select value={selectedProject} onValueChange={handleProjectChange}>
                               <SelectTrigger className="w-auto border-none shadow-none text-xl font-bold p-0 focus:ring-0">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
-                                <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
+                                <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
+                                <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
                               </SelectContent>
                             </Select>
                         }
                         author="Roberto"
-                        aiModel="Phi 4 Mini"
+                        aiModel={
+                             <Select defaultValue="phi-4-mini">
+                                <SelectTrigger className="w-auto border-none shadow-none focus:ring-0">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="phi-4-mini">Phi 4 Mini</SelectItem>
+                                    <SelectItem value="llama-3">Llama 3</SelectItem>
+                                    <SelectItem value="gemini-1.5">Gemini 1.5</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        }
                     />
                 </div>
                  <div className="flex items-center gap-2">
@@ -415,5 +445,3 @@ export default function ClientesPage() {
         </div>
     )
 }
-
-    
