@@ -13,7 +13,8 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import PageHeader from "@/components/page-header";
-import { Save } from "lucide-react";
+import { Save, History, Undo, Redo } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type FodaState = {
   fortalezas: string;
@@ -44,15 +45,35 @@ export default function FodaPage() {
 
     return (
         <div className="space-y-8">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                <PageHeader
-                    title="Análisis FODA"
-                    description="Evalúa las Fortalezas, Oportunidades, Debilidades y Amenazas de tu negocio."
-                />
-                 <Button onClick={handleSave}>
-                    <Save className="mr-2 h-4 w-4"/>
-                    Guardar Progreso
-                </Button>
+            <div className="flex flex-col md:flex-row items-start justify-between gap-4">
+                <div className="flex-grow">
+                     <PageHeader
+                        title="Análisis FODA"
+                        description="Evalúa las Fortalezas, Oportunidades, Debilidades y Amenazas de tu negocio."
+                        projectSelector={
+                           <Select defaultValue="cafe-aroma">
+                              <SelectTrigger className="w-auto border-none shadow-none text-xl font-bold p-0 focus:ring-0">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
+                                <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
+                              </SelectContent>
+                            </Select>
+                        }
+                        author="Roberto"
+                        aiModel="Phi 4 Mini"
+                    />
+                </div>
+                <div className="flex items-center gap-2">
+                    <Button variant="ghost" size="icon"><Undo/></Button>
+                    <Button variant="ghost" size="icon"><Redo/></Button>
+                    <Button variant="outline"><History className="mr-2"/> Historial</Button>
+                    <Button onClick={handleSave}>
+                        <Save className="mr-2"/>
+                        Guardar Progreso
+                    </Button>
+                </div>
             </div>
 
             <Card>
@@ -61,19 +82,19 @@ export default function FodaPage() {
                     <CardDescription>Rellena cada cuadrante para obtener una visión completa de tu posición estratégica.</CardDescription>
                 </CardHeader>
                 <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2 p-4 bg-green-50/50 rounded-lg border border-green-200">
+                    <div className="space-y-2 p-4 bg-green-50 rounded-lg border border-green-200">
                         <Label htmlFor="fortalezas" className="text-lg font-semibold text-green-800">Fortalezas (Interno, Positivo)</Label>
                         <Textarea id="fortalezas" value={foda.fortalezas} onChange={createChangeHandler(setFoda, 'fortalezas')} placeholder="¿En qué eres bueno? ¿Qué ventajas tienes?" rows={8} className="bg-white"/>
                     </div>
-                    <div className="space-y-2 p-4 bg-blue-50/50 rounded-lg border border-blue-200">
+                    <div className="space-y-2 p-4 bg-blue-50 rounded-lg border border-blue-200">
                         <Label htmlFor="oportunidades" className="text-lg font-semibold text-blue-800">Oportunidades (Externo, Positivo)</Label>
                         <Textarea id="oportunidades" value={foda.oportunidades} onChange={createChangeHandler(setFoda, 'oportunidades')} placeholder="¿Qué tendencias del mercado puedes aprovechar? ¿Qué cambios tecnológicos te benefician?" rows={8} className="bg-white"/>
                     </div>
-                    <div className="space-y-2 p-4 bg-red-50/50 rounded-lg border border-red-200">
+                    <div className="space-y-2 p-4 bg-red-50 rounded-lg border border-red-200">
                         <Label htmlFor="debilidades" className="text-lg font-semibold text-red-800">Debilidades (Interno, Negativo)</Label>
                         <Textarea id="debilidades" value={foda.debilidades} onChange={createChangeHandler(setFoda, 'debilidades')} placeholder="¿En qué podrías mejorar? ¿Qué recursos te faltan?" rows={8} className="bg-white"/>
                     </div>
-                    <div className="space-y-2 p-4 bg-amber-50/50 rounded-lg border border-amber-200">
+                    <div className="space-y-2 p-4 bg-amber-50 rounded-lg border border-amber-200">
                         <Label htmlFor="amenazas" className="text-lg font-semibold text-amber-800">Amenazas (Externo, Negativo)</Label>
                         <Textarea id="amenazas" value={foda.amenazas} onChange={createChangeHandler(setFoda, 'amenazas')} placeholder="¿Qué obstáculos enfrentas? ¿Qué hace tu competencia?" rows={8} className="bg-white"/>
                     </div>
