@@ -13,7 +13,7 @@ const TradeInfoSchema = z.object({
   query: z
     .string()
     .describe(
-      'The specific trade, business, or financial question (e.g., "tariffs for exporting coffee from Mexico to the EU", "top importers of avocados worldwide", "restaurantes en Guadalajara", "statistics on e-commerce growth", "USD to MXN exchange rate", "precio del aguacate en CDMX segun PROFECO", "population of Canada").'
+      'The specific trade, business, or financial question (e.g., "tariffs for exporting coffee from Mexico to the EU", "top importers of avocados worldwide", "restaurantes en Guadalajara", "statistics on e-commerce growth", "USD to MXN exchange rate", "precio del aguacate en CDMX segun PROFECO", "population of Canada", "World Bank report on renewable energy in Africa", "ingredients for product barcode 123456789").'
     ),
 });
 
@@ -21,7 +21,7 @@ export const getTradeInformation = ai.defineTool(
   {
     name: 'getTradeInformation',
     description:
-      'Provides information from multiple sources: international trade data (ITC/WCO), local business data for Mexico (INEGI DENUE), price comparisons (PROFECO), market statistics (Statista), financial data (Alpha Vantage), and global demographic/economic indicators (UN Data). Use this to enrich business plans with real-world data.',
+      'Provides information from multiple sources: international trade data (ITC/WCO), local business data for Mexico (INEGI DENUE), price comparisons (PROFECO), market statistics (Statista), financial data (Alpha Vantage), global demographic/economic indicators (UN Data), official documents (World Bank), and food product details (Open Food Facts). Use this to enrich business plans with real-world data.',
     inputSchema: TradeInfoSchema,
     outputSchema: z.string().describe('A summary of the requested trade, business, or financial data.'),
   },
@@ -97,7 +97,19 @@ export const getTradeInformation = ai.defineTool(
     if (unDataKeywords.some(keyword => query.toLowerCase().includes(keyword))) {
         return `[Simulated UN Data Response] According to UN Data, the population of Canada is projected to be 40 million in 2025. This information is vital for calculating the potential market size for products targeting this country.`;
     }
+
+    // Check if query is about World Bank documents
+    const worldBankKeywords = ['world bank', 'banco mundial', 'report on', 'informe sobre'];
+    if (worldBankKeywords.some(keyword => query.toLowerCase().includes(keyword))) {
+        return `[Simulated World Bank Response] A search in the World Bank Documents API for "${query}" found 3 relevant reports. The top result is "Global Economic Prospects - June 2023". This report could provide valuable insights for your financial projections and risk analysis.`;
+    }
     
+    // Check if query is about food products
+    const foodFactsKeywords = ['ingredients', 'nutrition', 'ingredientes', 'nutrición', 'barcode', 'código de barras'];
+    if (foodFactsKeywords.some(keyword => query.toLowerCase().includes(keyword))) {
+        return `[Simulated Open Food Facts Response] The product corresponding to your query is a 'Yogurt con Fresa'. Main ingredients include: Leche, Azúcar, Fresa (8%), Sólidos de leche, Almidón modificado, Sabores naturales, Cultivos lácticos. This is useful for competitive analysis.`;
+    }
+
     // Fallback to mock data for international trade
     if (query.toLowerCase().includes('coffee')) {
       return 'The EU applies a 0% tariff on green coffee beans from Mexico under tratado de libre comercio, but specific import documentation (like a Certificate of Origin) is required. Germany is the largest importer within the EU.';
