@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Card,
   CardContent,
@@ -41,13 +41,117 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartConfig } from "
 import { Separator } from '@/components/ui/separator';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-
 const formatCurrency = (value: number) =>
   new Intl.NumberFormat('es-MX', {
     style: 'currency',
     currency: 'MXN',
     minimumFractionDigits: 0,
   }).format(value);
+
+type EmployeeRole = {
+  id: number;
+  name: string;
+  count: number;
+  salary: number;
+  riskClass: 'I' | 'II' | 'III' | 'IV' | 'V';
+};
+
+type FinancialAssumptions = {
+  initialInvestment: number;
+  monthlyRevenue: number;
+  monthlyGrowth: number;
+  inflationRate: number;
+  employeeRoles: EmployeeRole[];
+  costs: Record<string, number>;
+}
+
+const projectsData: Record<string, FinancialAssumptions> = {
+  "cafe-aroma": {
+    initialInvestment: 50000,
+    monthlyRevenue: 15000,
+    monthlyGrowth: 3,
+    inflationRate: 4.5,
+    employeeRoles: [
+      { id: 1, name: 'Tostador', count: 1, salary: 20000, riskClass: 'II' },
+      { id: 2, name: 'Empacador', count: 1, salary: 12000, riskClass: 'I' },
+    ],
+    costs: {
+      rent: 8000,
+      utilities: 2500,
+      marketing: 3000,
+      software: 1000,
+      supplies: 1500,
+      insurance: 1000,
+      transport: 2000,
+      other: 1000,
+    },
+  },
+  "restaurante-gambusinos": {
+    initialInvestment: 597171,
+    monthlyRevenue: 608777,
+    monthlyGrowth: 4,
+    inflationRate: 4.5,
+    employeeRoles: [
+      { id: 1, name: 'Mesero', count: 4, salary: 8500, riskClass: 'I' },
+      { id: 2, name: 'Cocinero', count: 2, salary: 12000, riskClass: 'I' },
+      { id: 3, name: 'Cajero', count: 1, salary: 9000, riskClass: 'I' },
+      { id: 4, name: 'Gerente', count: 1, salary: 25000, riskClass: 'I' },
+      { id: 5, name: 'Cantinero', count: 1, salary: 10000, riskClass: 'I' },
+    ],
+    costs: {
+      rent: 15000,
+      utilities: 9482,
+      marketing: 5000,
+      software: 1489,
+      supplies: 244125, // (Inventario Restaurante + Bar)
+      insurance: 3000,
+      transport: 2000,
+      other: 5000,
+    },
+  },
+  "ecoturismo-la-salina": {
+    initialInvestment: 663097,
+    monthlyRevenue: 108933,
+    monthlyGrowth: 5,
+    inflationRate: 4.5,
+    employeeRoles: [
+      { id: 1, name: 'Guía Turístico', count: 2, salary: 15000, riskClass: 'III' },
+      { id: 2, name: 'Administrador', count: 1, salary: 18000, riskClass: 'I' },
+      { id: 3, name: 'Personal Mantenimiento', count: 2, salary: 10000, riskClass: 'II' },
+    ],
+    costs: {
+      rent: 0, // Es propiedad del ejido
+      utilities: 3500,
+      marketing: 4000,
+      software: 500,
+      supplies: 10000, // Insumos para tours y restaurant
+      insurance: 2000,
+      transport: 3000, // Combustible para recorridos
+      other: 2000,
+    },
+  },
+  "taller-carroceria": {
+    initialInvestment: 173049,
+    monthlyRevenue: 77926,
+    monthlyGrowth: 3.5,
+    inflationRate: 4.5,
+    employeeRoles: [
+      { id: 1, name: 'Carrocero', count: 1, salary: 14400, riskClass: 'IV' },
+      { id: 2, name: 'Ayudante', count: 1, salary: 9600, riskClass: 'III' },
+      { id: 3, name: 'Administrador', count: 1, salary: 7200, riskClass: 'I' },
+    ],
+    costs: {
+      rent: 5000,
+      utilities: 2350, // Agua, Luz, Telefono
+      marketing: 1500,
+      software: 500,
+      supplies: 25710, // Insumos de taller
+      insurance: 1500,
+      transport: 1000,
+      other: 1000,
+    },
+  },
+};
   
 const chartOfAccounts = [
   // --- Activos ---
@@ -303,14 +407,6 @@ const SocialChargeGuide = () => (
     </Card>
 );
 
-type EmployeeRole = {
-  id: number;
-  name: string;
-  count: number;
-  salary: number;
-  riskClass: 'I' | 'II' | 'III' | 'IV' | 'V';
-};
-
 const riskClassPremiums: Record<EmployeeRole['riskClass'], number> = {
   'I': 0.0052150,
   'II': 0.0113065,
@@ -430,59 +526,47 @@ const PersonnelCostBreakdown = ({ roles }: { roles: EmployeeRole[] }) => {
 
 
 export default function FinancialsPage() {
-  // --- STATE MANAGEMENT ---
+  const [selectedProject, setSelectedProject] = useState("cafe-aroma");
   const [projectionMonths, setProjectionMonths] = useState(12);
+  const [assumptions, setAssumptions] = useState<FinancialAssumptions>(projectsData[selectedProject]);
 
-  // Key Assumptions
-  const [initialInvestment, setInitialInvestment] = useState(50000);
-  const [monthlyRevenue, setMonthlyRevenue] = useState(15000);
-  const [monthlyGrowth, setMonthlyGrowth] = useState(3); // Percentage
-  const [inflationRate, setInflationRate] = useState(4.5); // Annual inflation rate
+  useEffect(() => {
+    setAssumptions(projectsData[selectedProject] || projectsData["cafe-aroma"]);
+  }, [selectedProject]);
 
-  // Personnel Costs
-  const [employeeRoles, setEmployeeRoles] = useState<EmployeeRole[]>([
-    { id: 1, name: 'Desarrollador', count: 2, salary: 25000, riskClass: 'I' },
-    { id: 2, name: 'Vendedor', count: 1, salary: 18000, riskClass: 'I' },
-  ]);
+
+  const handleAssumptionChange = <K extends keyof FinancialAssumptions>(field: K, value: FinancialAssumptions[K]) => {
+      setAssumptions(prev => ({...prev, [field]: value}));
+  }
 
   const handleRoleChange = (id: number, field: keyof EmployeeRole, value: string | number) => {
-    setEmployeeRoles(roles => roles.map(role => role.id === id ? { ...role, [field]: value } : role));
+    const newRoles = assumptions.employeeRoles.map(role => role.id === id ? { ...role, [field]: value } : role);
+    handleAssumptionChange('employeeRoles', newRoles);
   };
 
   const addRole = () => {
-    setEmployeeRoles(roles => [...roles, { id: Date.now(), name: '', count: 1, salary: 10000, riskClass: 'I' }]);
+    const newRoles = [...assumptions.employeeRoles, { id: Date.now(), name: '', count: 1, salary: 10000, riskClass: 'I' }];
+    handleAssumptionChange('employeeRoles', newRoles);
   };
 
   const removeRole = (id: number) => {
-    setEmployeeRoles(roles => roles.filter(role => role.id !== id));
+    const newRoles = assumptions.employeeRoles.filter(role => role.id !== id);
+    handleAssumptionChange('employeeRoles', newRoles);
   };
-
-
-  // Fixed & Variable Costs
-  const [costs, setCosts] = useState({
-    rent: 1200,
-    utilities: 500, // Water, electricity, internet
-    marketing: 800,
-    software: 300,
-    supplies: 400,
-    insurance: 400,
-    transport: 250,
-    other: 200,
-  });
 
   const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setCosts((prev) => ({ ...prev, [name]: Number(value) || 0 }));
+    const newCosts = { ...assumptions.costs, [name]: Number(value) || 0 };
+    handleAssumptionChange('costs', newCosts);
   };
   
   const handleSave = () => {
-    console.log("Guardando datos financieros");
+    console.log("Guardando datos financieros para el proyecto:", selectedProject, assumptions);
     alert("Datos financieros guardados en la consola.");
   }
 
-
-  // --- CALCULATIONS ---
   const calculateProjections = () => {
+    const { monthlyRevenue, monthlyGrowth, employeeRoles, costs } = assumptions;
     const data = [];
     let currentRevenue = monthlyRevenue;
 
@@ -530,7 +614,7 @@ export default function FinancialsPage() {
   const { data: projectionData, totalMonthlyCost } = calculateProjections();
   const totalProfit = projectionData.reduce((acc, d) => acc + d.Beneficio, 0);
   const finalCumulativeProfit = projectionData[projectionData.length - 1]?.Beneficio_Acumulado || 0;
-  const growthBeatsInflation = monthlyGrowth > (Math.pow(1 + inflationRate / 100, 1 / 12) - 1) * 100;
+  const growthBeatsInflation = assumptions.monthlyGrowth > (Math.pow(1 + assumptions.inflationRate / 100, 1 / 12) - 1) * 100;
 
   return (
      <div className="space-y-8">
@@ -540,18 +624,31 @@ export default function FinancialsPage() {
                     title="Modelado Financiero"
                     description="Genera estados financieros, ratios y gráficos. Realiza análisis 'what-if' para pronosticar el futuro de tu negocio."
                     projectSelector={
-                       <Select defaultValue="cafe-aroma">
-                          <SelectTrigger className="w-auto border-none shadow-none text-xl font-bold p-0 focus:ring-0">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
-                            <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
-                          </SelectContent>
+                        <Select value={selectedProject} onValueChange={setSelectedProject}>
+                            <SelectTrigger className="w-auto border-none shadow-none text-xl font-bold p-0 focus:ring-0">
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
+                                <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
+                                <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
+                                <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
+                            </SelectContent>
                         </Select>
                     }
                     author="Roberto"
-                    aiModel="Phi 4 Mini"
+                    aiModel={
+                        <Select defaultValue="phi-4-mini">
+                            <SelectTrigger className="w-auto border-none shadow-none focus:ring-0">
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="phi-4-mini">Phi 4 Mini</SelectItem>
+                                <SelectItem value="llama-3">Llama 3</SelectItem>
+                                <SelectItem value="gemini-1.5">Gemini 1.5</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    }
                 />
             </div>
             <div className="flex items-center gap-2">
@@ -583,19 +680,19 @@ export default function FinancialsPage() {
                 <CardContent className="space-y-4">
                 <div className="space-y-2">
                     <Label htmlFor="initialInvestment">Inversión Inicial</Label>
-                    <Input id="initialInvestment" type="number" value={initialInvestment} onChange={(e) => setInitialInvestment(Number(e.target.value))} />
+                    <Input id="initialInvestment" type="number" value={assumptions.initialInvestment} onChange={(e) => handleAssumptionChange('initialInvestment', Number(e.target.value))} />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="monthlyRevenue">Ingresos (Primer Mes)</Label>
-                    <Input id="monthlyRevenue" type="number" value={monthlyRevenue} onChange={(e) => setMonthlyRevenue(Number(e.target.value))} />
+                    <Input id="monthlyRevenue" type="number" value={assumptions.monthlyRevenue} onChange={(e) => handleAssumptionChange('monthlyRevenue', Number(e.target.value))} />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="monthlyGrowth">Crecimiento Mensual Ingresos (%)</Label>
-                    <Input id="monthlyGrowth" type="number" value={monthlyGrowth} onChange={(e) => setMonthlyGrowth(Number(e.target.value))} />
+                    <Input id="monthlyGrowth" type="number" value={assumptions.monthlyGrowth} onChange={(e) => handleAssumptionChange('monthlyGrowth', Number(e.target.value))} />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="inflationRate">Tasa de Inflación Anual (%)</Label>
-                    <Input id="inflationRate" type="number" value={inflationRate} onChange={(e) => setInflationRate(Number(e.target.value))} />
+                    <Input id="inflationRate" type="number" value={assumptions.inflationRate} onChange={(e) => handleAssumptionChange('inflationRate', Number(e.target.value))} />
                 </div>
                 </CardContent>
             </Card>
@@ -604,7 +701,7 @@ export default function FinancialsPage() {
                     <CardTitle className="flex items-center gap-2"><Users className="h-5 w-5 text-primary"/> Costos de Personal</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    {employeeRoles.map((role, index) => (
+                    {assumptions.employeeRoles.map((role, index) => (
                         <div key={role.id} className="p-3 border rounded-lg space-y-3 relative">
                              { index > 0 && <Separator className="absolute -top-5 left-0 right-0"/>}
                             <div className="grid grid-cols-2 gap-2">
@@ -692,7 +789,7 @@ export default function FinancialsPage() {
                                 </p>
                                 <div className="space-y-4">
                                     <div className="grid grid-cols-2 gap-x-4 gap-y-4">
-                                        {Object.entries(costs).map(([key, value]) => (
+                                        {Object.entries(assumptions.costs).map(([key, value]) => (
                                             <div key={key} className="space-y-1.5">
                                                 <Label htmlFor={key} className="capitalize text-sm">{key.replace('_', ' ')}</Label>
                                                 <Input id={key} name={key} type="number" value={value} onChange={handleCostChange} className="h-9"/>
@@ -848,7 +945,7 @@ export default function FinancialsPage() {
                             </div>
                         </CardContent>
                     </Card>
-                    { finalCumulativeProfit < initialInvestment &&
+                    { finalCumulativeProfit < assumptions.initialInvestment &&
                         <Card className="bg-amber-50 border-amber-200">
                             <CardHeader className="flex flex-row items-center gap-4 space-y-0 pb-4">
                                 <AlertCircle className="h-6 w-6 text-amber-600"/>
@@ -897,7 +994,7 @@ export default function FinancialsPage() {
                 </div>
             </div>
             <div className="mt-6">
-                <PersonnelCostBreakdown roles={employeeRoles} />
+                <PersonnelCostBreakdown roles={assumptions.employeeRoles} />
             </div>
         </TabsContent>
          <TabsContent value="kpis">
@@ -979,3 +1076,5 @@ export default function FinancialsPage() {
     </div>
   );
 }
+
+    
