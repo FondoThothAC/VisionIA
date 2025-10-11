@@ -21,7 +21,7 @@ export const getTradeInformation = ai.defineTool(
   {
     name: 'getTradeInformation',
     description:
-      'Provides information on trade tariffs, market access (ITC/WCO), local business data for Mexico (INEGI DENUE), price comparisons (PROFECO), market statistics (Statista), and financial data like stock prices or exchange rates (Alpha Vantage).',
+      'Provides information on trade tariffs, market access (ITC/WCO), local business data for Mexico (INEGI DENUE), price comparisons (PROFECO), market statistics (Statista), and financial data like stock prices or exchange rates (Alpha Vantage). Use this to enrich business plans with real-world data.',
     inputSchema: TradeInfoSchema,
     outputSchema: z.string().describe('A summary of the requested trade, business, or financial data.'),
   },
