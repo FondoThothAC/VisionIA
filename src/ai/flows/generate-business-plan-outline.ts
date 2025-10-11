@@ -48,7 +48,7 @@ const prompt = ai.definePrompt({
 
   Based on the following information about the business idea, generate a detailed business plan outline.
 
-  If the business idea involves importing or exporting goods, use the getTradeInformation tool to enrich the market analysis or financial projections sections with real-world data on tariffs or trade flows.
+  **Crucially, if the business idea involves importing or exporting goods, you MUST use the getTradeInformation tool to enrich the "Market Analysis" or "Financial Projections" sections with real-world data on tariffs or trade flows from sources like ITC Trade Map or WCO.**
 
   Business Idea: {{{businessIdea}}}
   Target Market: {{{targetMarket}}}
