@@ -12,7 +12,7 @@ const TradeInfoSchema = z.object({
   query: z
     .string()
     .describe(
-      'The specific trade-related question (e.g., "tariffs for exporting coffee from Mexico to the EU", "top importers of avocados worldwide").'
+      'The specific trade-related question (e.g., "tariffs for exporting coffee from Mexico to the EU", "top importers of avocados worldwide", "restaurantes en Guadalajara").'
     ),
 });
 
@@ -28,17 +28,39 @@ export const getTradeInformation = ai.defineTool(
     console.log(`[Trade Tool] Answering query: ${query}`);
     
     const inegiToken = process.env.INEGI_API_TOKEN;
-    if (inegiToken) {
-      console.log(`[Trade Tool] Found INEGI API Token: ${inegiToken.substring(0, 4)}...`);
-    } else {
-      console.log('[Trade Tool] INEGI API Token not found in environment variables.');
-    }
+    
+    // Check if the query is about local businesses in Mexico
+    if (inegiToken && query.toLowerCase().includes(' en ')) {
+      try {
+        const [keyword, location] = query.split(' en ').map(s => s.trim());
+        const url = `https://www.inegi.org.mx/app/api/denue/v1/referencia/rest/buscar/${encodeURIComponent(keyword)}/${encodeURIComponent(location)}/0/1000/${inegiToken}`;
+        
+        console.log(`[Trade Tool] Calling INEGI DENUE API: ${url.replace(inegiToken, 'REDACTED')}`);
 
-    // In a real implementation, this would make an API call to ITC, WCO, or INEGI.
-    // For now, we return a mock response based on the query.
-    if (query.toLowerCase().includes('restaurantes')) {
-        return `Simulación de respuesta de INEGI: Se encontraron 1,500 restaurantes en la zona consultada. Los 3 más comunes son 'Restaurante de comida corrida', 'Taquería' y 'Pizzería'. La mayoría son microempresas con 1-5 empleados.`;
-    } else if (query.toLowerCase().includes('coffee')) {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Error fetching from INEGI: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data && data.length > 0) {
+            const count = data.length;
+            const top5Names = data.slice(0, 5).map((d: any) => d.Nombre).join(', ');
+            const mostCommonActivity = data.length > 0 ? data[0].Clase_actividad : 'N/A';
+
+            return `Respuesta de INEGI DENUE: Se encontraron ${count} unidades económicas para "${keyword}" en "${location}". Los primeros resultados incluyen: ${top5Names}. La clase de actividad más común es: '${mostCommonActivity}'.`;
+        } else {
+            return `Respuesta de INEGI DENUE: No se encontraron resultados para "${keyword}" en "${location}".`;
+        }
+      } catch (error: any) {
+        console.error(`[Trade Tool] Error calling INEGI API: ${error.message}`);
+        return 'Error al contactar el servicio de datos de INEGI. Por favor, verifica la conexión o el token.';
+      }
+    }
+    
+    // Fallback to mock data for international trade
+    if (query.toLowerCase().includes('coffee')) {
       return 'The EU applies a 0% tariff on green coffee beans from Mexico under tratado de libre comercio, but specific import documentation (like a Certificate of Origin) is required. Germany is the largest importer within the EU.';
     } else if (query.toLowerCase().includes('avocados')) {
       return 'The top 3 global importers of avocados by value are the United States, the Netherlands, and Spain. Demand is projected to grow by 5% annually.';
