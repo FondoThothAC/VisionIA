@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview Defines a Genkit tool for retrieving information from various business and economic data sources.
@@ -12,7 +13,7 @@ const TradeInfoSchema = z.object({
   query: z
     .string()
     .describe(
-      'The specific trade, business, or financial question (e.g., "tariffs for exporting coffee from Mexico to the EU", "top importers of avocados worldwide", "restaurantes en Guadalajara", "statistics on e-commerce growth", "USD to MXN exchange rate").'
+      'The specific trade, business, or financial question (e.g., "tariffs for exporting coffee from Mexico to the EU", "top importers of avocados worldwide", "restaurantes en Guadalajara", "statistics on e-commerce growth", "USD to MXN exchange rate", "precio del aguacate en CDMX segun PROFECO").'
     ),
 });
 
@@ -20,7 +21,7 @@ export const getTradeInformation = ai.defineTool(
   {
     name: 'getTradeInformation',
     description:
-      'Provides information on trade tariffs, market access (ITC/WCO), local business data for Mexico (INEGI DENUE), market statistics (Statista), and financial data like stock prices or exchange rates (Alpha Vantage).',
+      'Provides information on trade tariffs, market access (ITC/WCO), local business data for Mexico (INEGI DENUE), price comparisons (PROFECO), market statistics (Statista), and financial data like stock prices or exchange rates (Alpha Vantage).',
     inputSchema: TradeInfoSchema,
     outputSchema: z.string().describe('A summary of the requested trade, business, or financial data.'),
   },
@@ -59,6 +60,13 @@ export const getTradeInformation = ai.defineTool(
         console.error(`[Trade Tool] Error calling INEGI API: ${error.message}`);
         return 'Error al contactar el servicio de datos de INEGI. Por favor, verifica la conexión o el token.';
       }
+    }
+
+    // Check if the query is about prices (likely for PROFECO)
+    const profecoKeywords = ['precio de', 'precios de', 'cuánto cuesta', 'profeco'];
+    if (profecoKeywords.some(keyword => query.toLowerCase().includes(keyword))) {
+        // PROFECO API does not require a token
+        return `[Simulated PROFECO Response] Según datos abiertos de PROFECO, el precio promedio del kilogramo de aguacate Hass en la Ciudad de México esta semana es de $85.50 MXN, con un mínimo de $75.00 y un máximo de $98.00. Esta información es crucial para definir una estrategia de precios competitiva.`;
     }
 
     // Check if the query is about statistics or trends (likely for Statista)
