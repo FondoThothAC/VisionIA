@@ -47,6 +47,12 @@ const fodaData: Record<string, FodaState> = {
         oportunidades: "- Mercado constante debido a daños por accidentes o desgaste natural de los vehículos.\n- Posibilidad de captar clientes que buscan calidad a un precio económico.\n- El incremento en el valor de reventa de un auto bien cuidado es un buen argumento de venta.",
         debilidades: "- El taller necesita remodelación y equipamiento nuevo.\n- Ubicación no céntrica, dependiendo de vías de acceso principales como el Blvd. Solidaridad.\n- Es una empresa nueva que compite contra talleres ya establecidos y con experiencia en el mercado.",
         amenazas: "- Competencia fuerte con empresas ya instaladas y con mayor equipamiento.\n- Aumento constante en el precio de los materiales (pintura, thinner, bondo).\n- Percepción del cliente de que un precio más bajo podría significar menor calidad."
+    },
+    "pizzeria-siglo-xxi": {
+        fortalezas: "- Emplea a personas con síndrome de Down, lo que lo hace único y destacado en el mercado.\n- Ofrece productos de alta calidad y un servicio amable y acogedor.\n- Promueve una sensación de comunidad y pertenencia para las personas con síndrome de Down y sus familias.",
+        debilidades: "- El proceso de capacitación puede llevar tiempo y esfuerzo adicional.\n- Puede haber cierta resistencia por parte de algunos clientes hacia la inclusión de personas con síndrome de Down en roles de trabajo.\n- El enfoque en la capacitación y la inclusión puede requerir recursos adicionales.",
+        oportunidades: "- Hay una creciente conciencia sobre la inclusión y la diversidad en la sociedad.\n- Puede expandirse a través de la apertura de nuevas sucursales o mediante la franquicia del modelo.\n- Puede colaborar con organizaciones y empresas locales para aumentar la visibilidad y el alcance del negocio.",
+        amenazas: "- La competencia en el mercado de alimentos puede ser alta.\n- Las regulaciones y los requisitos gubernamentales pueden ser más estrictos para las empresas que emplean a personas con discapacidades.\n- Puede haber una percepción errónea de que la calidad del producto se ve afectada."
     }
 };
 
@@ -57,7 +63,7 @@ export default function FodaPage() {
 
     const handleProjectChange = (projectId: string) => {
         setSelectedProject(projectId);
-        setFoda(fodaData[projectId] || { fortalezas: '', oportunidades: '', debilidades: '', amenazas: '' });
+        setFoda(fodaData[projectId as keyof typeof fodaData] || { fortalezas: '', oportunidades: '', debilidades: '', amenazas: '' });
     };
 
     const handleSave = () => {
@@ -86,6 +92,7 @@ export default function FodaPage() {
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
                                 <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
+                                <SelectItem value="pizzeria-siglo-xxi">Proyecto: Pizzería Siglo XXI</SelectItem>
                               </SelectContent>
                             </Select>
                         }

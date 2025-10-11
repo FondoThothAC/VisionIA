@@ -51,6 +51,14 @@ const pestelData: Record<string, PestelState> = {
         tecnologicos: "- Nuevas tecnologías en pintura y materiales de reparación que mejoran la calidad y eficiencia (Oportunidad).\n- Necesidad de inversión y capacitación constante para usar nuevas herramientas y técnicas (Amenaza).",
         ecologicos: "- Exigencia de un manejo adecuado de residuos tóxicos (Amenaza).\n- Oportunidad de usar productos y pinturas con base de agua, más ecológicos, como diferenciador.",
         legales: "- Requisitos de protección civil y permisos de operación municipal (Amenaza).\n- Normas sobre garantías en servicios de reparación que deben cumplirse (Amenaza)."
+    },
+    "pizzeria-siglo-xxi": {
+        politicos: "- Programas gubernamentales de apoyo a la inclusión laboral (Oportunidad).\n- Estabilidad política local que favorece la apertura de nuevos negocios.",
+        economicos: "- Crecimiento del mercado de comida rápida y a domicilio (Oportunidad).\n- Sensibilidad al precio de los insumos (harina, queso) (Amenaza).",
+        sociales: "- Creciente conciencia social sobre la diversidad y la inclusión (Oportunidad).\n- La pizza es uno de los alimentos preferidos en México, con una demanda constante.",
+        tecnologicos: "- Auge de las plataformas de delivery (Rappi, Uber Eats) facilita la logística (Oportunidad).\n- Importancia del marketing digital y redes sociales para atraer clientes.",
+        ecologicos: "- Demanda de empaques ecológicos y biodegradables (Oportunidad).\n- Regulaciones sobre el manejo de residuos orgánicos (Amenaza).",
+        legales: "- Requisitos de licencia sanitaria y de funcionamiento (Amenaza).\n- Regulaciones laborales específicas para la inclusión de personas con discapacidad (Oportunidad/Amenaza)."
     }
 };
 
@@ -60,7 +68,7 @@ export default function PestelPage() {
 
     const handleProjectChange = (projectId: string) => {
         setSelectedProject(projectId);
-        setPestel(pestelData[projectId] || { politicos: '', economicos: '', sociales: '', tecnologicos: '', ecologicos: '', legales: '' });
+        setPestel(pestelData[projectId as keyof typeof pestelData] || { politicos: '', economicos: '', sociales: '', tecnologicos: '', ecologicos: '', legales: '' });
     };
 
     const handleSave = () => {
@@ -89,6 +97,7 @@ export default function PestelPage() {
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
                                 <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
+                                <SelectItem value="pizzeria-siglo-xxi">Proyecto: Pizzería Siglo XXI</SelectItem>
                               </SelectContent>
                             </Select>
                         }

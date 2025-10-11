@@ -42,6 +42,12 @@ const fppData: Record<string, FppState> = {
         actividadB: "Contratar a dos pintores adicionales para aumentar la capacidad de trabajos simultáneos.",
         recursoLimitado: "Inversión inicial de $110,899 del INAES.",
         costoOportunidad: "Invertir en la cabina de pintura (~$80,000) consume la mayor parte del capital, retrasando la contratación de personal que podría aumentar el volumen de trabajo a corto plazo, aunque con acabados estándar. Contratar personal primero aumenta la capacidad pero crea cuellos de botella en el proceso de secado y acabado."
+    },
+    "pizzeria-siglo-xxi": {
+        actividadA: "Desarrollar una campaña de marketing digital a gran escala para dar a conocer la misión social del proyecto.",
+        actividadB: "Invertir en un programa de capacitación y desarrollo de liderazgo para los empleados con síndrome de Down.",
+        recursoLimitado: "Excedente de flujo de efectivo mensual ($50,000 MXN).",
+        costoOportunidad: "Cada $10,000 invertidos en pauta publicitaria en redes sociales es capital que no se destina a talleres de habilidades blandas o cursos de liderazgo para el personal, lo que podría mejorar la retención y la calidad del servicio a largo plazo."
     }
 };
 
@@ -51,7 +57,7 @@ export default function FppPage() {
 
     const handleProjectChange = (projectId: string) => {
         setSelectedProject(projectId);
-        setFpp(fppData[projectId] || { actividadA: '', actividadB: '', recursoLimitado: '', costoOportunidad: '' });
+        setFpp(fppData[projectId as keyof typeof fppData] || { actividadA: '', actividadB: '', recursoLimitado: '', costoOportunidad: '' });
     };
 
     const handleSave = () => {
@@ -80,6 +86,7 @@ export default function FppPage() {
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
                                 <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
+                                <SelectItem value="pizzeria-siglo-xxi">Proyecto: Pizzería Siglo XXI</SelectItem>
                               </SelectContent>
                             </Select>
                         }
