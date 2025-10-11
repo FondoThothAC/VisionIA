@@ -19,18 +19,33 @@ type PestelState = {
   legales: string;
 };
 
-const initialPestelState: PestelState = {
-    politicos: "- Acuerdos comerciales favorables para la exportación de café (Oportunidad).\n- Inestabilidad política en regiones cafetaleras puede afectar el suministro (Amenaza).",
-    economicos: "- Aumento del poder adquisitivo de la clase media que busca productos premium (Oportunidad).\n- Inflación y aumento en costos de logística (Amenaza).\n- Volatilidad del tipo de cambio para compras de equipo importado (Amenaza).",
-    sociales: "- Creciente interés en la cultura del café de especialidad y la preparación en casa (Oportunidad).\n- Tendencia hacia un consumo más consciente y ético (Oportunidad).\n- Cambios en los hábitos de consumo, prefiriendo la rapidez sobre la calidad (Amenaza).",
-    tecnologicos: "- Nuevas plataformas de e-commerce y marketing digital facilitan el acceso a clientes (Oportunidad).\n- Mejoras en la tecnología de tostado para mayor consistencia (Oportunidad).\n- Necesidad de inversión constante para mantenerse tecnológicamente relevante (Amenaza).",
-    ecologicos: "- Demanda por empaques sostenibles y biodegradables (Oportunidad).\n- El cambio climático afecta las cosechas y la calidad del grano (Amenaza).\n- Regulaciones ambientales más estrictas sobre el tratamiento de residuos del café (Amenaza).",
-    legales: "- Normativas de etiquetado de alimentos más exigentes (Amenaza).\n- Leyes de protección al consumidor que regulan la publicidad (Amenaza).\n- Legislación laboral que aumenta los costos de personal (Amenaza)."
+const pestelData: Record<string, PestelState> = {
+    "cafe-aroma": {
+        politicos: "- Acuerdos comerciales favorables para la exportación de café (Oportunidad).\n- Inestabilidad política en regiones cafetaleras puede afectar el suministro (Amenaza).",
+        economicos: "- Aumento del poder adquisitivo de la clase media que busca productos premium (Oportunidad).\n- Inflación y aumento en costos de logística (Amenaza).\n- Volatilidad del tipo de cambio para compras de equipo importado (Amenaza).",
+        sociales: "- Creciente interés en la cultura del café de especialidad y la preparación en casa (Oportunidad).\n- Tendencia hacia un consumo más consciente y ético (Oportunidad).\n- Cambios en los hábitos de consumo, prefiriendo la rapidez sobre la calidad (Amenaza).",
+        tecnologicos: "- Nuevas plataformas de e-commerce y marketing digital facilitan el acceso a clientes (Oportunidad).\n- Mejoras en la tecnología de tostado para mayor consistencia (Oportunidad).\n- Necesidad de inversión constante para mantenerse tecnológicamente relevante (Amenaza).",
+        ecologicos: "- Demanda por empaques sostenibles y biodegradables (Oportunidad).\n- El cambio climático afecta las cosechas y la calidad del grano (Amenaza).\n- Regulaciones ambientales más estrictas sobre el tratamiento de residuos del café (Amenaza).",
+        legales: "- Normativas de etiquetado de alimentos más exigentes (Amenaza).\n- Leyes de protección al consumidor que regulan la publicidad (Amenaza).\n- Legislación laboral que aumenta los costos de personal (Amenaza)."
+    },
+    "restaurante-gambusinos": {
+        politicos: "- Apoyos gubernamentales al turismo regional (Oportunidad).\n- Estabilidad política local que favorece la inversión (Oportunidad).",
+        economicos: "- Crecimiento de la industria minera en la región, que trae trabajadores con poder adquisitivo (Oportunidad).\n- Inflación en el precio de los alimentos (Amenaza).",
+        sociales: "- Revalorización de la cocina regional y tradicional (Oportunidad).\n- Aumento del turismo de fin de semana en la ruta del Río Sonora (Oportunidad).",
+        tecnologicos: "- Uso de redes sociales para promoción a bajo costo (Oportunidad).\n- Sistemas de punto de venta en la nube para una mejor administración (Oportunidad).",
+        ecologicos: "- Regulaciones sobre el manejo de residuos de restaurantes (Amenaza).\n- Creciente interés de los turistas en prácticas sostenibles (Oportunidad).",
+        legales: "- Requisitos para la licencia de venta de alcohol (Amenaza).\n- Normas de salubridad y protección civil que deben cumplirse estrictamente (Amenaza)."
+    }
 };
 
-
 export default function PestelPage() {
-    const [pestel, setPestel] = useState<PestelState>(initialPestelState);
+    const [selectedProject, setSelectedProject] = useState("cafe-aroma");
+    const [pestel, setPestel] = useState<PestelState>(pestelData[selectedProject]);
+
+    const handleProjectChange = (projectId: string) => {
+        setSelectedProject(projectId);
+        setPestel(pestelData[projectId] || { politicos: '', economicos: '', sociales: '', tecnologicos: '', ecologicos: '', legales: '' });
+    };
 
     const handleSave = () => {
         console.log("Guardando análisis PESTEL:", pestel);
@@ -49,18 +64,30 @@ export default function PestelPage() {
                         title="Análisis PESTEL"
                         description="Identifica los factores del macroentorno que pueden impactar tu negocio."
                         projectSelector={
-                           <Select defaultValue="cafe-aroma">
+                           <Select value={selectedProject} onValueChange={handleProjectChange}>
                               <SelectTrigger className="w-auto border-none shadow-none text-xl font-bold p-0 focus:ring-0">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
+                                <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
                               </SelectContent>
                             </Select>
                         }
                         author="Roberto"
-                        aiModel="Phi 4 Mini"
+                         aiModel={
+                             <Select defaultValue="phi-4-mini">
+                                <SelectTrigger className="w-auto border-none shadow-none focus:ring-0">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="phi-4-mini">Phi 4 Mini</SelectItem>
+                                    <SelectItem value="llama-3">Llama 3</SelectItem>
+                                    <SelectItem value="gemini-1.5">Gemini 1.5</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        }
                     />
                 </div>
                  <div className="flex items-center gap-2">

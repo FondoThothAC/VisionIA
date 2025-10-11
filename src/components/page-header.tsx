@@ -5,7 +5,7 @@ type PageHeaderProps = {
   description: string;
   projectSelector?: React.ReactNode;
   author?: string;
-  aiModel?: string;
+  aiModel?: React.ReactNode;
 };
 
 export default function PageHeader({ title, description, projectSelector, author, aiModel }: PageHeaderProps) {
@@ -19,9 +19,12 @@ export default function PageHeader({ title, description, projectSelector, author
           )}
           {author && <span>Autor: <strong>{author}</strong></span>}
           {aiModel && (
-            <span>
-              Modelo IA: <strong>{aiModel}</strong>
-            </span>
+            <div className="flex items-center gap-2">
+              <span>
+                Modelo IA:
+              </span>
+              {aiModel}
+            </div>
           )}
       </div>
 

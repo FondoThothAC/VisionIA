@@ -18,16 +18,29 @@ type FppState = {
   costoOportunidad: string;
 };
 
-const initialFppState: FppState = {
-    actividadA: "Desarrollar una nueva línea de café saborizado (ej. vainilla, canela).",
-    actividadB: "Aumentar la producción y marketing de nuestro café de origen único más vendido.",
-    recursoLimitado: "Horas del maestro tostador (40 horas/semana) y presupuesto de marketing ($10,000/mes).",
-    costoOportunidad: "Por cada hora que el maestro tostador dedica a experimentar con sabores, se deja de tostar 5kg de nuestro café principal. Por cada $1,000 invertidos en marketing para el nuevo producto, se deja de alcanzar a 500 clientes potenciales para el producto existente."
+const fppData: Record<string, FppState> = {
+    "cafe-aroma": {
+        actividadA: "Desarrollar una nueva línea de café saborizado (ej. vainilla, canela).",
+        actividadB: "Aumentar la producción y marketing de nuestro café de origen único más vendido.",
+        recursoLimitado: "Horas del maestro tostador (40 horas/semana) y presupuesto de marketing ($10,000/mes).",
+        costoOportunidad: "Por cada hora que el maestro tostador dedica a experimentar con sabores, se deja de tostar 5kg de nuestro café principal. Por cada $1,000 invertidos en marketing para el nuevo producto, se deja de alcanzar a 500 clientes potenciales para el producto existente."
+    },
+    "restaurante-gambusinos": {
+        actividadA: "Invertir en una campaña de marketing digital agresiva para atraer turistas.",
+        actividadB: "Crear un programa de lealtad y eventos especiales para fidelizar a la población local.",
+        recursoLimitado: "Presupuesto de Marketing y Promoción ($20,000 MXN mensuales).",
+        costoOportunidad: "Cada $5,000 invertidos en anuncios para turistas en redes sociales son $5,000 que no se usan para organizar un evento de música en vivo para la gente del pueblo, lo que podría generar mayor recurrencia."
+    }
 };
 
-
 export default function FppPage() {
-    const [fpp, setFpp] = useState<FppState>(initialFppState);
+    const [selectedProject, setSelectedProject] = useState("cafe-aroma");
+    const [fpp, setFpp] = useState<FppState>(fppData[selectedProject]);
+
+    const handleProjectChange = (projectId: string) => {
+        setSelectedProject(projectId);
+        setFpp(fppData[projectId] || { actividadA: '', actividadB: '', recursoLimitado: '', costoOportunidad: '' });
+    };
 
     const handleSave = () => {
         console.log("Guardando análisis FPP:", fpp);
@@ -46,18 +59,30 @@ export default function FppPage() {
                         title="Lienzo de Asignación de Recursos (FPP)"
                         description="Analiza los trade-offs al asignar recursos limitados entre iniciativas competidoras."
                         projectSelector={
-                           <Select defaultValue="cafe-aroma">
+                           <Select value={selectedProject} onValueChange={handleProjectChange}>
                               <SelectTrigger className="w-auto border-none shadow-none text-xl font-bold p-0 focus:ring-0">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
+                                <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
                               </SelectContent>
                             </Select>
                         }
                         author="Roberto"
-                        aiModel="Phi 4 Mini"
+                         aiModel={
+                             <Select defaultValue="phi-4-mini">
+                                <SelectTrigger className="w-auto border-none shadow-none focus:ring-0">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="phi-4-mini">Phi 4 Mini</SelectItem>
+                                    <SelectItem value="llama-3">Llama 3</SelectItem>
+                                    <SelectItem value="gemini-1.5">Gemini 1.5</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        }
                     />
                 </div>
                  <div className="flex items-center gap-2">

@@ -23,16 +23,30 @@ type FodaState = {
   amenazas: string;
 };
 
-const initialFodaState: FodaState = {
-    fortalezas: "- Equipo con experiencia en la industria del café.\n- Relación directa con productores de alta calidad.\n- Marca con historia y propósito (storytelling).",
-    oportunidades: "- Crecimiento del mercado de café de especialidad.\n- Aumento del consumo de productos éticos y sostenibles.\n- Posibilidad de exportación a mercados internacionales.",
-    debilidades: "- Capital de trabajo limitado para grandes inventarios.\n- Poca experiencia en marketing digital a gran escala.\n- Dependencia de un número reducido de fincas proveedoras.",
-    amenazas: "- Volatilidad en los precios del café verde.\n- Aparición de nuevas marcas competidoras con mayor presupuesto.\n- Cambios en las regulaciones de importación/exportación."
+const fodaData: Record<string, FodaState> = {
+    "cafe-aroma": {
+        fortalezas: "- Equipo con experiencia en la industria del café.\n- Relación directa con productores de alta calidad.\n- Marca con historia y propósito (storytelling).",
+        oportunidades: "- Crecimiento del mercado de café de especialidad.\n- Aumento del consumo de productos éticos y sostenibles.\n- Posibilidad de exportación a mercados internacionales.",
+        debilidades: "- Capital de trabajo limitado para grandes inventarios.\n- Poca experiencia en marketing digital a gran escala.\n- Dependencia de un número reducido de fincas proveedoras.",
+        amenazas: "- Volatilidad en los precios del café verde.\n- Aparición de nuevas marcas competidoras con mayor presupuesto.\n- Cambios en las regulaciones de importación/exportación."
+    },
+    "restaurante-gambusinos": {
+        fortalezas: "- Concepto de Restaurant-Bar único en la región.\n- Ubicación céntrica y de alta afluencia en Aconchi.\n- Oferta gastronómica basada en la cocina regional popular.",
+        oportunidades: "- Demanda de servicios de restaurante insatisfecha en el municipio.\n- Turismo constante por atractivos como las aguas termales.\n- Mercado de trabajadores de la minería con poder adquisitivo.",
+        debilidades: "- La sociedad propietaria tiene experiencia limitada en la gestión directa de restaurantes.\n- El éxito depende de estandarizar procesos y recetas desde el día uno.\n- El formato de bar podría disuadir a una parte del público familiar en ciertos horarios.",
+        amenazas: "- Competencia de otros establecimientos de comida en la región aunque no tengan el mismo concepto.\n- Dependencia del flujo turístico que puede ser estacional.\n- Aumento en el costo de los insumos y materias primas regionales."
+    }
 };
 
 
 export default function FodaPage() {
-    const [foda, setFoda] = useState<FodaState>(initialFodaState);
+    const [selectedProject, setSelectedProject] = useState("cafe-aroma");
+    const [foda, setFoda] = useState<FodaState>(fodaData[selectedProject]);
+
+    const handleProjectChange = (projectId: string) => {
+        setSelectedProject(projectId);
+        setFoda(fodaData[projectId] || { fortalezas: '', oportunidades: '', debilidades: '', amenazas: '' });
+    };
 
     const handleSave = () => {
         console.log("Guardando análisis FODA:", foda);
@@ -51,18 +65,30 @@ export default function FodaPage() {
                         title="Análisis FODA"
                         description="Evalúa las Fortalezas, Oportunidades, Debilidades y Amenazas de tu negocio."
                         projectSelector={
-                           <Select defaultValue="cafe-aroma">
+                           <Select value={selectedProject} onValueChange={handleProjectChange}>
                               <SelectTrigger className="w-auto border-none shadow-none text-xl font-bold p-0 focus:ring-0">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
+                                <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
                               </SelectContent>
                             </Select>
                         }
                         author="Roberto"
-                        aiModel="Phi 4 Mini"
+                        aiModel={
+                             <Select defaultValue="phi-4-mini">
+                                <SelectTrigger className="w-auto border-none shadow-none focus:ring-0">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="phi-4-mini">Phi 4 Mini</SelectItem>
+                                    <SelectItem value="llama-3">Llama 3</SelectItem>
+                                    <SelectItem value="gemini-1.5">Gemini 1.5</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        }
                     />
                 </div>
                 <div className="flex items-center gap-2">
