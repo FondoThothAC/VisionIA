@@ -28,28 +28,55 @@ type Competitor = {
   marketingStrategy: string;
 };
 
-const initialCompetitors: Competitor[] = [
-    {
-        id: 1,
-        name: "Café 'El Origen'",
-        valueProposition: "Café orgánico de origen único, enfocado en la historia del productor.",
-        customerSegment: "Consumidores éticos y conocedores de café (B2C).",
-        pricing: "Premium, 15-20% más caro que el nuestro.",
-        strengths: "Fuerte branding y storytelling. Empaques atractivos. Buena presencia en redes.",
-        weaknesses: "Distribución limitada, solo venden en su web. Poca variedad de tuestes.",
-        marketingStrategy: "Marketing de contenidos, colaboraciones con influencers de sostenibilidad.",
-    },
-    {
-        id: 2,
-        name: "Suministros 'Cafetal'",
-        valueProposition: "Proveedor B2B de café a granel a precios competitivos.",
-        customerSegment: "Cafeterías y restaurantes que buscan volumen y bajo costo (B2B).",
-        pricing: "Bajo, enfocado en volumen. Descuentos por grandes compras.",
-        strengths: "Precios muy competitivos. Logística eficiente para grandes pedidos.",
-        weaknesses: "Calidad inconsistente. Nulo branding o conexión con el cliente final. Sin venta online B2C.",
-        marketingStrategy: "Venta directa y equipo comercial. Sin marketing digital visible.",
-    }
-];
+const competitorData: Record<string, Competitor[]> = {
+    "cafe-aroma": [
+        {
+            id: 1,
+            name: "Café 'El Origen'",
+            valueProposition: "Café orgánico de origen único, enfocado en la historia del productor.",
+            customerSegment: "Consumidores éticos y conocedores de café (B2C).",
+            pricing: "Premium, 15-20% más caro que el nuestro.",
+            strengths: "Fuerte branding y storytelling. Empaques atractivos. Buena presencia en redes.",
+            weaknesses: "Distribución limitada, solo venden en su web. Poca variedad de tuestes.",
+            marketingStrategy: "Marketing de contenidos, colaboraciones con influencers de sostenibilidad.",
+        },
+        {
+            id: 2,
+            name: "Suministros 'Cafetal'",
+            valueProposition: "Proveedor B2B de café a granel a precios competitivos.",
+            customerSegment: "Cafeterías y restaurantes que buscan volumen y bajo costo (B2B).",
+            pricing: "Bajo, enfocado en volumen. Descuentos por grandes compras.",
+            strengths: "Precios muy competitivos. Logística eficiente para grandes pedidos.",
+            weaknesses: "Calidad inconsistente. Nulo branding o conexión con el cliente final. Sin venta online B2C.",
+            marketingStrategy: "Venta directa y equipo comercial. Sin marketing digital visible.",
+        }
+    ],
+    "restaurante-gambusinos": [],
+    "ecoturismo-la-salina": [],
+    "taller-carroceria": [
+         {
+            id: 1,
+            name: "Portillo Auto Carrocería",
+            valueProposition: "Servicio de carrocería y pintura general.",
+            customerSegment: "Clientes particulares y posiblemente aseguradoras.",
+            pricing: "$800 por pieza de pintura.",
+            strengths: "Tienen buen equipamiento y herramienta.",
+            weaknesses: "Precios pueden ser un punto de comparación.",
+            marketingStrategy: "Ubicación física y reputación establecida.",
+        },
+        {
+            id: 2,
+            name: "Auto Carrocería Castillo",
+            valueProposition: "Servicio similar de reparación y pintura.",
+            customerSegment: "Clientes particulares de la zona.",
+            pricing: "$1300 por pieza de pintura, un precio más elevado.",
+            strengths: "Buena ubicación y publicidad.",
+            weaknesses: "Precios más altos, lo que abre una oportunidad para un servicio más económico.",
+            marketingStrategy: "Publicidad local y ubicación.",
+        },
+    ]
+};
+
 
 const CompetitorCard = ({ competitor, onUpdate, onRemove }: { competitor: Competitor, onUpdate: (id: number, field: keyof Competitor, value: string) => void, onRemove: (id: number) => void }) => {
   return (
@@ -100,7 +127,13 @@ const CompetitorCard = ({ competitor, onUpdate, onRemove }: { competitor: Compet
 };
 
 export default function CompetitionCanvasPage() {
-  const [competitors, setCompetitors] = useState<Competitor[]>(initialCompetitors);
+  const [selectedProject, setSelectedProject] = useState("cafe-aroma");
+  const [competitors, setCompetitors] = useState<Competitor[]>(competitorData[selectedProject]);
+
+  const handleProjectChange = (projectId: string) => {
+      setSelectedProject(projectId);
+      setCompetitors(competitorData[projectId as keyof typeof competitorData] || []);
+  };
 
   const handleUpdate = (id: number, field: keyof Competitor, value: string) => {
     setCompetitors(prev =>
@@ -139,18 +172,31 @@ export default function CompetitionCanvasPage() {
                 title="Lienzo de la Competencia"
                 description="Añade y analiza a tus competidores para entender el panorama del mercado."
                 projectSelector={
-                   <Select defaultValue="cafe-aroma">
+                   <Select value={selectedProject} onValueChange={handleProjectChange}>
                       <SelectTrigger className="w-auto border-none shadow-none text-xl font-bold p-0 focus:ring-0">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
-                        <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
+                        <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
+                        <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
+                        <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
                       </SelectContent>
                     </Select>
                 }
                 author="Roberto"
-                aiModel="Phi 4 Mini"
+                aiModel={
+                     <Select defaultValue="phi-4-mini">
+                        <SelectTrigger className="w-auto border-none shadow-none focus:ring-0">
+                            <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="phi-4-mini">Phi 4 Mini</SelectItem>
+                            <SelectItem value="llama-3">Llama 3</SelectItem>
+                            <SelectItem value="gemini-1.5">Gemini 1.5</SelectItem>
+                        </SelectContent>
+                    </Select>
+                }
             />
         </div>
          <div className="flex items-center gap-2">
