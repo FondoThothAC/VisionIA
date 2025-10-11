@@ -50,9 +50,15 @@ const fodaData: Record<string, FodaState> = {
     },
     "pizzeria-siglo-xxi": {
         fortalezas: "- Emplea a personas con síndrome de Down, lo que lo hace único y destacado en el mercado.\n- Ofrece productos de alta calidad y un servicio amable y acogedor.\n- Promueve una sensación de comunidad y pertenencia para las personas con síndrome de Down y sus familias.",
-        debilidades: "- El proceso de capacitación puede llevar tiempo y esfuerzo adicional.\n- Puede haber cierta resistencia por parte de algunos clientes hacia la inclusión de personas con síndrome de Down en roles de trabajo.\n- El enfoque en la capacitación y la inclusión puede requerir recursos adicionales.",
         oportunidades: "- Hay una creciente conciencia sobre la inclusión y la diversidad en la sociedad.\n- Puede expandirse a través de la apertura de nuevas sucursales o mediante la franquicia del modelo.\n- Puede colaborar con organizaciones y empresas locales para aumentar la visibilidad y el alcance del negocio.",
+        debilidades: "- El proceso de capacitación puede llevar tiempo y esfuerzo adicional.\n- Puede haber cierta resistencia por parte de algunos clientes hacia la inclusión de personas con síndrome de Down en roles de trabajo.\n- El enfoque en la capacitación y la inclusión puede requerir recursos adicionales.",
         amenazas: "- La competencia en el mercado de alimentos puede ser alta.\n- Las regulaciones y los requisitos gubernamentales pueden ser más estrictos para las empresas que emplean a personas con discapacidades.\n- Puede haber una percepción errónea de que la calidad del producto se ve afectada."
+    },
+    "papeleria-la-sirena": {
+        fortalezas: "- Experiencia por parte de los integrantes en la comercialización.\n- Punto de venta establecido en una ubicación viable.",
+        oportunidades: "- La competencia es escasa y se encuentra a una distancia retirada.\n- Demanda considerable debido a la existencia de siete planteles educativos en la comunidad.",
+        debilidades: "- Falta de capital para la inversión inicial.\n- La necesidad de trasladarse 107 km a Hermosillo para abastecerse de los proveedores mayoristas.",
+        amenazas: "- Variación en el costo de los productos.\n- El surgimiento de más competencia en el futuro."
     }
 };
 
@@ -93,6 +99,7 @@ export default function FodaPage() {
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
                                 <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
                                 <SelectItem value="pizzeria-siglo-xxi">Proyecto: Pizzería Siglo XXI</SelectItem>
+                                <SelectItem value="papeleria-la-sirena">Proyecto: Papelería La Sirena</SelectItem>
                               </SelectContent>
                             </Select>
                         }

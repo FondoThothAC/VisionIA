@@ -59,6 +59,14 @@ const pestelData: Record<string, PestelState> = {
         tecnologicos: "- Auge de las plataformas de delivery (Rappi, Uber Eats) facilita la logística (Oportunidad).\n- Importancia del marketing digital y redes sociales para atraer clientes.",
         ecologicos: "- Demanda de empaques ecológicos y biodegradables (Oportunidad).\n- Regulaciones sobre el manejo de residuos orgánicos (Amenaza).",
         legales: "- Requisitos de licencia sanitaria y de funcionamiento (Amenaza).\n- Regulaciones laborales específicas para la inclusión de personas con discapacidad (Oportunidad/Amenaza)."
+    },
+    "papeleria-la-sirena": {
+        politicos: "- Regulaciones sobre permisos de uso de suelo para comercios (Amenaza).\n- Apoyo gubernamental a la educación puede incrementar la demanda de útiles (Oportunidad).",
+        economicos: "- Variación en el costo de los productos importados (papel, tintas) debido al tipo de cambio (Amenaza).\n- El regreso a clases presenciales aumenta la demanda estacional (Oportunidad).",
+        sociales: "- Creciente uso de dispositivos electrónicos en la educación reduce la necesidad de papelería tradicional (Amenaza).\n- Valoración de pequeños comercios locales por parte de la comunidad (Oportunidad).",
+        tecnologicos: "- Oferta de servicios de impresión y copiado como fuente de ingresos clave (Oportunidad).\n- Competencia de tiendas en línea con catálogos más amplios (Amenaza).",
+        ecologicos: "- Demanda de productos reciclados o ecológicos (Oportunidad).\n- Normativas sobre el uso de bolsas de plástico (Amenaza/Oportunidad).",
+        legales: "- Cumplimiento de normativas fiscales y de operación comercial (Amenaza).\n- Protección al consumidor en cuanto a la calidad de los productos (Amenaza)."
     }
 };
 
@@ -98,6 +106,7 @@ export default function PestelPage() {
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
                                 <SelectItem value="taller-carroceria">Proyecto: Taller de Carrocería y Pintura</SelectItem>
                                 <SelectItem value="pizzeria-siglo-xxi">Proyecto: Pizzería Siglo XXI</SelectItem>
+                                <SelectItem value="papeleria-la-sirena">Proyecto: Papelería La Sirena</SelectItem>
                               </SelectContent>
                             </Select>
                         }
