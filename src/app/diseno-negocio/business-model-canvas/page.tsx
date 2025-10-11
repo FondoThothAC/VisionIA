@@ -5,9 +5,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
-import { Save, ChevronsUpDown, Maximize } from "lucide-react";
+import { Save, Maximize, History, Redo, Undo } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import PageHeader from "@/components/page-header";
 
 const initialData = {
     keyPartners: "- Fincas de café de comercio justo en Chiapas y Veracruz.\n- Proveedores de empaques biodegradables.\n- Empresas de logística para distribución nacional.\n- Tiendas y mercados de productos orgánicos.",
@@ -73,34 +74,40 @@ export default function BusinessModelCanvasPage() {
 
   const handleSave = () => {
     console.log("Guardando datos del lienzo:", canvasData);
-    // En una aplicación real, aquí llamarías a una API para guardar los datos.
     alert("Progreso guardado en la consola del navegador.");
   }
 
   return (
     <div className="space-y-6">
-       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-         <div>
-            <h1 className="font-headline text-3xl font-bold">Lienzo del Modelo de Negocio</h1>
-            <p className="text-muted-foreground">Rellena los 9 bloques para construir tu modelo de negocio.</p>
-         </div>
-         <div className="flex items-center gap-4 w-full md:w-auto">
-            <Select defaultValue="cafe-aroma">
-              <SelectTrigger className="w-full md:w-[280px]">
-                <ChevronsUpDown className="mr-2 h-4 w-4 opacity-50"/>
-                <SelectValue placeholder="Seleccionar proyecto..." />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
-                <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
-                <SelectItem value="new-project">Nuevo Proyecto (en blanco)</SelectItem>
-              </SelectContent>
-            </Select>
+       <div className="flex flex-col md:flex-row items-start justify-between gap-4">
+         <div className="flex-grow">
+             <PageHeader
+                title="Lienzo del Modelo de Negocio"
+                description="Rellena los 9 bloques para construir tu modelo de negocio."
+                projectSelector={
+                   <Select defaultValue="cafe-aroma">
+                      <SelectTrigger className="w-auto border-none shadow-none text-xl font-bold p-0 focus:ring-0">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
+                        <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
+                      </SelectContent>
+                    </Select>
+                }
+                author="Roberto"
+                aiModel="Phi 4 Mini"
+            />
+        </div>
+         <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon"><Undo/></Button>
+            <Button variant="ghost" size="icon"><Redo/></Button>
+            <Button variant="outline"><History className="mr-2"/> Historial</Button>
             <Button onClick={handleSave}>
-                <Save className="mr-2 h-4 w-4"/>
+                <Save className="mr-2"/>
                 Guardar Progreso
             </Button>
-         </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-5 grid-rows-8 gap-4 min-h-[75vh]">

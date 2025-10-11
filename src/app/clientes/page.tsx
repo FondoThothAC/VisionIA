@@ -13,7 +13,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import PageHeader from "@/components/page-header";
-import { Save, PlusCircle, Trash2 } from "lucide-react";
+import { Save, PlusCircle, Trash2, History, Redo, Undo } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -176,15 +176,35 @@ export default function ClientesPage() {
 
     return (
         <div className="space-y-8">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                <PageHeader
-                    title="Entendiendo a tu Cliente"
-                    description="Utiliza estas herramientas para analizar y empatizar con tu público objetivo."
-                />
-                 <Button onClick={handleSave}>
-                    <Save className="mr-2 h-4 w-4"/>
-                    Guardar Progreso
-                </Button>
+            <div className="flex flex-col md:flex-row items-start justify-between gap-4">
+                <div className="flex-grow">
+                     <PageHeader
+                        title="Entendiendo a tu Cliente"
+                        description="Utiliza estas herramientas para analizar y empatizar con tu público objetivo."
+                        projectSelector={
+                           <Select defaultValue="cafe-aroma">
+                              <SelectTrigger className="w-auto border-none shadow-none text-xl font-bold p-0 focus:ring-0">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
+                                <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
+                              </SelectContent>
+                            </Select>
+                        }
+                        author="Roberto"
+                        aiModel="Phi 4 Mini"
+                    />
+                </div>
+                 <div className="flex items-center gap-2">
+                    <Button variant="ghost" size="icon"><Undo/></Button>
+                    <Button variant="ghost" size="icon"><Redo/></Button>
+                    <Button variant="outline"><History className="mr-2"/> Historial</Button>
+                    <Button onClick={handleSave}>
+                        <Save className="mr-2"/>
+                        Guardar Progreso
+                    </Button>
+                </div>
             </div>
 
             <div className="space-y-8">

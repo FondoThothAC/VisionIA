@@ -6,8 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Save } from "lucide-react";
+import { Save, History, Redo, Undo } from "lucide-react";
 import PageHeader from "@/components/page-header";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const initialData = {
     problema: "- Los emprendedores luchan por crear planes de negocio sólidos.\n- Las herramientas existentes (Word, Excel) son ineficientes y no están conectadas.\n- El acceso a consultoría de calidad es caro y no escalable.",
@@ -57,12 +58,35 @@ export default function LeanCanvasPage() {
 
   return (
     <div className="space-y-6">
-       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-         <PageHeader title="Lean Canvas" description="Un plan de negocio de 1 página enfocado en problemas, soluciones y métricas clave."/>
-         <Button onClick={handleSave}>
-             <Save className="mr-2 h-4 w-4"/>
-             Guardar Progreso
-         </Button>
+       <div className="flex flex-col md:flex-row items-start justify-between gap-4">
+         <div className="flex-grow">
+             <PageHeader
+                title="Lean Canvas"
+                description="Un plan de negocio de 1 página enfocado en problemas, soluciones y métricas clave."
+                projectSelector={
+                   <Select defaultValue="cafe-aroma">
+                      <SelectTrigger className="w-auto border-none shadow-none text-xl font-bold p-0 focus:ring-0">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
+                        <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
+                      </SelectContent>
+                    </Select>
+                }
+                author="Roberto"
+                aiModel="Phi 4 Mini"
+            />
+        </div>
+         <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon"><Undo/></Button>
+            <Button variant="ghost" size="icon"><Redo/></Button>
+            <Button variant="outline"><History className="mr-2"/> Historial</Button>
+            <Button onClick={handleSave}>
+                <Save className="mr-2"/>
+                Guardar Progreso
+            </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 min-h-[75vh]">

@@ -32,7 +32,7 @@ import {
 } from '@/components/ui/table';
 import { Slider } from '@/components/ui/slider';
 import { Button } from '@/components/ui/button';
-import { FileDown, TrendingDown, TrendingUp, DollarSign, Users, AlertCircle, BookOpen, Info, Trash2, PlusCircle, Package, Calculator } from 'lucide-react';
+import { FileDown, TrendingDown, TrendingUp, DollarSign, Users, AlertCircle, BookOpen, Info, Trash2, PlusCircle, Package, Calculator, History, Redo, Undo, Save } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PageHeader from "@/components/page-header";
@@ -474,6 +474,12 @@ export default function FinancialsPage() {
     const { name, value } = e.target;
     setCosts((prev) => ({ ...prev, [name]: Number(value) || 0 }));
   };
+  
+  const handleSave = () => {
+    console.log("Guardando datos financieros");
+    alert("Datos financieros guardados en la consola.");
+  }
+
 
   // --- CALCULATIONS ---
   const calculateProjections = () => {
@@ -528,15 +534,35 @@ export default function FinancialsPage() {
 
   return (
      <div className="space-y-8">
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <PageHeader
-          title="Modelado Financiero"
-          description="Genera estados financieros, ratios y gráficos. Realiza análisis 'what-if' para pronosticar el futuro de tu negocio."
-        />
-        <Button variant="outline">
-            <FileDown className="mr-2 h-4 w-4"/>
-            Exportar a PDF
-        </Button>
+        <div className="flex flex-col md:flex-row items-start justify-between gap-4">
+            <div className="flex-grow">
+                 <PageHeader
+                    title="Modelado Financiero"
+                    description="Genera estados financieros, ratios y gráficos. Realiza análisis 'what-if' para pronosticar el futuro de tu negocio."
+                    projectSelector={
+                       <Select defaultValue="cafe-aroma">
+                          <SelectTrigger className="w-auto border-none shadow-none text-xl font-bold p-0 focus:ring-0">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
+                            <SelectItem value="app-fitness">Proyecto: App de Fitness</SelectItem>
+                          </SelectContent>
+                        </Select>
+                    }
+                    author="Roberto"
+                    aiModel="Phi 4 Mini"
+                />
+            </div>
+            <div className="flex items-center gap-2">
+                <Button variant="ghost" size="icon"><Undo/></Button>
+                <Button variant="ghost" size="icon"><Redo/></Button>
+                <Button variant="outline"><History className="mr-2"/> Historial</Button>
+                <Button onClick={handleSave}>
+                    <Save className="mr-2"/>
+                    Guardar Progreso
+                </Button>
+            </div>
       </div>
       
        <Tabs defaultValue="projections">

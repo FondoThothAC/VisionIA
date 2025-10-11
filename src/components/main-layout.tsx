@@ -110,7 +110,7 @@ const menuItems = [
     ]
   },
   {
-    href: '/competencia',
+    href: '/competencia/lienzo',
     label: 'Competencia',
     icon: Target,
   },
@@ -163,6 +163,14 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
     setOpenSubmenus(prev => ({...prev, [label]: !prev[label]}));
   }
   
+  React.useEffect(() => {
+    const activeGroup = menuItems.find(item => item.isGroup && item.items.some((subItem: any) => pathname.startsWith(subItem.href)));
+    if (activeGroup && activeGroup.isGroup) {
+      setOpenSubmenus(prev => ({...prev, [activeGroup.label]: true}));
+    }
+  }, [pathname]);
+
+
   const renderMenuItem = (item: any) => {
     if (item.isGroup) {
       const isSubmenuActive = item.items.some((subItem: any) => pathname.startsWith(subItem.href));
@@ -177,6 +185,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           >
             <item.icon />
             <span>{item.label}</span>
+             <ChevronDown className={`ml-auto h-4 w-4 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} group-data-[collapsible=icon]:hidden`} />
           </SidebarMenuButton>
           {isOpen && (
              <SidebarMenuSub>
@@ -242,23 +251,10 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         </SidebarContent>
       </Sidebar>
       <SidebarInset>
-        <header className="flex items-center justify-between p-4 border-b">
+        <header className="flex items-center justify-between p-4 border-b lg:hidden">
             <div className="flex items-center gap-4">
-                <SidebarTrigger className="lg:hidden" />
-                 <Logo iconOnly={true} className="lg:hidden" />
-            </div>
-
-            <div className="flex items-center gap-4">
-                <Button variant="outline" className="rounded-full border-2 border-primary/50 font-bold text-primary hover:bg-primary/10 hover:text-primary pl-6 pr-5 relative -top-1 -mr-2 shadow-sm">
-                    Proyecto
-                    <div className="absolute top-0 right-0 -mr-px -mt-px w-3 h-3 border-l-2 border-t-2 border-primary/50 rounded-tl-sm" />
-                    <div className="absolute bottom-0 right-0 -mr-px -mb-px w-3 h-3 border-l-2 border-t-2 border-primary/50 transform -rotate-90" />
-                    <div className="absolute top-0 left-0 -ml-px -mt-px w-3 h-3 border-r-2 border-b-2 border-primary/50 transform -rotate-90" />
-                     <div className="absolute bottom-0 left-0 -ml-px -mb-px w-3 h-3 border-r-2 border-b-2 border-primary/50" />
-                </Button>
-                 <Button>
-                    Guardar y Continuar
-                </Button>
+                <SidebarTrigger />
+                 <Logo iconOnly={true} />
             </div>
         </header>
         <main className="p-4 md:p-6 lg:p-8">
@@ -268,5 +264,3 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
     </>
   );
 }
-
-    
