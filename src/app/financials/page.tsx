@@ -699,6 +699,52 @@ export default function FinancialsPage() {
   const totalProfit = projectionData.reduce((acc, d) => acc + d.Beneficio, 0);
   const finalCumulativeProfit = projectionData[projectionData.length - 1]?.Beneficio_Acumulado || 0;
   const growthBeatsInflation = assumptions.monthlyGrowth > (Math.pow(1 + assumptions.inflationRate / 100, 1 / 12) - 1) * 100;
+  
+  const renderAccountRow = (account: any, level = 0) => {
+    const isHeader = account.type === 'Header' || account.type === 'MainHeader' || account.type === 'SubHeader';
+    const indentClass = `pl-${4 + level * 4}`;
+
+    if (account.type === 'MainHeader') {
+        const nature = account.code.startsWith('1') || account.code.startsWith('5') ? 'Activo/Gasto' : 'Pasivo/Capital/Ingreso';
+        return (
+            <TableRow key={account.code} className="bg-muted/30 hover:bg-muted/30">
+                <TableCell colSpan={6} className="font-bold text-primary text-lg py-4">
+                   <div className="flex flex-col">
+                     <span>{account.code} - {account.name}</span>
+                     <span className="text-sm font-normal text-muted-foreground">{account.description}</span>
+                   </div>
+                </TableCell>
+            </TableRow>
+        );
+    }
+    
+    if (isHeader) {
+      return (
+        <TableRow key={account.code} className="bg-muted/20 hover:bg-muted/20">
+          <TableCell colSpan={6} className={`font-semibold text-foreground/90 ${indentClass}`}>
+            {account.code} - {account.name}
+          </TableCell>
+        </TableRow>
+      );
+    }
+
+    return (
+      <TableRow key={account.code}>
+        <TableCell className={`${indentClass} text-muted-foreground`}>{account.code}</TableCell>
+        <TableCell className="font-medium">{account.name}</TableCell>
+        <TableCell className="text-right">
+            <Input type="number" placeholder="0.00" className="text-right h-8" disabled />
+        </TableCell>
+        <TableCell className="text-right">
+            <Input type="number" placeholder="0.00" className="text-right h-8" disabled />
+        </TableCell>
+        <TableCell className="text-right font-semibold">
+            {formatCurrency(0)}
+        </TableCell>
+      </TableRow>
+    );
+  };
+
 
   return (
      <div className="space-y-8">
@@ -754,7 +800,7 @@ export default function FinancialsPage() {
         <TabsList className="grid w-full grid-cols-3 mb-4">
           <TabsTrigger value="projections">Proyecciones Financieras</TabsTrigger>
           <TabsTrigger value="kpis">Indicadores (KPIs)</TabsTrigger>
-          <TabsTrigger value="accounts">Catálogo de Cuentas</TabsTrigger>
+          <TabsTrigger value="accounts">Libro Mayor / Cuentas</TabsTrigger>
         </TabsList>
 
         <TabsContent value="projections">
@@ -1114,49 +1160,24 @@ export default function FinancialsPage() {
         <TabsContent value="accounts">
              <Card>
                 <CardHeader>
-                    <CardTitle className="flex items-center gap-2"><BookOpen className="h-5 w-5 text-primary"/> Catálogo de Cuentas Contables (Esquema de Mayor)</CardTitle>
-                    <CardDescription>Visualización de Cuentas T para entender el registro de transacciones mediante cargos (Debe) y abonos (Haber).</CardDescription>
+                    <CardTitle className="flex items-center gap-2"><BookOpen className="h-5 w-5 text-primary"/> Libro Mayor Contable</CardTitle>
+                    <CardDescription>Introduce los saldos iniciales de tu contabilidad anterior o deja en cero para un nuevo negocio. Esto es la base para generar el Balance General.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                   <div className="space-y-6">
-                        {
-                            chartOfAccounts.map(account => {
-                                if (account.type === 'MainHeader') {
-                                    return (
-                                        <div key={account.code} className="mt-6 pt-4 border-t">
-                                            <h2 className="text-xl font-bold text-primary tracking-wide">{account.name}</h2>
-                                            <p className="text-base text-muted-foreground">{account.description}</p>
-                                            <Separator className="mt-2"/>
-                                        </div>
-                                    )
-                                }
-                                if (account.type === 'Header') {
-                                     return (
-                                        <div key={account.code} className="mt-4">
-                                            <h3 className="text-lg font-semibold">{account.name}</h3>
-                                            <Separator className="mt-1"/>
-                                        </div>
-                                    )
-                                }
-                                if (account.type === 'SubHeader') {
-                                     return (
-                                        <div key={account.code} className="mt-4 ml-4">
-                                            <h4 className="text-md font-semibold text-muted-foreground">{account.name}</h4>
-                                        </div>
-                                    )
-                                }
-                                if (account.type === 'Account') {
-                                    const nature = account.code.startsWith('1') || account.code.startsWith('5') ? 'debit' : 'credit';
-                                    return (
-                                      <div key={account.code} className="ml-8 pl-4 border-l-2 border-slate-200 py-2">
-                                        <TAccountCard name={account.name} note={account.note} nature={nature} />
-                                      </div>
-                                    )
-                                }
-                                return null;
-                            })
-                        }
-                   </div>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead className="w-[100px]">Código</TableHead>
+                                <TableHead>Nombre de la Cuenta</TableHead>
+                                <TableHead className="text-right w-[150px]">Debe (Cargos)</TableHead>
+                                <TableHead className="text-right w-[150px]">Haber (Abonos)</TableHead>
+                                <TableHead className="text-right w-[180px]">Saldo</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                           {chartOfAccounts.map(account => renderAccountRow(account))}
+                        </TableBody>
+                    </Table>
                 </CardContent>
              </Card>
         </TabsContent>
@@ -1164,3 +1185,6 @@ export default function FinancialsPage() {
     </div>
   );
 }
+
+
+    
