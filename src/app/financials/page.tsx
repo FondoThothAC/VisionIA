@@ -214,6 +214,26 @@ const projectsData: Record<string, FinancialAssumptions> = {
             maintenance: 1500, // Mantenimiento local
             other: 1000,
         },
+    },
+    "restaurante-mariscos": {
+        initialInvestment: 151663,
+        monthlyRevenue: 57987,
+        monthlyGrowth: 3.2,
+        inflationRate: 4.5,
+        employeeRoles: [
+            { id: 1, name: 'Administrador', count: 1, salary: 61200/12, riskClass: 'I' },
+            { id: 2, name: 'Chef', count: 1, salary: 61200/12, riskClass: 'II' },
+            { id: 3, name: 'Cajero', count: 1, salary: 48600/12, riskClass: 'I' },
+            { id: 4, name: 'Mesero 1', count: 1, salary: 43200/12, riskClass: 'I' },
+            { id: 5, name: 'Mesero 2', count: 1, salary: 43200/12, riskClass: 'I' },
+        ],
+        costs: {
+            rent: 0,
+            utilities: 9979,
+            marketing: 2000,
+            supplies: 18639,
+            other: 1000,
+        },
     }
 };
   
@@ -700,6 +720,7 @@ export default function FinancialsPage() {
                                 <SelectItem value="pizzeria-siglo-xxi">Proyecto: Pizzería Siglo XXI</SelectItem>
                                 <SelectItem value="papeleria-la-sirena">Proyecto: Papelería La Sirena</SelectItem>
                                 <SelectItem value="cocina-economica">Proyecto: Cocina Económica Nacozari</SelectItem>
+                                <SelectItem value="restaurante-mariscos">Proyecto: Restaurante de Mariscos</SelectItem>
                             </SelectContent>
                         </Select>
                     }
