@@ -376,7 +376,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const TAccountCard = ({ name, note, nature }: { name: string, note?: string, nature: string }) => {
+const TAccountCard = ({ name, note, nature }: { name: string, note?: string, nature: "debit" | "credit" }) => {
     const isDebitNature = nature === "debit";
     return (
         <Card className="text-center">
@@ -705,7 +705,7 @@ export default function FinancialsPage() {
     const indentClass = `pl-${4 + level * 4}`;
 
     if (account.type === 'MainHeader') {
-        const nature = account.code.startsWith('1') || account.code.startsWith('5') ? 'Activo/Gasto' : 'Pasivo/Capital/Ingreso';
+        const nature: "debit" | "credit" = account.code.startsWith('1') || account.code.startsWith('5') ? 'debit' : 'credit';
         return (
             <TableRow key={account.code} className="bg-muted/30 hover:bg-muted/30">
                 <TableCell colSpan={6} className="font-bold text-primary text-lg py-4">
@@ -1185,6 +1185,3 @@ export default function FinancialsPage() {
     </div>
   );
 }
-
-
-    
