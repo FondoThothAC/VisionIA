@@ -20,6 +20,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -30,8 +31,12 @@ import { Textarea } from '@/components/ui/textarea';
 import PageHeader from '@/components/page-header';
 import { useToast } from '@/hooks/use-toast';
 import { Skeleton } from '@/components/ui/skeleton';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 const formSchema = z.object({
+  projectStage: z.enum(['new_idea', 'existing_business'], {
+    required_error: 'Debes seleccionar el estado de tu proyecto.',
+  }),
   businessType: z.string().min(3, 'Por favor, especifica el tipo de negocio.'),
   industry: z.string().min(3, 'Por favor, especifica la industria.'),
   businessModel: z.string().min(3, 'Por favor, describe el modelo de negocio.'),
@@ -48,6 +53,7 @@ export default function NewProjectPage() {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      projectStage: 'new_idea',
       businessType: 'Tech Startup',
       industry: 'Software as a Service (SaaS)',
       businessModel: 'Suscripción mensual',
@@ -95,7 +101,41 @@ export default function NewProjectPage() {
                 <CardTitle>Describe tu Negocio</CardTitle>
                 <CardDescription>Proporciona los conceptos centrales de tu futura empresa.</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6">
+                <FormField
+                  control={form.control}
+                  name="projectStage"
+                  render={({ field }) => (
+                    <FormItem className="space-y-3">
+                      <FormLabel>¿Cuál es el estado de tu proyecto?</FormLabel>
+                      <FormControl>
+                        <RadioGroup
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                          className="flex flex-col space-y-1"
+                        >
+                          <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <RadioGroupItem value="new_idea" />
+                            </FormControl>
+                            <FormLabel className="font-normal">
+                              Nueva Idea de Negocio (Etapa temprana)
+                            </FormLabel>
+                          </FormItem>
+                          <FormItem className="flex items-center space-x-3 space-y-0">
+                            <FormControl>
+                              <RadioGroupItem value="existing_business" />
+                            </FormControl>
+                            <FormLabel className="font-normal">
+                              Empresa Existente (Ya en operación)
+                            </FormLabel>
+                          </FormItem>
+                        </RadioGroup>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                  <FormField
                   control={form.control}
                   name="businessType"
@@ -217,3 +257,5 @@ export default function NewProjectPage() {
     </div>
   );
 }
+
+    
