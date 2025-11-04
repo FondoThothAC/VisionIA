@@ -54,6 +54,7 @@ type EmployeeRole = {
   count: number;
   salary: number;
   riskClass: 'I' | 'II' | 'III' | 'IV' | 'V';
+  contractType: 'salary' | 'professional_services';
 };
 
 type FinancialAssumptions = {
@@ -72,8 +73,8 @@ const projectsData: Record<string, FinancialAssumptions> = {
     monthlyGrowth: 3,
     inflationRate: 4.5,
     employeeRoles: [
-      { id: 1, name: 'Tostador', count: 1, salary: 20000, riskClass: 'II' },
-      { id: 2, name: 'Empacador', count: 1, salary: 12000, riskClass: 'I' },
+      { id: 1, name: 'Tostador', count: 1, salary: 20000, riskClass: 'II', contractType: 'salary' },
+      { id: 2, name: 'Empacador', count: 1, salary: 12000, riskClass: 'I', contractType: 'salary' },
     ],
     costs: {
       rent: 8000,
@@ -92,11 +93,11 @@ const projectsData: Record<string, FinancialAssumptions> = {
     monthlyGrowth: 4,
     inflationRate: 4.5,
     employeeRoles: [
-      { id: 1, name: 'Mesero', count: 4, salary: 8500, riskClass: 'I' },
-      { id: 2, name: 'Cocinero', count: 2, salary: 12000, riskClass: 'I' },
-      { id: 3, name: 'Cajero', count: 1, salary: 9000, riskClass: 'I' },
-      { id: 4, name: 'Gerente', count: 1, salary: 25000, riskClass: 'I' },
-      { id: 5, name: 'Cantinero', count: 1, salary: 10000, riskClass: 'I' },
+      { id: 1, name: 'Mesero', count: 4, salary: 8500, riskClass: 'I', contractType: 'salary' },
+      { id: 2, name: 'Cocinero', count: 2, salary: 12000, riskClass: 'I', contractType: 'salary' },
+      { id: 3, name: 'Cajero', count: 1, salary: 9000, riskClass: 'I', contractType: 'salary' },
+      { id: 4, name: 'Gerente', count: 1, salary: 25000, riskClass: 'I', contractType: 'salary' },
+      { id: 5, name: 'Cantinero', count: 1, salary: 10000, riskClass: 'I', contractType: 'salary' },
     ],
     costs: {
       rent: 15000,
@@ -115,9 +116,9 @@ const projectsData: Record<string, FinancialAssumptions> = {
     monthlyGrowth: 5,
     inflationRate: 4.5,
     employeeRoles: [
-      { id: 1, name: 'Guía Turístico', count: 2, salary: 15000, riskClass: 'III' },
-      { id: 2, name: 'Administrador', count: 1, salary: 18000, riskClass: 'I' },
-      { id: 3, name: 'Personal Mantenimiento', count: 2, salary: 10000, riskClass: 'II' },
+      { id: 1, name: 'Guía Turístico', count: 2, salary: 15000, riskClass: 'III', contractType: 'salary' },
+      { id: 2, name: 'Administrador', count: 1, salary: 18000, riskClass: 'I', contractType: 'salary' },
+      { id: 3, name: 'Personal Mantenimiento', count: 2, salary: 10000, riskClass: 'II', contractType: 'salary' },
     ],
     costs: {
       rent: 0, // Es propiedad del ejido
@@ -136,9 +137,9 @@ const projectsData: Record<string, FinancialAssumptions> = {
     monthlyGrowth: 3.5,
     inflationRate: 4.5,
     employeeRoles: [
-      { id: 1, name: 'Carrocero', count: 1, salary: 14400, riskClass: 'IV' },
-      { id: 2, name: 'Ayudante', count: 1, salary: 9600, riskClass: 'III' },
-      { id: 3, name: 'Administrador', count: 1, salary: 7200, riskClass: 'I' },
+      { id: 1, name: 'Carrocero', count: 1, salary: 14400, riskClass: 'IV', contractType: 'salary' },
+      { id: 2, name: 'Ayudante', count: 1, salary: 9600, riskClass: 'III', contractType: 'salary' },
+      { id: 3, name: 'Administrador', count: 1, salary: 7200, riskClass: 'I', contractType: 'salary' },
     ],
     costs: {
       rent: 5000,
@@ -157,11 +158,11 @@ const projectsData: Record<string, FinancialAssumptions> = {
         monthlyGrowth: 5,
         inflationRate: 4.5,
         employeeRoles: [
-            { id: 1, name: 'Panadero', count: 10, salary: (225.5 * 30), riskClass: 'II' },
-            { id: 2, name: 'Jefe de Cocina', count: 1, salary: (278.89 * 30), riskClass: 'I' },
-            { id: 3, name: 'Maestro Capacitador', count: 1, salary: (312.54 * 30), riskClass: 'I' },
-            { id: 4, name: 'Auxiliar Capacitación', count: 1, salary: (250.12 * 30), riskClass: 'I' },
-            { id: 5, name: 'Conserje', count: 1, salary: (225.5 * 30), riskClass: 'I' },
+            { id: 1, name: 'Panadero', count: 10, salary: (225.5 * 30), riskClass: 'II', contractType: 'salary' },
+            { id: 2, name: 'Jefe de Cocina', count: 1, salary: (278.89 * 30), riskClass: 'I', contractType: 'salary' },
+            { id: 3, name: 'Maestro Capacitador', count: 1, salary: (312.54 * 30), riskClass: 'I', contractType: 'salary' },
+            { id: 4, name: 'Auxiliar Capacitación', count: 1, salary: (250.12 * 30), riskClass: 'I', contractType: 'salary' },
+            { id: 5, name: 'Conserje', count: 1, salary: (225.5 * 30), riskClass: 'I', contractType: 'salary' },
         ],
         costs: {
             rent: 10000, // Asumido
@@ -180,11 +181,11 @@ const projectsData: Record<string, FinancialAssumptions> = {
         monthlyGrowth: 2.5,
         inflationRate: 4.5,
         employeeRoles: [
-            { id: 1, name: 'Administración', count: 1, salary: (150 * 28), riskClass: 'I' },
-            { id: 2, name: 'Servicio al Cliente 1', count: 1, salary: (150 * 28), riskClass: 'I' },
-            { id: 3, name: 'Servicio al Cliente 2', count: 1, salary: (140 * 28), riskClass: 'I' },
-            { id: 4, name: 'Inventarios', count: 1, salary: (150 * 28), riskClass: 'I' },
-            { id: 5, name: 'Servicio al Cliente 3', count: 1, salary: (150 * 28), riskClass: 'I' },
+            { id: 1, name: 'Administración', count: 1, salary: (150 * 28), riskClass: 'I', contractType: 'salary' },
+            { id: 2, name: 'Servicio al Cliente 1', count: 1, salary: (150 * 28), riskClass: 'I', contractType: 'salary' },
+            { id: 3, name: 'Servicio al Cliente 2', count: 1, salary: (140 * 28), riskClass: 'I', contractType: 'salary' },
+            { id: 4, name: 'Inventarios', count: 1, salary: (150 * 28), riskClass: 'I', contractType: 'salary' },
+            { id: 5, name: 'Servicio al Cliente 3', count: 1, salary: (150 * 28), riskClass: 'I', contractType: 'salary' },
         ],
         costs: {
             utilities: 1000, // Agua y Luz
@@ -200,12 +201,12 @@ const projectsData: Record<string, FinancialAssumptions> = {
         monthlyGrowth: 3,
         inflationRate: 4.5,
         employeeRoles: [
-            { id: 1, name: 'Administrador', count: 1, salary: (200 * 7 * 4), riskClass: 'I' }, // Asumiendo 7 días/semana
-            { id: 2, name: 'Encargada de Cocina', count: 1, salary: (200 * 6 * 4), riskClass: 'II' },
-            { id: 3, name: 'Cocinera 1', count: 1, salary: (186.40 * 6 * 4), riskClass: 'II' },
-            { id: 4, name: 'Cocinera 2', count: 1, salary: (186.40 * 6 * 4), riskClass: 'II' },
-            { id: 5, name: 'Mesera', count: 1, salary: (178 * 6 * 4), riskClass: 'I' },
-            { id: 6, name: 'Repartidora', count: 1, salary: (150 * 6 * 4), riskClass: 'III' },
+            { id: 1, name: 'Administrador', count: 1, salary: (200 * 7 * 4), riskClass: 'I', contractType: 'salary' }, // Asumiendo 7 días/semana
+            { id: 2, name: 'Encargada de Cocina', count: 1, salary: (200 * 6 * 4), riskClass: 'II', contractType: 'salary' },
+            { id: 3, name: 'Cocinera 1', count: 1, salary: (186.40 * 6 * 4), riskClass: 'II', contractType: 'salary' },
+            { id: 4, name: 'Cocinera 2', count: 1, salary: (186.40 * 6 * 4), riskClass: 'II', contractType: 'salary' },
+            { id: 5, name: 'Mesera', count: 1, salary: (178 * 6 * 4), riskClass: 'I', contractType: 'salary' },
+            { id: 6, name: 'Repartidora', count: 1, salary: (150 * 6 * 4), riskClass: 'III', contractType: 'salary' },
         ],
         costs: {
             utilities: 414 + 859 + 441, // Gas + Agua + Elec
@@ -221,11 +222,11 @@ const projectsData: Record<string, FinancialAssumptions> = {
         monthlyGrowth: 3.2,
         inflationRate: 4.5,
         employeeRoles: [
-            { id: 1, name: 'Administrador', count: 1, salary: 61200/12, riskClass: 'I' },
-            { id: 2, name: 'Chef', count: 1, salary: 61200/12, riskClass: 'II' },
-            { id: 3, name: 'Cajero', count: 1, salary: 48600/12, riskClass: 'I' },
-            { id: 4, name: 'Mesero 1', count: 1, salary: 43200/12, riskClass: 'I' },
-            { id: 5, name: 'Mesero 2', count: 1, salary: 43200/12, riskClass: 'I' },
+            { id: 1, name: 'Administrador', count: 1, salary: 61200/12, riskClass: 'I', contractType: 'salary' },
+            { id: 2, name: 'Chef', count: 1, salary: 61200/12, riskClass: 'II', contractType: 'salary' },
+            { id: 3, name: 'Cajero', count: 1, salary: 48600/12, riskClass: 'I', contractType: 'salary' },
+            { id: 4, name: 'Mesero 1', count: 1, salary: 43200/12, riskClass: 'I', contractType: 'salary' },
+            { id: 5, name: 'Mesero 2', count: 1, salary: 43200/12, riskClass: 'I', contractType: 'salary' },
         ],
         costs: {
             rent: 0,
@@ -329,7 +330,7 @@ const kpis = [
     // --- Rentabilidad y Valor ---
     { id: "ebitda", name: "EBITDA", formula: "Utilidad Operativa + Depreciación + Amortización", description: "Mide la rentabilidad de la operación principal del negocio antes de intereses, impuestos, depreciaciones y amortizaciones. Es un indicador de la capacidad de generar efectivo." },
     { id: "capex", name: "CAPEX (Inversiones en Activos Fijos)", formula: "Compra de Propiedad, Planta y Equipo", description: "Representa las inversiones en activos de largo plazo que la empresa realiza para mantener o expandir su capacidad productiva." },
-    { id: "value-investing", name: "Principios de Value Investing", formula: "Precio < Valor Intrínseco", description: "Filosofía de inversión que busca comprar activos por debajo de su valor real (intrínseco). Implica un análisis fundamental profundo para determinar el verdadero valor de un negocio." },
+    { id: "value-investing", name: "Principios de Value Investing", formula: "Precio &lt; Valor Intrínseco", description: "Filosofía de inversión que busca comprar activos por debajo de su valor real (intrínseco). Implica un análisis fundamental profundo para determinar el verdadero valor de un negocio." },
     { id: "fundamental-analysis", name: "Análisis Fundamental", formula: "Análisis de Estados Financieros, Industria y Economía", description: "Método para evaluar el valor de un activo analizando factores económicos, financieros y cualitativos. El objetivo es encontrar activos infravalorados o sobrevalorados." },
     { id: "roas", name: "ROAS (Retorno de la Inversión Publicitaria)", formula: "(Ingresos por Publicidad / Costo de Publicidad) x 100", description: "Mide los ingresos brutos generados por cada dólar gastado en publicidad." },
     { id: "romi", name: "ROMI (Retorno de la Inversión en Marketing)", formula: "((Ingresos por Marketing - Costos de Marketing) / Costos de Marketing) x 100", description: "Mide la rentabilidad de las actividades de marketing." },
@@ -376,7 +377,8 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const TAccountCard = ({ name, note, nature }: { name: string, note?: string, nature: "debit" | "credit" }) => {
+const TAccountCard = ({ name, note, type }: { name: string, note?: string, type: string }) => {
+    const nature: "debit" | "credit" = type.startsWith('1') || type.startsWith('5') ? 'debit' : 'credit';
     const isDebitNature = nature === "debit";
     return (
         <Card className="text-center">
@@ -513,11 +515,13 @@ type Breakdown = {
 
 const PersonnelCostBreakdown = ({ roles }: { roles: EmployeeRole[] }) => {
     const breakdownData: Breakdown[] = roles.map(role => {
-        if (role.salary <= 0) {
+        if (role.salary <= 0 || role.contractType === 'professional_services') {
             return {
                 roleName: role.name || '[Sin nombre]',
                 employeeCount: role.count,
-                baseSalary: 0, sbc: 0, socialCharge: 0, totalPerEmployee: 0, totalPerRole: 0
+                baseSalary: role.salary, sbc: 0, socialCharge: 0, 
+                totalPerEmployee: role.salary, 
+                totalPerRole: role.salary * role.count
             };
         }
 
@@ -629,7 +633,7 @@ export default function FinancialsPage() {
   };
 
   const addRole = () => {
-    const newRoles = [...assumptions.employeeRoles, { id: Date.now(), name: '', count: 1, salary: 10000, riskClass: 'I' }];
+    const newRoles = [...assumptions.employeeRoles, { id: Date.now(), name: '', count: 1, salary: 10000, riskClass: 'I', contractType: 'salary' }];
     handleAssumptionChange('employeeRoles', newRoles);
   };
 
@@ -656,6 +660,11 @@ export default function FinancialsPage() {
 
     const totalSalaryCost = employeeRoles.reduce((acc, role) => {
         if (role.salary <= 0) return acc;
+        
+        if (role.contractType === 'professional_services') {
+            return acc + (role.salary * role.count);
+        }
+
         const dailySalary = role.salary / 30;
         const aguinaldoProportion = (15 / 365) * dailySalary;
         const primaVacacionalProportion = (12 * 0.25 / 365) * dailySalary;
@@ -861,7 +870,7 @@ export default function FinancialsPage() {
                                 </div>
                             </div>
                              <div>
-                                <Label htmlFor={`role-salary-${role.id}`} className="text-xs">Salario Mensual (Bruto)</Label>
+                                <Label htmlFor={`role-salary-${role.id}`} className="text-xs">Pago Mensual (Bruto)</Label>
                                 <Input
                                     id={`role-salary-${role.id}`}
                                     type="number"
@@ -871,23 +880,40 @@ export default function FinancialsPage() {
                                 />
                             </div>
                              <div>
-                                <Label htmlFor={`role-risk-${role.id}`} className="text-xs">Clase de Riesgo (IMSS)</Label>
+                                <Label htmlFor={`role-contract-${role.id}`} className="text-xs">Tipo de Contrato</Label>
                                 <Select
-                                     value={role.riskClass}
-                                     onValueChange={(value: EmployeeRole['riskClass']) => handleRoleChange(role.id, 'riskClass', value)}
+                                     value={role.contractType}
+                                     onValueChange={(value: EmployeeRole['contractType']) => handleRoleChange(role.id, 'contractType', value)}
                                 >
-                                    <SelectTrigger id={`role-risk-${role.id}`} className="h-9">
+                                    <SelectTrigger id={`role-contract-${role.id}`} className="h-9">
                                         <SelectValue placeholder="Seleccionar..." />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="I">Clase I (Riesgo mínimo)</SelectItem>
-                                        <SelectItem value="II">Clase II (Riesgo bajo)</SelectItem>
-                                        <SelectItem value="III">Clase III (Riesgo medio)</SelectItem>
-                                        <SelectItem value="IV">Clase IV (Riesgo alto)</SelectItem>
-                                        <SelectItem value="V">Clase V (Riesgo máximo)</SelectItem>
+                                        <SelectItem value="salary">Asalariado (con Carga Social)</SelectItem>
+                                        <SelectItem value="professional_services">Servicios Profesionales (Honorarios)</SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>
+                             {role.contractType === 'salary' && (
+                              <div>
+                                  <Label htmlFor={`role-risk-${role.id}`} className="text-xs">Clase de Riesgo (IMSS)</Label>
+                                  <Select
+                                      value={role.riskClass}
+                                      onValueChange={(value: EmployeeRole['riskClass']) => handleRoleChange(role.id, 'riskClass', value)}
+                                  >
+                                      <SelectTrigger id={`role-risk-${role.id}`} className="h-9">
+                                          <SelectValue placeholder="Seleccionar..." />
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                          <SelectItem value="I">Clase I (Riesgo mínimo)</SelectItem>
+                                          <SelectItem value="II">Clase II (Riesgo bajo)</SelectItem>
+                                          <SelectItem value="III">Clase III (Riesgo medio)</SelectItem>
+                                          <SelectItem value="IV">Clase IV (Riesgo alto)</SelectItem>
+                                          <SelectItem value="V">Clase V (Riesgo máximo)</SelectItem>
+                                      </SelectContent>
+                                  </Select>
+                              </div>
+                            )}
                              <Button
                                 variant="ghost"
                                 size="icon"
@@ -1185,5 +1211,7 @@ export default function FinancialsPage() {
     </div>
   );
 }
+
+    
 
     
