@@ -21,6 +21,8 @@ import {
   Line,
   ComposedChart,
   ReferenceLine,
+  BarChart,
+  Legend,
 } from 'recharts';
 import {
   Table,
@@ -363,18 +365,18 @@ const kpis = [
 
 
 const chartConfig = {
-  Ingresos: {
-    label: "Ingresos",
-    color: "hsl(var(--chart-1))",
-  },
-  Costos: {
-    label: "Costos",
-    color: "hsl(var(--chart-2))",
-  },
-  Beneficio: {
-    label: "Beneficio",
-    color: "hsl(var(--chart-3))",
-  },
+  Ingresos: { label: "Ingresos", color: "hsl(var(--chart-1))" },
+  Costos: { label: "Costos", color: "hsl(var(--chart-2))" },
+  Beneficio: { label: "Beneficio", color: "hsl(var(--chart-3))" },
+  Nómina: { label: 'Nómina', color: 'hsl(var(--chart-2))' },
+  rent: { label: 'Renta', color: 'hsl(var(--chart-3))' },
+  utilities: { label: 'Servicios', color: 'hsl(var(--chart-4))' },
+  marketing: { label: 'Marketing', color: 'hsl(var(--chart-5))' },
+  software: { label: 'Software', color: 'hsl(27, 87%, 67%)' },
+  supplies: { label: 'Insumos', color: 'hsl(180, 80%, 40%)' },
+  insurance: { label: 'Seguros', color: 'hsl(340, 80%, 60%)' },
+  transport: { label: 'Transporte', color: 'hsl(80, 80%, 40%)' },
+  other: { label: 'Otros', color: 'hsl(260, 40%, 50%)' },
 } satisfies ChartConfig;
 
 const TAccountCard = ({ name, note, type }: { name: string, note?: string, type: string }) => {
@@ -659,7 +661,7 @@ export default function FinancialsPage() {
     let currentRevenue = monthlyRevenue;
     const annualInflationFactor = 1 + inflationRate / 100;
 
-    const calculateTotalMonthlyCost = (year: number) => {
+    const calculateMonthlyCostDetails = (year: number) => {
       const inflationMultiplier = Math.pow(annualInflationFactor, year - 1);
       
       const totalSalaryCost = employeeRoles.reduce((acc, role) => {
@@ -690,16 +692,34 @@ export default function FinancialsPage() {
           return acc + (totalPerEmployee * role.count);
       }, 0);
       
-      const otherCosts = Object.values(costs).reduce((acc, v) => acc + v, 0) * inflationMultiplier;
-      return totalSalaryCost + otherCosts;
+      const inflatedCosts = Object.entries(costs).reduce((acc, [key, value]) => {
+          acc[key] = value * inflationMultiplier;
+          return acc;
+      }, {} as Record<string, number>);
+
+      const otherCostsTotal = Object.values(inflatedCosts).reduce((acc, v) => acc + v, 0);
+      
+      return {
+          Nómina: totalSalaryCost,
+          ...inflatedCosts,
+          Total: totalSalaryCost + otherCostsTotal,
+      };
     }
     
     let cumulativeProfit = 0;
     for (let i = 1; i <= projectionMonths; i++) {
       const currentYear = Math.ceil(i / 12);
-      const totalMonthlyCost = calculateTotalMonthlyCost(currentYear);
+      const monthlyCostDetails = calculateMonthlyCostDetails(currentYear);
+      const totalMonthlyCost = monthlyCostDetails.Total;
       const profit = currentRevenue - totalMonthlyCost;
       cumulativeProfit += profit;
+
+      const costComposition = {
+        Nómina: Math.round(monthlyCostDetails.Nómina),
+      };
+      for (const key in costs) {
+        costComposition[key] = Math.round(monthlyCostDetails[key]);
+      }
 
       data.push({
         month: `Mes ${i}`,
@@ -707,11 +727,11 @@ export default function FinancialsPage() {
         Costos: Math.round(totalMonthlyCost),
         Beneficio: Math.round(profit),
         Beneficio_Acumulado: Math.round(cumulativeProfit),
-        Punto_Equilibrio: totalMonthlyCost
+        ...costComposition
       });
       currentRevenue *= 1 + monthlyGrowth / 100;
     }
-    return { data, totalMonthlyCost: calculateTotalMonthlyCost(1) };
+    return { data, totalMonthlyCost: calculateMonthlyCostDetails(1).Total };
   };
 
   const { data: projectionData, totalMonthlyCost } = calculateProjections();
@@ -1042,46 +1062,76 @@ export default function FinancialsPage() {
             </div>
 
 
-            {/* Column 3: Projections & Chart */}
-            <div className="lg:col-span-3 xl:col-span-2">
-            <Card>
-                <CardHeader>
-                <CardTitle>Proyección a {projectionMonths} Meses</CardTitle>
-                <CardDescription>
-                    Ajusta el control deslizante para cambiar el período de proyección y visualiza los resultados.
-                </CardDescription>
-                <div className="flex items-center space-x-4 pt-4">
-                    <Label>Periodo:</Label>
-                    <Slider defaultValue={[projectionMonths]} min={6} max={60} step={6} onValueChange={(value) => setProjectionMonths(value[0])} />
-                    <span>{projectionMonths} meses</span>
-                </div>
-                </CardHeader>
-                <CardContent className="h-[400px] w-full pt-6">
-                <ChartContainer config={chartConfig} className="h-full w-full">
-                  <ResponsiveContainer>
-                      <ComposedChart data={projectionData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
-                      <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                      <XAxis dataKey="month" fontSize={12} tickLine={false} axisLine={false} />
-                      <YAxis fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value / 1000}k`} />
-                      <ChartTooltip
-                          cursor={{ fill: 'hsl(var(--muted))' }}
-                          content={<ChartTooltipContent formatter={(value, name) => {
-                              if (typeof value !== 'number') return [value, name];
-                              if (name === 'Ingresos') return [formatCurrency(value), 'Ingresos'];
-                              if (name === 'Costos') return [formatCurrency(value), 'Costos'];
-                              if (name === 'Beneficio') return [formatCurrency(value), 'Beneficio'];
-                              return [value, name];
-                          }}/>}
-                      />
-                      <Bar dataKey="Ingresos" fill="var(--color-Ingresos)" radius={[4, 4, 0, 0]} name="Ingresos"/>
-                      <Bar dataKey="Costos" fill="var(--color-Costos)" radius={[4, 4, 0, 0]} name="Costos"/>
-                      <Line type="monotone" dataKey="Beneficio" stroke="var(--color-Beneficio)" strokeWidth={2} dot={false} name="Beneficio Neto"/>
-                      <ReferenceLine y={0} stroke="#666" strokeDasharray="3 3" />
-                      </ComposedChart>
-                  </ResponsiveContainer>
-                </ChartContainer>
-                </CardContent>
-            </Card>
+            {/* Column 3: Projections & Charts */}
+            <div className="lg:col-span-3 xl:col-span-2 space-y-6">
+                <Card>
+                    <CardHeader>
+                    <CardTitle>Proyección a {projectionMonths} Meses</CardTitle>
+                    <CardDescription>
+                        Ajusta el control deslizante para cambiar el período de proyección y visualiza los resultados.
+                    </CardDescription>
+                    <div className="flex items-center space-x-4 pt-4">
+                        <Label>Periodo:</Label>
+                        <Slider defaultValue={[projectionMonths]} min={6} max={60} step={6} onValueChange={(value) => setProjectionMonths(value[0])} />
+                        <span>{projectionMonths} meses</span>
+                    </div>
+                    </CardHeader>
+                    <CardContent className="h-[400px] w-full pt-6">
+                    <ChartContainer config={chartConfig} className="h-full w-full">
+                      <ResponsiveContainer>
+                          <ComposedChart data={projectionData} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                          <XAxis dataKey="month" fontSize={12} tickLine={false} axisLine={false} />
+                          <YAxis fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value / 1000}k`} />
+                          <ChartTooltip
+                              cursor={{ fill: 'hsl(var(--muted))' }}
+                              content={<ChartTooltipContent formatter={(value, name) => {
+                                  if (typeof value !== 'number') return [value, name];
+                                  if (name === 'Ingresos') return [formatCurrency(value), 'Ingresos'];
+                                  if (name === 'Costos') return [formatCurrency(value), 'Costos'];
+                                  if (name === 'Beneficio') return [formatCurrency(value), 'Beneficio'];
+                                  return [value, name];
+                              }}/>}
+                          />
+                          <Bar dataKey="Ingresos" fill="var(--color-Ingresos)" radius={[4, 4, 0, 0]} name="Ingresos"/>
+                          <Bar dataKey="Costos" fill="var(--color-Costos)" radius={[4, 4, 0, 0]} name="Costos"/>
+                          <Line type="monotone" dataKey="Beneficio" stroke="var(--color-Beneficio)" strokeWidth={2} dot={false} name="Beneficio Neto"/>
+                          <ReferenceLine y={0} stroke="#666" strokeDasharray="3 3" />
+                          </ComposedChart>
+                      </ResponsiveContainer>
+                    </ChartContainer>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Composición de Costos Mensuales</CardTitle>
+                        <CardDescription>Visualiza el peso de cada categoría de costo en tu presupuesto mensual.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="h-[400px] w-full pt-6">
+                        <ChartContainer config={chartConfig} className="h-full w-full">
+                            <ResponsiveContainer>
+                                <BarChart data={projectionData}>
+                                    <CartesianGrid vertical={false} />
+                                    <XAxis dataKey="month" fontSize={12} tickLine={false} axisLine={false} />
+                                    <YAxis fontSize={12} tickLine={false} axisLine={false} tickFormatter={(value) => `$${value / 1000}k`} />
+                                    <ChartTooltip
+                                        cursor={{ fill: 'hsl(var(--muted))' }}
+                                        content={<ChartTooltipContent formatter={(value, name) => {
+                                            if (typeof value !== 'number') return [value, name];
+                                            const label = chartConfig[name as keyof typeof chartConfig]?.label || name;
+                                            return [formatCurrency(value), label];
+                                        }}/>}
+                                    />
+                                    <Legend />
+                                    <Bar dataKey="Nómina" stackId="a" fill="var(--color-Nómina)" radius={[4, 4, 0, 0]} />
+                                    {Object.keys(assumptions.costs).map((costKey) => (
+                                        <Bar key={costKey} dataKey={costKey} stackId="a" fill={`var(--color-${costKey})`} />
+                                    ))}
+                                </BarChart>
+                            </ResponsiveContainer>
+                        </ChartContainer>
+                    </CardContent>
+                </Card>
             </div>
             </div>
             
