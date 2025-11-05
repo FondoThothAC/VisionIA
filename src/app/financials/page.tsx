@@ -654,43 +654,53 @@ export default function FinancialsPage() {
   }
 
   const calculateProjections = () => {
-    const { monthlyRevenue, monthlyGrowth, employeeRoles, costs } = assumptions;
+    const { monthlyRevenue, monthlyGrowth, employeeRoles, costs, inflationRate } = assumptions;
     const data = [];
     let currentRevenue = monthlyRevenue;
+    const annualInflationFactor = 1 + inflationRate / 100;
 
-    const totalSalaryCost = employeeRoles.reduce((acc, role) => {
-        if (role.salary <= 0) return acc;
-        
-        if (role.contractType === 'professional_services') {
-            return acc + (role.salary * role.count);
-        }
+    const calculateTotalMonthlyCost = (year: number) => {
+      const inflationMultiplier = Math.pow(annualInflationFactor, year - 1);
+      
+      const totalSalaryCost = employeeRoles.reduce((acc, role) => {
+          const currentSalary = (role.salary || 0) * inflationMultiplier;
+          if (currentSalary <= 0) return acc;
+          
+          if (role.contractType === 'professional_services') {
+              return acc + (currentSalary * role.count);
+          }
 
-        const dailySalary = role.salary / 30;
-        const aguinaldoProportion = (15 / 365) * dailySalary;
-        const primaVacacionalProportion = (12 * 0.25 / 365) * dailySalary;
-        const sbc = dailySalary + aguinaldoProportion + primaVacacionalProportion;
-        const monthlySBC = sbc * 30;
-        const riskOfWork = monthlySBC * riskClassPremiums[role.riskClass];
-        const fixedQuota = UMA_2024 * 30 * 0.2040;
-        const additionalQuota = Math.max(0, sbc - 3 * UMA_2024) * 30 * 0.0110;
-        const moneyBenefits = monthlySBC * 0.0070;
-        const disabilityAndLife = monthlySBC * 0.0175;
-        const retirement = monthlySBC * 0.0200;
-        const cesantiaAndVejez = monthlySBC * 0.03150;
-        const childcare = monthlySBC * 0.0100;
-        const infonavit = monthlySBC * 0.0500;
-        const isn = role.salary * ISN_RATE;
-        const socialCharge = riskOfWork + fixedQuota + additionalQuota + moneyBenefits + disabilityAndLife + retirement + cesantiaAndVejez + childcare + infonavit + isn;
-        const totalPerEmployee = role.salary + socialCharge;
-        return acc + (totalPerEmployee * role.count);
-    }, 0);
+          const dailySalary = currentSalary / 30;
+          const aguinaldoProportion = (15 / 365) * dailySalary;
+          const primaVacacionalProportion = (12 * 0.25 / 365) * dailySalary;
+          const sbc = dailySalary + aguinaldoProportion + primaVacacionalProportion;
+          const monthlySBC = sbc * 30;
+          const riskOfWork = monthlySBC * riskClassPremiums[role.riskClass];
+          const fixedQuota = UMA_2024 * 30 * 0.2040;
+          const additionalQuota = Math.max(0, sbc - 3 * UMA_2024) * 30 * 0.0110;
+          const moneyBenefits = monthlySBC * 0.0070;
+          const disabilityAndLife = monthlySBC * 0.0175;
+          const retirement = monthlySBC * 0.0200;
+          const cesantiaAndVejez = monthlySBC * 0.03150;
+          const childcare = monthlySBC * 0.0100;
+          const infonavit = monthlySBC * 0.0500;
+          const isn = currentSalary * ISN_RATE;
+          const socialCharge = riskOfWork + fixedQuota + additionalQuota + moneyBenefits + disabilityAndLife + retirement + cesantiaAndVejez + childcare + infonavit + isn;
+          const totalPerEmployee = currentSalary + socialCharge;
+          return acc + (totalPerEmployee * role.count);
+      }, 0);
+      
+      const otherCosts = Object.values(costs).reduce((acc, v) => acc + v, 0) * inflationMultiplier;
+      return totalSalaryCost + otherCosts;
+    }
     
-    const otherCosts = Object.values(costs).reduce((acc, v) => acc + v, 0);
-    const totalMonthlyCost = totalSalaryCost + otherCosts;
-
+    let cumulativeProfit = 0;
     for (let i = 1; i <= projectionMonths; i++) {
+      const currentYear = Math.ceil(i / 12);
+      const totalMonthlyCost = calculateTotalMonthlyCost(currentYear);
       const profit = currentRevenue - totalMonthlyCost;
-      const cumulativeProfit = (data[i - 2]?.cumulativeProfit || 0) + profit;
+      cumulativeProfit += profit;
+
       data.push({
         month: `Mes ${i}`,
         Ingresos: Math.round(currentRevenue),
@@ -701,7 +711,7 @@ export default function FinancialsPage() {
       });
       currentRevenue *= 1 + monthlyGrowth / 100;
     }
-    return { data, totalMonthlyCost };
+    return { data, totalMonthlyCost: calculateTotalMonthlyCost(1) };
   };
 
   const { data: projectionData, totalMonthlyCost } = calculateProjections();
@@ -714,10 +724,9 @@ export default function FinancialsPage() {
     const indentClass = `pl-${4 + level * 4}`;
 
     if (account.type === 'MainHeader') {
-        const nature: "debit" | "credit" = account.code.startsWith('1') || account.code.startsWith('5') ? 'debit' : 'credit';
         return (
             <TableRow key={account.code} className="bg-muted/30 hover:bg-muted/30">
-                <TableCell colSpan={6} className="font-bold text-primary text-lg py-4">
+                <TableCell colSpan={5} className="font-bold text-primary text-lg py-4">
                    <div className="flex flex-col">
                      <span>{account.code} - {account.name}</span>
                      <span className="text-sm font-normal text-muted-foreground">{account.description}</span>
@@ -730,7 +739,7 @@ export default function FinancialsPage() {
     if (isHeader) {
       return (
         <TableRow key={account.code} className="bg-muted/20 hover:bg-muted/20">
-          <TableCell colSpan={6} className={`font-semibold text-foreground/90 ${indentClass}`}>
+          <TableCell colSpan={5} className={`font-semibold text-foreground/90 ${indentClass}`}>
             {account.code} - {account.name}
           </TableCell>
         </TableRow>
@@ -1201,7 +1210,7 @@ export default function FinancialsPage() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                           {chartOfAccounts.map(account => renderAccountRow(account))}
+                           {chartOfAccounts.map(account => renderAccountRow(account, 0))}
                         </TableBody>
                     </Table>
                 </CardContent>
@@ -1211,7 +1220,5 @@ export default function FinancialsPage() {
     </div>
   );
 }
-
-    
 
     
