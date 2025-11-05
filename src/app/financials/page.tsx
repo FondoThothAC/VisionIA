@@ -69,6 +69,28 @@ type FinancialAssumptions = {
 }
 
 const projectsData: Record<string, FinancialAssumptions> = {
+  "cositas": {
+    initialInvestment: 3283692,
+    monthlyRevenue: 140000, // Tomando marketing como proxy inicial de ingresos por publicidad/comisiones
+    monthlyGrowth: 15, // Crecimiento agresivo para una startup
+    inflationRate: 4.5,
+    employeeRoles: [
+      { id: 1, name: 'CEO', count: 1, salary: 60000, riskClass: 'I', contractType: 'salary' },
+      { id: 2, name: 'CTO', count: 1, salary: 55000, riskClass: 'I', contractType: 'salary' },
+      { id: 3, name: 'CPO/COO', count: 1, salary: 50000, riskClass: 'I', contractType: 'salary' },
+      { id: 4, name: 'CFO', count: 1, salary: 50000, riskClass: 'I', contractType: 'salary' },
+      { id: 5, name: 'CMO', count: 1, salary: 50000, riskClass: 'I', contractType: 'salary' },
+      { id: 6, name: 'Developer', count: 1, salary: 40000, riskClass: 'I', contractType: 'salary' },
+      { id: 7, name: 'Designer', count: 1, salary: 35000, riskClass: 'I', contractType: 'salary' },
+    ],
+    costs: {
+      infraestructura: 25000, // 300k/12
+      oficinas: 15000, // 180k/12
+      marketing: 140000, // 1.68M/12
+      legales: 8333, // 100k/12
+      contingencia: 16667, // 200k/12
+    },
+  },
   "cafe-aroma": {
     initialInvestment: 50000,
     monthlyRevenue: 15000,
@@ -131,27 +153,6 @@ const projectsData: Record<string, FinancialAssumptions> = {
       insurance: 2000,
       transport: 3000, // Combustible para recorridos
       other: 2000,
-    },
-  },
-  "taller-carroceria": {
-    initialInvestment: 173049,
-    monthlyRevenue: 77926,
-    monthlyGrowth: 3.5,
-    inflationRate: 4.5,
-    employeeRoles: [
-      { id: 1, name: 'Carrocero', count: 1, salary: 14400, riskClass: 'IV', contractType: 'salary' },
-      { id: 2, name: 'Ayudante', count: 1, salary: 9600, riskClass: 'III', contractType: 'salary' },
-      { id: 3, name: 'Administrador', count: 1, salary: 7200, riskClass: 'I', contractType: 'salary' },
-    ],
-    costs: {
-      rent: 5000,
-      utilities: 2350, // Agua, Luz, Telefono
-      marketing: 1500,
-      software: 500,
-      supplies: 25710, // Insumos de taller
-      insurance: 1500,
-      transport: 1000,
-      other: 1000,
     },
   },
     "pizzeria-siglo-xxi": {
@@ -369,9 +370,13 @@ const chartConfig = {
   Costos: { label: "Costos", color: "hsl(var(--chart-2))" },
   Beneficio: { label: "Beneficio", color: "hsl(var(--chart-3))" },
   Nómina: { label: 'Nómina', color: 'hsl(var(--chart-2))' },
+  infraestructura: { label: 'Infraestructura', color: 'hsl(var(--chart-5))' },
+  oficinas: { label: 'Oficinas', color: 'hsl(var(--chart-4))' },
+  marketing: { label: 'Marketing', color: 'hsl(var(--chart-1))' },
+  legales: { label: 'Legales', color: 'hsl(27, 87%, 67%)' },
+  contingencia: { label: 'Contingencia', color: 'hsl(180, 80%, 40%)' },
   rent: { label: 'Renta', color: 'hsl(var(--chart-3))' },
   utilities: { label: 'Servicios', color: 'hsl(var(--chart-4))' },
-  marketing: { label: 'Marketing', color: 'hsl(var(--chart-5))' },
   software: { label: 'Software', color: 'hsl(27, 87%, 67%)' },
   supplies: { label: 'Insumos', color: 'hsl(180, 80%, 40%)' },
   insurance: { label: 'Seguros', color: 'hsl(340, 80%, 60%)' },
@@ -616,7 +621,7 @@ const PersonnelCostBreakdown = ({ roles }: { roles: EmployeeRole[] }) => {
 
 
 export default function FinancialsPage() {
-  const [selectedProject, setSelectedProject] = useState("cafe-aroma");
+  const [selectedProject, setSelectedProject] = useState("cositas");
   const [projectionMonths, setProjectionMonths] = useState(12);
   const [assumptions, setAssumptions] = useState<FinancialAssumptions>(projectsData[selectedProject]);
 
@@ -797,6 +802,7 @@ export default function FinancialsPage() {
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
+                                <SelectItem value="cositas">Proyecto: Cositas</SelectItem>
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
@@ -1270,5 +1276,3 @@ export default function FinancialsPage() {
     </div>
   );
 }
-
-    

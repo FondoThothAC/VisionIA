@@ -11,6 +11,17 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import PageHeader from "@/components/page-header";
 
 const canvasDataSets = {
+    "cositas": {
+        keyPartners: "- MiPymes y comercios locales (nuestros clientes principales).\n- Cámaras de comercio (CANACOPE, CANIRAC) para adopción masiva.\n- Gobiernos locales para legitimidad y apoyo.\n- Proveedores de tecnología (Google Cloud, Mapbox, Stripe).\n- Empresas de bienes de consumo (CPGs) como Nestlé, Coca-Cola (para el flujo de datos B2B).",
+        keyActivities: "- Desarrollo y mantenimiento de la plataforma (apps y backend).\n- Adquisición y onboarding de vendedores (Embajadores Digitales).\n- Marketing y adquisición de compradores.\n- Procesamiento seguro de transacciones (online y offline).\n- Análisis y empaquetado de datos de mercado para B2B.",
+        keyResources: "- Equipo de desarrollo tecnológico (backend, apps, blockchain).\n- Plataforma tecnológica (Firebase, blockchain privada).\n- Red de 'Embajadores Digitales' en campo.\n- Algoritmos de IA y el protocolo de pagos offline.\n- El activo de datos de mercado en tiempo real.",
+        valueProposition: "Un ecosistema digital 3-en-1 que da visibilidad (marketplace), eficiencia (asistente IA) e inclusión financiera (pagos offline) al comercio de barrio, permitiéndoles competir en la economía digital.",
+        customerRelationships: "- Soporte técnico a través de chat y teléfono.\n- Capacitación continua a través de los Embajadores Digitales.\n- Creación de una comunidad de 'cositeros' (vendedores).\n- Comunicación automatizada y personalizada vía el asistente IA.",
+        channels: "- App nativa Android para compradores (ligera y offline-first).\n- Progressive Web App (PWA) para vendedores (accesible desde cualquier dispositivo).\n- Embajadores Digitales para el onboarding presencial.\n- Alianzas estratégicas con cámaras de comercio.",
+        customerSegments: "- Vendedores: MiPymes informales y de baja tecnología ('Excluidos Digitales Funcionales').\n- Compradores: Residentes locales (18-45 años) con smartphones de gama baja/media y planes de datos limitados.\n- Clientes B2B: Grandes empresas de consumo (CPGs) interesadas en inteligencia de mercado del canal tradicional.",
+        costStructure: "- Salarios del equipo (desarrollo, marketing, operaciones).\n- Infraestructura tecnológica (servidores en la nube, APIs).\n- Marketing y costos de adquisición de usuarios (CAC).\n- Costos regulatorios y legales (Ley Fintech).\n- Oficinas y recursos físicos.",
+        revenueStreams: "- Comisión por transacción en los retiros de saldo (~5%).\n- Modelo freemium/suscripción para herramientas de IA avanzadas para vendedores.\n- Venta de datos de mercado agregados y anonimizados a clientes B2B (SaaS).\n- Publicidad hiper-local (promoción de 'historias' de negocios).\n- Micro-donaciones en el checkout."
+    },
     "cafe-aroma": {
         keyPartners: "- Fincas de café de comercio justo en Chiapas y Veracruz.\n- Proveedores de empaques biodegradables.\n- Empresas de logística para distribución nacional.\n- Tiendas y mercados de productos orgánicos.",
         keyActivities: "- Tostado y molido artesanal del café.\n- Control de calidad riguroso.\n- Empaquetado y distribución.\n- Marketing digital y gestión de redes sociales.\n- Participación en ferias de café.",
@@ -131,7 +142,7 @@ const CanvasBlock = ({ title, content, onContentChange, blockKey, className }: {
 
 
 export default function BusinessModelCanvasPage() {
-  const [selectedProject, setSelectedProject] = useState("cafe-aroma");
+  const [selectedProject, setSelectedProject] = useState("cositas");
   const [canvasData, setCanvasData] = useState<CanvasData>(canvasDataSets[selectedProject]);
 
   const handleProjectChange = (projectId: string) => {
@@ -164,6 +175,7 @@ export default function BusinessModelCanvasPage() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="cositas">Proyecto: Cositas</SelectItem>
                         <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                         <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                         <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>

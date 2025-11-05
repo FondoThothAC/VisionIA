@@ -26,6 +26,13 @@ type ProductState = {
 };
 
 const projectData: Record<string, ProductState> = {
+    "cositas": {
+        name: "Ecosistema Digital 'Cositas'",
+        description: "Un ecosistema digital compuesto por tres pilares: un marketplace para descubrimiento hiper-local, un asistente de IA para la gestión de MiPymes y una pasarela de pagos offline-first. Está optimizado para dispositivos de gama baja y zonas con conectividad limitada.",
+        valueProposition: "A diferencia de las soluciones fragmentadas, Cositas ofrece una herramienta 3-en-1 que soluciona la invisibilidad digital, la gestión ineficiente y la exclusión financiera del comercio de barrio. Nuestra ventaja competitiva es la integración de estos tres pilares y un diseño offline-first.",
+        lifecycle: "Fase 1: Lanzamiento del marketplace para lograr masa crítica de usuarios. Fase 2: Introducción del asistente IA de gestión para aumentar la retención de vendedores. Fase 3: Despliegue de la pasarela de pagos offline. A largo plazo, se contempla la expansión a otras ciudades y países de Latinoamérica.",
+        ip: "La marca 'Cositas' y su logotipo se registrarán en el IMPI. Los algoritmos de IA y, crucialmente, el protocolo de pagos offline basado en blockchain, se protegerán como secreto industrial, ya que constituyen nuestra principal barrera de entrada tecnológica."
+    },
     "cafe-aroma": {
         name: "Café de Especialidad 'Aroma de Montaña'",
         description: "Ofrecemos granos de café 100% arábica de origen único, cultivados en las altas montañas de Chiapas. Nuestro proceso de tostado artesanal, realizado en lotes pequeños, garantiza la máxima frescura y resalta las notas de sabor únicas de cada cosecha, que van desde cítricos y florales hasta achocolatados y afrutados. El café se vende en grano o molido según la preferencia del cliente.",
@@ -79,7 +86,7 @@ const projectData: Record<string, ProductState> = {
 
 
 export default function ProductPage() {
-    const [selectedProject, setSelectedProject] = useState("cafe-aroma");
+    const [selectedProject, setSelectedProject] = useState("cositas");
     const [product, setProduct] = useState<ProductState>(projectData[selectedProject]);
 
      const handleProjectChange = (projectId: string) => {
@@ -109,6 +116,7 @@ export default function ProductPage() {
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
+                                <SelectItem value="cositas">Proyecto: Cositas</SelectItem>
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>

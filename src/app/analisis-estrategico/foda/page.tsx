@@ -24,6 +24,12 @@ type FodaState = {
 };
 
 const fodaData: Record<string, FodaState> = {
+    "cositas": {
+        fortalezas: "- Enfoque offline-first.\n- Ecosistema integrado 3-en-1 (marketplace, pagos, IA).\n- Diseño accesible para dispositivos de gama baja y baja conectividad.\n- Enfoque en inclusión digital y financiera.",
+        oportunidades: "- Mercado gigante y desatendido (4.9M MiPymes informales).\n- Escasez de soluciones tecnológicas completas y accesibles.\n- Creciente adopción digital post-pandemia.\n- Potencial de monetización de datos B2B.",
+        debilidades: "- Alta dependencia de la adopción temprana por parte de un segmento de mercado no tecnológico.\n- Complejidad regulatoria (Ley Fintech) para la fase de pagos.\n- Modelo de negocio complejo con múltiples dependencias (vendedores, compradores, CPGs).",
+        amenazas: "- Competencia de gigantes tecnológicos (Facebook, Mercado Libre, Google) si deciden enfocarse en el mismo nicho.\n- Barreras de conectividad persistentes en zonas rurales.\n- Resistencia al cambio y desconfianza en la tecnología por parte del mercado objetivo."
+    },
     "cafe-aroma": {
         fortalezas: "- Equipo con experiencia en la industria del café.\n- Relación directa con productores de alta calidad.\n- Marca con historia y propósito (storytelling).",
         oportunidades: "- Crecimiento del mercado de café de especialidad.\n- Aumento del consumo de productos éticos y sostenibles.\n- Posibilidad de exportación a mercados internacionales.",
@@ -76,7 +82,7 @@ const fodaData: Record<string, FodaState> = {
 
 
 export default function FodaPage() {
-    const [selectedProject, setSelectedProject] = useState("cafe-aroma");
+    const [selectedProject, setSelectedProject] = useState("cositas");
     const [foda, setFoda] = useState<FodaState>(fodaData[selectedProject]);
 
     const handleProjectChange = (projectId: string) => {
@@ -106,6 +112,7 @@ export default function FodaPage() {
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
+                                <SelectItem value="cositas">Proyecto: Cositas</SelectItem>
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>

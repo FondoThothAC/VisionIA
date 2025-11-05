@@ -19,6 +19,12 @@ type FppState = {
 };
 
 const fppData: Record<string, FppState> = {
+    "cositas": {
+        actividadA: "Desarrollar el marketplace de descubrimiento de negocios (Fase 1).",
+        actividadB: "Desarrollar la pasarela de pagos offline con blockchain (Fase 3).",
+        recursoLimitado: "Horas de ingeniería del equipo de desarrollo (aprox. 1,280 horas/mes para 8 desarrolladores).",
+        costoOportunidad: "Cada sprint (2 semanas) dedicado a la arquitectura de pagos blockchain retrasa el lanzamiento del marketplace, que es la herramienta clave para adquirir la masa crítica inicial de usuarios. Priorizar el marketplace permite validar el modelo de negocio más rápido, pero pospone la creación de la barrera de entrada tecnológica más fuerte (los pagos offline)."
+    },
     "cafe-aroma": {
         actividadA: "Desarrollar una nueva línea de café saborizado (ej. vainilla, canela).",
         actividadB: "Aumentar la producción y marketing de nuestro café de origen único más vendido.",
@@ -64,7 +70,7 @@ const fppData: Record<string, FppState> = {
 };
 
 export default function FppPage() {
-    const [selectedProject, setSelectedProject] = useState("cafe-aroma");
+    const [selectedProject, setSelectedProject] = useState("cositas");
     const [fpp, setFpp] = useState<FppState>(fppData[selectedProject]);
 
     const handleProjectChange = (projectId: string) => {
@@ -94,6 +100,7 @@ export default function FppPage() {
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
+                                <SelectItem value="cositas">Proyecto: Cositas</SelectItem>
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>

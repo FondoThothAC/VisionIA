@@ -29,6 +29,28 @@ type Competitor = {
 };
 
 const competitorData: Record<string, Competitor[]> = {
+    "cositas": [
+        {
+            id: 1,
+            name: "Facebook Marketplace",
+            valueProposition: "Plataforma de clasificados gratuita y masiva para comprar y vender artículos localmente.",
+            customerSegment: "Público general que busca ofertas o vender artículos de segunda mano.",
+            pricing: "Gratis.",
+            strengths: "Base de usuarios gigantesca, sin fricción para empezar a vender, viralidad.",
+            weaknesses: "Nula verificación, alto riesgo de estafas, sin certeza de disponibilidad, no es una herramienta de negocio.",
+            marketingStrategy: "Integración nativa en el ecosistema de Facebook.",
+        },
+        {
+            id: 2,
+            name: "Clip / Mercado Pago",
+            valueProposition: "Terminales de punto de venta móviles para aceptar pagos con tarjeta.",
+            customerSegment: "Pequeños y medianos comercios que buscan formalizar sus cobros.",
+            pricing: "Comisión por transacción (ej. ~3.6% + IVA).",
+            strengths: "Fácil de usar, marcas reconocidas y confiables, resuelve el problema de aceptar tarjetas.",
+            weaknesses: "Dependen 100% de la conectividad a internet, no resuelven el descubrimiento de clientes, son solo una herramienta de pago.",
+            marketingStrategy: "Fuerte marketing digital, distribución en tiendas de conveniencia, publicidad masiva.",
+        }
+    ],
     "cafe-aroma": [
         {
             id: 1,
@@ -214,7 +236,7 @@ const CompetitorCard = ({ competitor, onUpdate, onRemove }: { competitor: Compet
 };
 
 export default function CompetitionCanvasPage() {
-  const [selectedProject, setSelectedProject] = useState("cafe-aroma");
+  const [selectedProject, setSelectedProject] = useState("cositas");
   const [competitors, setCompetitors] = useState<Competitor[]>(competitorData[selectedProject]);
 
   const handleProjectChange = (projectId: string) => {
@@ -264,6 +286,7 @@ export default function CompetitionCanvasPage() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
+                        <SelectItem value="cositas">Proyecto: Cositas</SelectItem>
                         <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                         <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                         <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>

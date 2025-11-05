@@ -22,6 +22,16 @@ type ServiceFlowerState = {
 };
 
 const serviceFlowerData: Record<string, ServiceFlowerState> = {
+    "cositas": {
+        informacion: "- Mapa interactivo en la app con negocios, horarios y disponibilidad de productos en tiempo real.\n- 'Historias' diarias de promociones y novedades.\n- Sección de ayuda y tutoriales para vendedores y compradores.",
+        consulta: "- Asistente IA para vendedores que responde preguntas de negocio ('¿Qué producto se vendió más hoy?').\n- Chat de soporte para compradores y vendedores con dudas técnicas.",
+        tomaPedidos: "- No hay 'pedidos' tradicionales. El sistema se basa en la compra y pago inmediato en el local físico.\n- El marketplace sirve para 'apartar' o verificar existencia antes de ir.",
+        hospitalidad: "- Mensajes de bienvenida y onboarding gamificado para nuevos usuarios.\n- Reconocimientos y badges para vendedores destacados ('Vendedor Confiable').\n- Trato amable y capacitado por parte de los Embajadores Digitales.",
+        cuidadoPertenencias: "- La app en sí es el activo del cliente. Se cuida con encriptación de datos y acceso seguro.\n- Las transacciones offline se guardan localmente de forma segura hasta la sincronización.",
+        excepciones: "- Protocolo claro para disputas de pago, con un historial de transacciones inmutable (gracias a la blockchain).\n- Canales para reportar información incorrecta de un negocio.",
+        facturacion: "- Generación automática de un resumen de ventas semanal/mensual para vendedores.\n- Para compradores, el historial de compras funciona como un recibo digital.\n- Futuro: integración con SAT para emitir CFDI automáticos.",
+        pago: "- Sistema de pago QR offline-first.\n- Recarga de saldo en la app 'Cositas' a través de tarjeta, SPEI o en puntos de recarga.\n- Retiro de saldo para vendedores a su cuenta bancaria (con comisión)."
+    },
     "cafe-aroma": {
         informacion: "- Página web con detalles de cada café, origen y notas de sabor.\n- Guías de preparación en el blog.\n- FAQ con información de envíos y suscripciones.",
         consulta: "- Chat en vivo en el sitio web para resolver dudas sobre el mejor café para su gusto.\n- Consultoría por email para clientes B2B (cafeterías).",
@@ -56,7 +66,7 @@ const serviceFlowerData: Record<string, ServiceFlowerState> = {
 
 
 export default function ServiceFlowerPage() {
-    const [selectedProject, setSelectedProject] = useState("cafe-aroma");
+    const [selectedProject, setSelectedProject] = useState("cositas");
     const [state, setState] = useState<ServiceFlowerState>(serviceFlowerData[selectedProject]);
 
     const handleProjectChange = (projectId: string) => {
@@ -86,10 +96,10 @@ export default function ServiceFlowerPage() {
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
+                                <SelectItem value="cositas">Proyecto: Cositas</SelectItem>
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="pizzeria-siglo-xxi">Proyecto: Pizzería Siglo XXI</SelectItem>
-                                {/* Add other projects as needed */}
                               </SelectContent>
                             </Select>
                         }
@@ -128,6 +138,7 @@ export default function ServiceFlowerPage() {
                     <div className="space-y-2 col-span-1 md:col-span-2 lg:col-span-4 text-center">
                         <Label className="text-xl font-bold">Producto Principal</Label>
                         <p className="text-muted-foreground">
+                            {selectedProject === 'cositas' && 'Ecosistema digital para comercio hiper-local'}
                             {selectedProject === 'cafe-aroma' && 'Café de Especialidad'}
                             {selectedProject === 'restaurante-gambusinos' && 'Servicio de Restaurant-Bar Regional'}
                             {selectedProject === 'pizzeria-siglo-xxi' && 'Pizzas y Galletas Artesanales con Causa'}
@@ -171,5 +182,3 @@ export default function ServiceFlowerPage() {
         </div>
     )
 }
-
-    

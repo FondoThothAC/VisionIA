@@ -20,6 +20,14 @@ type PestelState = {
 };
 
 const pestelData: Record<string, PestelState> = {
+    "cositas": {
+        politicos: "- Políticas gubernamentales de apoyo a MiPymes y economía digital (Oportunidad).\n- Estabilidad política que favorece la inversión.\n- Riesgo de cambios regulatorios en el sector Fintech (Amenaza).",
+        economicos: "- Gran tamaño del mercado informal (24.8% del PIB) (Oportunidad).\n- Inflación y volatilidad económica pueden afectar el poder adquisitivo (Amenaza).\n- Creciente bancarización y acceso a servicios financieros digitales (Oportunidad).",
+        sociales: "- Creciente adopción de smartphones y tecnologías digitales en todos los estratos (Oportunidad).\n- Valoración del comercio local y de barrio post-pandemia (Oportunidad).\n- Desconfianza en transacciones digitales y brecha de habilidades tecnológicas (Amenaza).",
+        tecnologicos: "- Expansión de la cobertura de internet móvil, aunque con deficiencias (Oportunidad/Amenaza).\n- Avances en tecnologías offline-first y blockchain (Oportunidad).\n- Rápida obsolescencia tecnológica requiere actualización constante (Amenaza).",
+        ecologicos: "- Bajo impacto ambiental directo al ser un producto digital (Oportunidad).\n- Fomento de la economía circular al promover el comercio local y reducir desplazamientos largos (Oportunidad).",
+        legales: "- Complejidad de la Ley Fintech para operaciones de pago (Amenaza).\n- Ley de Protección de Datos Personales (LFPDPPP) exige un manejo robusto de la información del usuario (Amenaza).\n- Regulaciones fiscales (SAT) que pueden ser una barrera para la formalización de MiPymes (Amenaza)."
+    },
     "cafe-aroma": {
         politicos: "- Acuerdos comerciales favorables para la exportación de café (Oportunidad).\n- Inestabilidad política en regiones cafetaleras puede afectar el suministro (Amenaza).",
         economicos: "- Aumento del poder adquisitivo de la clase media que busca productos premium (Oportunidad).\n- Inflación y aumento en costos de logística (Amenaza).\n- Volatilidad del tipo de cambio para compras de equipo importado (Amenaza).",
@@ -79,7 +87,7 @@ const pestelData: Record<string, PestelState> = {
 };
 
 export default function PestelPage() {
-    const [selectedProject, setSelectedProject] = useState("cafe-aroma");
+    const [selectedProject, setSelectedProject] = useState("cositas");
     const [pestel, setPestel] = useState<PestelState>(pestelData[selectedProject]);
 
     const handleProjectChange = (projectId: string) => {
@@ -109,6 +117,7 @@ export default function PestelPage() {
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
+                                <SelectItem value="cositas">Proyecto: Cositas</SelectItem>
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>

@@ -63,6 +63,49 @@ type ProjectData = {
 };
 
 const initialProjectData: Record<string, ProjectData> = {
+    "cositas": {
+        empathyMap: {
+            thinksAndFeels: "Vendedor: 'Estoy abrumado con la gestión diaria'. 'No sé cómo atraer más clientes'. 'La tecnología es complicada y cara'. Comprador: 'Quiero apoyar lo local'. 'Ojalá supiera si la tiendita de la esquina tiene lo que busco antes de ir'.",
+            sees: "Vendedor: Clientes pagando en efectivo, cuadernos de notas desordenados, poca afluencia. Comprador: Negocios locales con poca presencia online, publicaciones desactualizadas en Facebook, letreros de 'Cerrado' inesperados.",
+            hears: "Vendedor: 'La competencia de las grandes cadenas es muy fuerte'. 'No tengo tiempo para redes sociales'. Comprador: 'Es más fácil pedir por Rappi'. 'Me enteré de esta nueva panadería por un vecino'.",
+            saysAndDoes: "Vendedor: Anota ventas en un cuaderno. Usa su WhatsApp personal para algunos pedidos. Cierra temprano si no hay ventas. Comprador: Camina para ver qué encuentra abierto. Pregunta a amigos por recomendaciones. Termina yendo al OXXO por conveniencia.",
+            pains: [
+              { id: 1, description: "Vendedor: Pérdida de ventas por no ser visible digitalmente. Comprador: Incertidumbre sobre la disponibilidad de productos y horarios.", solution: "Marketplace hiper-local con inventario y estado en tiempo real." },
+              { id: 2, description: "Vendedor: Gestión manual de inventario y finanzas propensa a errores. Comprador: Malas experiencias por productos agotados.", solution: "Asistente IA que automatiza la gestión y sugiere mejoras." },
+              { id: 3, description: "Vendedor: Riesgo de robos y dependencia del efectivo. Comprador: No siempre carga efectivo y desconfía de terminales complicadas.", solution: "Pasarela de pagos offline-first, segura y fácil de usar con QR." },
+            ],
+            gains: [
+                { id: 1, description: "Vendedor: Aumentar su visibilidad y ventas. Comprador: Descubrir y apoyar el comercio de su barrio con certeza.", creator: "Crear un perfil verificado del negocio en 'Cositas', destacando sus productos y promociones." },
+                { id: 2, description: "Vendedor: Tomar mejores decisiones de negocio. Comprador: Acceder a promociones personalizadas.", creator: "El asistente IA proporciona reportes simples: 'Hoy tu producto estrella fue X. Considera hacer una promoción de Y'." },
+                { id: 3, description: "Vendedor: Transacciones más seguras y rápidas. Comprador: Una forma de pago universal y segura que funciona incluso sin datos.", creator: "El sistema de pago con QR permite transacciones instantáneas y seguras, con confirmación local y sincronización posterior." },
+            ]
+        },
+        buyerPersona: {
+            demographics: "Vendedora: María, 45 años, dueña de 'Abarrotes Mary'. Trabaja 12 horas al día, usa un smartphone de gama media, principalmente para WhatsApp y Facebook. Comprador: Carlos, 28 años, desarrollador de software. Vive en la colonia, tiene un plan de datos limitado y prefiere apoyar a negocios locales si es conveniente.",
+            goals: "Vendedora: Aumentar sus ingresos para darle una mejor educación a sus hijos. No quedarse atrás ante la competencia. Comprador: Ahorrar tiempo en sus compras diarias. Encontrar productos frescos y de calidad cerca de casa.",
+            frustrations: "Vendedora: No entiende de marketing digital. Las comisiones de las apps de delivery son muy altas. Comprador: Frustrado cuando camina a una tienda y está cerrada o no tienen lo que busca.",
+            motivations: "Vendedora: El orgullo de su negocio y el servicio a su comunidad. La independencia económica. Comprador: La conveniencia, el sentido de comunidad y encontrar productos únicos.",
+            communicationChannels: "Vendedora: Grupos de WhatsApp del barrio, trato directo con clientes, proveedores. Comprador: Redes sociales, Google Maps, recomendaciones de amigos.",
+            story: "María ve cómo las nuevas generaciones usan cada vez más el teléfono para todo. Siente que su tienda, a pesar de tener buenos productos, se está volviendo invisible. Carlos quiere comprar el queso fresco que vende María, pero la semana pasada fue y ya se había acabado. Desearía tener una forma de saberlo sin tener que ir."
+        },
+        journeyMap: {
+            awareness: "Carlos escucha sobre 'Cositas' en un anuncio en una radio local o lo ve en un cartel en la tienda de María (gracias a los Embajadores Digitales).",
+            consideration: "Descarga la app, que es muy ligera. Ve que 'Abarrotes Mary' está a 3 cuadras y que le queda queso fresco. También ve que la panadería de la esquina tiene una promoción de conchas 2x1.",
+            purchase: "Va a la tienda, recoge sus productos y paga escaneando un código QR con la app de 'Cositas'. La transacción es instantánea, aunque en ese momento no tenía buena señal de internet.",
+            service: "La app le envía una notificación de su compra. El asistente IA de María registra la venta automáticamente y ajusta el inventario de queso y conchas.",
+            loyalty: "Carlos ahora abre 'Cositas' antes de salir de casa para ver qué hay de nuevo en su colonia. María, al ver que el queso se vende rápido, usa la IA para crear una promoción: '¡10% de descuento en queso los miércoles!', atrayendo a más clientes como Carlos."
+        },
+        survey: {
+            objective: "Validar el interés de las MiPymes en un ecosistema digital y medir la disposición de los compradores a usar una nueva app de comercio local.",
+            questions: [
+                { id: 1, text: "Vendedor: ¿Qué herramienta usa actualmente para llevar el control de sus ventas e inventario?", type: 'demografico' },
+                { id: 2, text: "Vendedor: Si existiera una herramienta digital gratuita para aumentar su visibilidad en su colonia, ¿qué tan interesado estaría en probarla?", type: 'deseo' },
+                { id: 3, text: "Comprador: ¿Con qué frecuencia deja de comprar en una tienda local porque no sabe si está abierta o si tiene lo que busca?", type: 'necesidad' },
+                { id: 4, text: "Comprador: ¿Estaría dispuesto a usar una nueva app de pagos si le permitiera pagar en tiendas locales incluso sin conexión a internet?", type: 'demanda' },
+                { id: 5, text: "Ambos: ¿Cuál es su principal barrera para usar más la tecnología en sus compras/ventas diarias?", type: 'abierta' },
+            ]
+        }
+    },
     "cafe-aroma": {
         empathyMap: {
             thinksAndFeels: "Preocupado por el impacto ambiental, busca productos éticos. Se siente bien al apoyar a pequeños productores. Valora la calidad y la historia detrás del producto.",
@@ -203,7 +246,7 @@ const emptyProjectData: ProjectData = {
 };
 
 export default function ClientesPage() {
-    const [selectedProject, setSelectedProject] = useState("cafe-aroma");
+    const [selectedProject, setSelectedProject] = useState("cositas");
     const [empathyMap, setEmpathyMap] = useState<EmpathyMapState>(initialProjectData[selectedProject].empathyMap);
     const [buyerPersona, setBuyerPersona] = useState<BuyerPersonaState>(initialProjectData[selectedProject].buyerPersona);
     const [journeyMap, setJourneyMap] = useState<CustomerJourneyMapState>(initialProjectData[selectedProject].journeyMap);
@@ -297,6 +340,7 @@ export default function ClientesPage() {
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent>
+                                <SelectItem value="cositas">Proyecto: Cositas</SelectItem>
                                 <SelectItem value="cafe-aroma">Proyecto: Café 'Aroma de Montaña'</SelectItem>
                                 <SelectItem value="restaurante-gambusinos">Proyecto: Restaurant-Bar "Gambusinos"</SelectItem>
                                 <SelectItem value="ecoturismo-la-salina">Proyecto: Campo Ecoturístico La Salina</SelectItem>
