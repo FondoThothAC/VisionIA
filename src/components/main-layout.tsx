@@ -30,6 +30,11 @@ import {
   Swords,
   Scaling,
   ChevronDown,
+  Sparkles,
+  MessageCircle,
+  ScanSearch,
+  Voicemail,
+  Database,
 } from 'lucide-react';
 
 import {
@@ -130,15 +135,18 @@ const menuItems = [
     icon: BarChart2,
   },
   {
-    href: '/visuals',
-    label: 'Generador de Visuales',
-    icon: ImageIcon,
-  },
-  {
-    href: '/video',
-    label: 'Pitch de Inversor',
-    icon: Film,
-  },
+    isGroup: true,
+    label: "Capacidades de IA",
+    icon: Sparkles,
+    items: [
+        { href: '/ia/chatbot', label: 'Chatbot', icon: MessageCircle },
+        { href: '/visuals', label: 'Generación de Imágenes', icon: ImageIcon },
+        { href: '/ia/analisis-imagen', label: 'Análisis de Imágenes', icon: ScanSearch },
+        { href: '/video', label: 'Pitch en Video', icon: Film },
+        { href: '/ia/texto-a-voz', label: 'Texto a Voz', icon: Voicemail },
+        { href: '/ia/busqueda-datos', label: 'Búsqueda y Datos', icon: Database },
+    ]
+  }
 ];
 
 const secondaryMenuItems = [
